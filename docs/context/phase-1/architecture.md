@@ -122,8 +122,11 @@ Skeletons must mirror this shell while data loads.
 
 ## Sanity
 
-- Studio at `/studio` — **not public**: Sanity project members / login only; no anonymous edit
-- Editable without code: site settings (venue, phones, map URL, video URL, WhatsApp by topic), home/school copy, **fair** documents
+- **Embedded in the Next app** at `/studio` (same deploy as the site — easiest for admins). Not a sibling Studio folder.
+- Project `h9imk562`, dataset `production` (`NEXT_PUBLIC_SANITY_*` in `web/.env`)
+- **Access:** Sanity login / project members only — no anonymous edit
+- CORS: allow `http://localhost:3000` (and the production domain) in [sanity.io/manage](https://www.sanity.io/manage) → API → CORS origins
+- Editable without code: singleton **Configuración general** (`siteSettings`), later home/school copy and **fair** documents
 - **Fair model (events):** `slug`, title, banner, `startDate` / `endDate` (optional day list), `featured`, summary, body, CTAs, `updatedAt` for “Última actualización”
 - One featured fair for banners (Home teaser + `/fairs` hero); many cards for the rest
 

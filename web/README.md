@@ -13,22 +13,21 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Brand assets live in `public/brand/` (`logo.jpg` header, `logo-white.png` footer, `favicon.ico` tab icon).
+Brand assets: `public/brand/` (`logo.jpg` header, `logo-white.png` footer, `favicon.ico` tab icon).
 
-## Sanity Studio (`/studio`)
+## Sanity Studio (embedded)
 
-The setup screen appears until `NEXT_PUBLIC_SANITY_PROJECT_ID` is set in `web/.env`.
+Studio lives **inside this app** at [http://localhost:3000/studio](http://localhost:3000/studio) — one URL for admins after deploy (`tudominio/studio`).
 
-1. Sign in at [sanity.io/manage](https://www.sanity.io/manage) (or `npx sanity login` in this folder).
-2. Create a project (dataset `production`) or open an existing one.
-3. Copy the **Project ID** into `web/.env`:
+| | |
+| --- | --- |
+| Project ID | `h9imk562` |
+| Dataset | `production` |
 
-```bash
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_id
-NEXT_PUBLIC_SANITY_DATASET=production
-```
+Already set in `.env.example`. Copy to `.env` if missing, then restart `npm run dev`.
 
-4. Restart `npm run dev` and open `/studio`.
-5. Sign in with the same Sanity account (no anonymous edit).
+1. Open `/studio` and sign in with your Sanity account (invite editors in [sanity.io/manage](https://www.sanity.io/manage)).
+2. In manage → API → **CORS origins**, add `http://localhost:3000` (and later your Vercel domain) with credentials allowed.
+3. Edit **Configuración general** (singleton `siteSettings`).
 
-Do not commit `web/.env`.
+Do not commit `web/.env`. Do not run a separate `studio-asdeoccidente` folder for day-to-day use.

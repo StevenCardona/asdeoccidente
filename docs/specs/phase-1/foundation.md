@@ -23,9 +23,9 @@ Bootstrap the Next.js app so the team can start features: packages, config, feat
 - `(site)` layout: Header · outlet · ContactLocation · Footer · mobile bottom nav
 - Routes stubs: `/`, `/school`, `/fairs`, `/fairs/[slug]` (placeholder bodies OK)
 - `/about` **commented** (file and nav entry) for later
-- `/studio` loads only for authenticated Sanity project members
+- `/studio` embedded in Next (same app) — Sanity login only; project `h9imk562` / dataset `production`
 - CSS variables / tokens from design system
-- `.env.example` / `.env` with **site-wide** name, address, phones, WhatsApp, social URLs, map/video embeds, plus Sanity + public site URL placeholders — **never hardcode** these in components (see root `AGENTS.md`)
+- `.env.example` / `.env` with **site-wide** name, address, phones, WhatsApp, social URLs, map/video embeds, plus Sanity project id — **never hardcode** contact in components (see root `AGENTS.md`)
 - `sitemap` / `robots` / `metadataBase` baseline
 
 ## Scope
@@ -78,10 +78,12 @@ Institutional look: clean, prestigious, not “AI generic”.
 
 ## Sanity access
 
-- Studio embedded at `/studio`
-- Require Sanity login / project membership — **no anonymous access**
-- Document `siteSettings` (singleton): venue name, address, phones, WhatsApp-by-topic, map embed URL, directions video URL, social links
-- Fair schema can land with fairs spec; foundation may stub empty schema folder
+- Studio embedded at `/studio` (same Next app — not a sibling folder)
+- Project `h9imk562`, dataset `production`
+- Sanity login / project membership only — **no anonymous access**
+- CORS: `localhost:3000` + production domain in manage → API
+- Document `siteSettings` (singleton): venue name, address, phones, WhatsApp, map embed URL, directions video URL, social links
+- Fair schema lands with the fairs feature work
 
 ## SEO base
 

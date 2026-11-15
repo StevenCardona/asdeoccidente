@@ -6,8 +6,8 @@
 | Spec foundation (docs) | Done |
 | Spec home / school / fairs (docs) | Done |
 | Spec about | Deferred (route commented) |
-| App `web/` foundation shell | Done — navigable stubs |
-| Sanity project + auth | Studio route ready; needs `NEXT_PUBLIC_SANITY_PROJECT_ID` |
+| App `web/` foundation shell | Done — navigable stubs + brand logos |
+| Sanity Studio (embedded `/studio`) | Wired to project `h9imk562` / `production` |
 | Confirmed 2026 school fees | Pending association |
 
 ## Foundation checklist
@@ -18,5 +18,6 @@
 - [x] Routes `/`, `/school`, `/fairs`, `/fairs/[slug]`
 - [x] `/about` deferred
 - [x] Env-driven contact/social (`web/.env`)
-- [x] `/studio` with setup gate until project id is set
+- [x] Brand logos + favicon
+- [x] `/studio` embedded — project id `h9imk562`
 - [x] SEO: metadata, sitemap, robots
