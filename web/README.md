@@ -13,8 +13,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Sanity Studio
+Brand assets live in `public/brand/` (`logo.jpg` header, `logo-white.png` footer, `favicon.ico` tab icon).
 
-1. Create a Sanity project and set `NEXT_PUBLIC_SANITY_PROJECT_ID` (+ dataset) in `.env`.
-2. Open `/studio` and sign in with an authorized Sanity account (no anonymous edit).
-3. Until the project id is set, `/studio` shows a setup message; the public site still runs on env contact data.
+## Sanity Studio (`/studio`)
+
+The setup screen appears until `NEXT_PUBLIC_SANITY_PROJECT_ID` is set in `web/.env`.
+
+1. Sign in at [sanity.io/manage](https://www.sanity.io/manage) (or `npx sanity login` in this folder).
+2. Create a project (dataset `production`) or open an existing one.
+3. Copy the **Project ID** into `web/.env`:
+
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
+
+4. Restart `npm run dev` and open `/studio`.
+5. Sign in with the same Sanity account (no anonymous edit).
+
+Do not commit `web/.env`.

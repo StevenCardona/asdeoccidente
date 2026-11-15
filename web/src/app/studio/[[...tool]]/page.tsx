@@ -13,10 +13,36 @@ export default function StudioPage() {
           Sanity Studio
         </h1>
         <p className="text-sm text-muted-foreground">
-          Configura <code className="rounded bg-muted px-1">NEXT_PUBLIC_SANITY_PROJECT_ID</code>{" "}
-          en <code className="rounded bg-muted px-1">web/.env</code> y reinicia el servidor.
-          El acceso al Studio queda protegido por la cuenta Sanity del proyecto (sin edición
-          anónima).
+          Falta el project id. Crea o abre un proyecto en{" "}
+          <a
+            href="https://www.sanity.io/manage"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-primary underline-offset-2 hover:underline"
+          >
+            sanity.io/manage
+          </a>
+          , copia el Project ID y ponlo en{" "}
+          <code className="rounded bg-muted px-1">web/.env</code>:
+        </p>
+        <pre className="rounded-lg border border-border bg-surface p-4 text-left text-xs text-secondary">
+          {`NEXT_PUBLIC_SANITY_PROJECT_ID=tu_project_id
+NEXT_PUBLIC_SANITY_DATASET=production`}
+        </pre>
+        <p className="text-sm text-muted-foreground">
+          Reinicia <code className="rounded bg-muted px-1">npm run dev</code> y
+          vuelve a <code className="rounded bg-muted px-1">/studio</code>. El
+          acceso queda protegido por tu cuenta Sanity (sin edición anónima).
+        </p>
+        <p className="text-xs text-muted-foreground">
+          CLI:{" "}
+          <code className="rounded bg-muted px-1">
+            npx sanity login
+          </code>{" "}
+          luego{" "}
+          <code className="rounded bg-muted px-1">
+            npx sanity projects list
+          </code>
         </p>
       </div>
     );
