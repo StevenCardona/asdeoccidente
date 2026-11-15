@@ -24,13 +24,33 @@ Nombre largo (sitio): Asociación de Criadores de Caballos de Paso y Fomento Equ
 | Criador o expositor | Registros · Hazte socio |
 | Organiza un evento | Sede y eventos |
 
-**Sede (sitio)**  
-Transversal 5 # 1 – 60, Corregimiento La Dolores, Palmira – Valle del Cauca (recta Cali–Palmira).
+**Sede (canónica para UI)**  
+Transversal 5 # 1 - 60, Recta Cali-Palmira, Corregimiento La Dolores, Palmira – Valle del Cauca.
 
-**Teléfonos generales (sitio; confirmar vigencia)**  
-PBX (2) 666 96 22 / 23 / 24 · 318 666 9622 · 318 269 8693  
-Correo: asdeocidente@asdeoccidente.org.co *(ortografía del sitio; confirmar)*  
-Instagram: @asdeoccidente.oficial
+**Variante mapa/Google (no usar como display principal):** Vereda La Dolores Lote No. 12, Recta Cali-Palmira, Cauca Seco, Cali, Valle del Cauca.
+
+**Contacto general (página de contacto oficial)**  
+PBX (+57)(2) 666 96 22 / 23 / 24 · Cel 318 666 96 22 / 318 269 86 93  
+Correo: asdeoccidente@asdeoccidente.org.co  
+Instagram: [@asdeoccidente.oficial](https://www.instagram.com/asdeoccidente.oficial/)  
+YouTube: [@asdeoccidente.oficial](https://www.youtube.com/@asdeoccidente.oficial)  
+TikTok: [@asdeoccidente](https://www.tiktok.com/@asdeoccidente?lang=es)  
+WhatsApp principal (sitio): 573186669622  
+
+**Directorio (contacto oficial)**
+
+| Rol | Nombre | Correo | Teléfono |
+| --- | --- | --- | --- |
+| Presidente | Diego Fernando García G. | presidencia@asdeoccidente.org.co | — |
+| Directora ejecutiva | María Luisa Daza Díaz | directorejecutivo@asdeoccidente.org.co | (+57) 318 397 4134 |
+| Director comercial | Steet Achury Mendoza | comercial@asdeoccidente.org.co | (+57) 300 3220606 |
+| Comunicaciones | Sofía Mera E. | comunicaciones@asdeoccidente.org.co | (+57) 317 437 1969 |
+| Registros | Cristian Castro | registros@asdeoccidente.org.co | Cel 318 666 96 22 · Tel 032 666 96 22 Ext.110 |
+| Contadora | Nubia Avendaño | contabilidad@asdeoccidente.org.co | Cel 318 666 96 22 · Tel 032 666 96 22 Ext.107 |
+| Analista administrativa | Paola Andrea Martínez R. | asdeoccidente@asdeoccidente.org.co | (+57) 318 666 96 22 |
+| Coordinador chalanería | Diego Fernando Hincapié | escueladechalaneria@asdeoccidente.org.co | (+57) 318 666 96 23 |
+
+Datos globales de UI también viven en `.env` / `.env.example` (`NEXT_PUBLIC_*`).
 
 ---
 
@@ -71,9 +91,8 @@ Prioridad del mensaje (orden de verdad): primero el caballo y montar bien; forma
 | Alumnos / trayectoria | Sitio habla de “más de 200 alumnos” históricos; Agronegocios cita ~63 activos (ene 2026) | Ambas `[por confirmar]` cuál usar en copy |
 | Logros / nombres | Campeones y podios regionales/nacionales/internacionales citados en prensa | Agronegocios `[por confirmar]` antes de publicar nombres |
 
-**Contacto escuela (sitio)**  
-PBX (2) 666 96 22 – 24 Ext. 101 · Cel +57 318 666 9623  
-Correo escuela (Fedequinas): escueladechalaneria@asdeoccidente.org.co `[por confirmar]`
+**Contacto escuela**  
+Coordinador: Diego Fernando Hincapié · Cel (+57) 318 666 96 23 · escueladechalaneria@asdeoccidente.org.co
 
 ### 2.3 Tarifas
 

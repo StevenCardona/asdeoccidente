@@ -1,6 +1,6 @@
 # Spec: Foundation (phase 1)
 
-> Status: **open** — docs ready; no app code yet.
+> Status: **implemented (shell)** — `web/` boots; page bodies still stubs.
 
 ## Identification
 

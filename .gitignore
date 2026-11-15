@@ -2,6 +2,9 @@
 .env
 .env.local
 .env.*.local
+web/.env
+web/.env.local
+web/.env.*.local
 
 # Dependencies & build
 node_modules/
