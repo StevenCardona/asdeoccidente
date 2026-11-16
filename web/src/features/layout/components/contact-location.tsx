@@ -35,8 +35,7 @@ export function ContactLocation() {
                 Escríbenos y ubica la sede
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
-                Déjanos tus datos y te respondemos por correo. Dirección y
-                teléfonos están en el pie de página.
+                Déjanos tus datos y te respondemos por correo.
               </p>
             </div>
 

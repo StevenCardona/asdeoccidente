@@ -182,29 +182,39 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | | |
 | --- | --- |
 | **Título** | Aprende, compite y celebra con el caballo criollo colombiano. |
-| **Subtítulo** | Clases de chalanería personalizadas para niños y adultos, ferias en el Valle del Cauca y trámites para tu ejemplar. Te acompañamos desde el primer paso. |
-| **Botones** | Quiero mi clase gratis · Ver la próxima feria |
+| **Subtítulo** | Clases de chalanería personalizadas para niños y adultos, y ferias en el Valle del Cauca. Te acompañamos desde el primer paso. |
+| **Botones** | Quiero mi clase gratis (WhatsApp escuela) · Ver la próxima feria (`/fairs`) |
 
-**Celular:** hero, dos botones, próximo evento, tarjetas “¿Qué quieres hacer hoy?”  
-**Escritorio suma:** escuela en breve, testimonios, cifras (una sola vez), una línea de ubicación.  
-**No va aquí:** tarifas completas, junta, detalle de instalaciones.
+**Bloques de la página (orden):**
 
-### Nosotros `/nosotros`
+1. Hero — banner, Google opiniones + Fedequinas, título, subtítulo, CTAs  
+2. Esencia — cuatro beats + mosaico fotográfico  
+3. Cifras — 1975 · +200 alumnos · opiniones Google · +180 socios  
+4. Servicios — trámites, escuela, equinoterapia, alquiler (CTAs informativos)  
+5. Galería — carrusel de fotos  
+6. Cuatro andares — pestañas (Paso Fino, Trocha, Trocha y Galope, Trote y Galope)  
+7. Videos — cuatro reels (marco 9:16)  
+8. Contacto y ubicación (layout) — mapa + video cómo llegar + mini formulario correo  
+9. Pie — dirección, teléfonos, WhatsApp, redes  
+
+**No va aquí:** tarifas completas, junta, “¿Qué quieres hacer?”, detalle de instalaciones.
+
+### Nosotros `/about` (diferido)
 
 | | |
 | --- | --- |
 | **Título** | Somos una comunidad de criadores, jinetes y familias. |
 | **Subtítulo** | Desde 1975 cuidamos y promovemos el caballo criollo colombiano en el Valle del Cauca. `[por confirmar año de fundación]` |
-| **Regla** | La junta completa solo vive aquí. Voz propia. |
+| **Regla** | La junta completa solo vive aquí. Voz propia. Ruta y nav comentadas hasta que exista el spec. |
 
-### Ferias `/ferias`
+### Ferias `/fairs` (+ `/fairs/[slug]`)
 
 | | |
 | --- | --- |
-| **Título** | XXXIV Copa América Equina · 29 de octubre al 1 de noviembre. `[ajustar fechas]` |
+| **Título (ejemplo de evento)** | XXXIV Copa América Equina · 29 de octubre al 1 de noviembre. `[ajustar fechas]` |
 | **Subtítulo** | Cuatro días de competencia y ambiente de feria. Entradas desde $10.000. `[por confirmar]` |
 | **Botones** | Ver entradas · Inscribir mi ejemplar |
-| **Regla** | Entrada general primero, luego palcos. Nombre oficial completo. Mostrar “Última actualización”. |
+| **Regla** | Producto de eventos: listado con destacada + cards, detalle por slug. Entrada general primero, luego palcos. Nombre oficial completo. Mostrar “Última actualización”. |
 
 ### Ofertas diferidas (fase 3; hechos cortos)
 

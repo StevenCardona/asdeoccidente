@@ -1,6 +1,6 @@
 # Spec: Foundation (phase 1)
 
-> Status: **implemented (shell)** — `web/` boots; page bodies still stubs.
+> Status: **implemented** — `web/` boots with shared chrome; Home body implemented; School/Fairs route placeholders.
 
 ## Identification
 
@@ -9,32 +9,32 @@
 | Id | `foundation` |
 | Phase | 1 |
 | Depends on | — |
-| Project root | `web/` (to create) |
+| Project root | `web/` |
 
 ## Goal
 
-Bootstrap the Next.js app so the team can start features: packages, config, feature folders, design tokens, shared layout shell, protected Sanity Studio, base SEO. No full page bodies yet.
+Next.js app shell: packages, config, feature folders, design tokens, shared layout, embedded Sanity Studio, base SEO. Contact and social identity from env (`siteConfig`), never hardcoded in components.
 
 ## Expected result
 
-- `web/` starts locally (`dev` script)
+- `web/` starts locally (`npm run dev`)
 - TypeScript strict; Tailwind + shadcn + Lucide wired
 - React Query + nuqs providers in root layout
-- `(site)` layout: Header · outlet · ContactLocation · Footer · mobile bottom nav
-- Routes stubs: `/`, `/school`, `/fairs`, `/fairs/[slug]` (placeholder bodies OK)
-- `/about` **commented** (file and nav entry) for later
-- `/studio` embedded in Next (same app) — Sanity login only; project `h9imk562` / dataset `production`
+- `(site)` layout via `SiteShell`: Header · outlet · ContactLocation · Footer · mobile bottom nav
+- Routes: `/` (Home feature), `/school`, `/fairs`, `/fairs/[slug]` (School/Fairs placeholder bodies)
+- `/about` deferred (file `page.tsx.deferred`; nav entry commented)
+- `/studio` embedded — Sanity login; project `h9imk562` / dataset `production`
 - CSS variables / tokens from design system
-- `.env.example` / `.env` with **site-wide** name, address, phones, WhatsApp, social URLs, map/video embeds, plus Sanity project id — **never hardcode** contact in components (see root `AGENTS.md`)
+- `.env.example` / `.env` with site-wide name, address, phones, WhatsApp, email, social URLs, map/video embeds, Google proof, home video URLs, Sanity ids
 - `sitemap` / `robots` / `metadataBase` baseline
 
 ## Scope
 
-**In:** bootstrap, shared UI primitives, layout chrome, site settings schema (minimal), auth gate for Studio, empty navigable shell.
+**In:** bootstrap, shared UI primitives, layout chrome, `siteSettings` + `home` + minimal `fair` schemas, Studio access, navigable shell.
 
-**Out:** Home / School / Fairs content (their specs); About page; chatbot; real production DNS.
+**Out:** School / Fairs page bodies (their specs); About page; chatbot; production DNS.
 
-## Packages (document for install when coding)
+## Packages
 
 | Package | Purpose |
 | --- | --- |
@@ -45,62 +45,61 @@ Bootstrap the Next.js app so the team can start features: packages, config, feat
 | `@tanstack/react-query` | Data fetching |
 | `nuqs` | URL state |
 | `zustand` | Optional global UI state |
-| `next-sanity`, `sanity`, `@sanity/vision` (as needed) | CMS + Studio |
+| `next-sanity`, `sanity`, `@sanity/vision` | CMS + Studio |
 
-Prefer current stable versions at install time; pin in lockfile.
+Prefer current stable versions; pin in lockfile.
 
-## Folder tree (must match architecture)
+## Folder tree
 
-See [`../../context/phase-1/architecture.md`](../../context/phase-1/architecture.md). Create `features/{home,school,fairs,layout}` and `shared/{components/ui,lib,config}` even if feature bodies are stubs.
+See [`../../context/phase-1/architecture.md`](../../context/phase-1/architecture.md). Features: `home` (full), `school` / `fairs` (placeholder pages), `layout` (chrome). Shared: `components/ui`, `lib`, `config`.
 
 ## Layout & navigation
 
-**Header (desktop):** logo · Inicio `/` · Escuela `/school` · Ferias `/fairs` · WhatsApp CTA (Lucide).  
+**Header (desktop):** BrandLockup · Inicio `/` · Escuela `/school` · Ferias `/fairs` · WhatsApp CTA.  
 `{/* Nosotros /about — deferred */}`
 
-**Mobile bottom nav:** Inicio · Escuela · Ferias (active states via Lucide). Comment Nosotros.
+**Mobile bottom nav:** Inicio · Escuela · Ferias (Lucide). Nosotros commented.
 
-**ContactLocation (every page, above footer):**
+**ContactLocation (every public page, above footer):**
 
-- Heading in Spanish (e.g. Contacto y ubicación)
-- Address, phones, WhatsApp from `siteSettings`
-- Google Maps iframe (`mapEmbedUrl`)
-- Video embed / iframe “Cómo llegar a la sede” (`directionsVideoUrl`)
-- Skeleton while settings load
+- Heading: Contacto y ubicación / “Escríbenos y ubica la sede”
+- Left: Google Maps iframe (`mapEmbedUrl`); optional “Cómo llegar” control → Dialog with video iframe when `directionsVideoUrl` is set
+- Right: mini form (nombre, teléfono, motivo, mensaje) → `mailto:` `NEXT_PUBLIC_EMAIL`
+- Address, phones, and WhatsApp are **not** duplicated here; they live in the Footer
 
-**Footer:** identical sitewide (name, short line, legal links placeholders, copyright).
+**Footer:** BrandLockup (dark), legal name line, nav links, full address, PBX/WhatsApp/email, social icons from env, copyright.
 
 ## Design tokens
 
 Map [`DESIGN.md`](../../design/DESIGN.md) into CSS variables / Tailwind theme: primary crimson, secondary navy, tertiary amber, neutrals, radii, spacing, fonts (Plus Jakarta Sans + Inter).
 
-Institutional look: clean, prestigious, not “AI generic”.
+Institutional look: clean, prestigious.
 
-## Sanity access
+## Sanity
 
-- Studio embedded at `/studio` (same Next app — not a sibling folder)
+- Studio embedded at `/studio` (same Next app)
 - Project `h9imk562`, dataset `production`
 - Sanity login / project membership only — **no anonymous access**
-- CORS: `localhost:3000` + production domain in manage → API
-- Document `siteSettings` (singleton): venue name, address, phones, WhatsApp, map embed URL, directions video URL, social links
-- Fair schema lands with the fairs feature work
+- CORS: `http://localhost:3000` + `https://asdeoccidente.vercel.app` in manage → API
+- Documents: singleton **Configuración general** (`siteSettings`), singleton **Inicio** (`home`), document type **Feria** (`fair` — minimal fields until fairs feature)
+- **UI contact/social today read from env** via `siteConfig` (`web/src/shared/config/site.ts`). `siteSettings` is editable in Studio for future wiring.
 
 ## SEO base
 
 - `lang="es-CO"`
 - `metadataBase` from env
-- Default title template
+- Default title template; Home uses `generateMetadata` from CMS/defaults
 - `sitemap.ts`, `robots.ts` (disallow studio; allow public routes)
 
 ## Mobile / desktop
 
-Same shell; mobile gets bottom nav and tighter gutters (`1.25rem`). Desktop max width ~`1280px`.
+Same shell; mobile gets bottom nav and tighter gutters. Desktop max width ~`1280px` (`max-w-7xl`).
 
 ## Acceptance criteria
 
-- [ ] `npm run dev` (or pnpm) serves the shell
-- [ ] Unauthenticated users cannot edit Studio content
-- [ ] Nav reaches `/`, `/school`, `/fairs` without About visible
-- [ ] ContactLocation shows map + video slots (placeholders OK if URLs pending)
-- [ ] Shared Button / Skeleton / Dialog exist and are used by the shell
-- [ ] No feature page content required beyond placeholders
+- [x] `npm run dev` serves the shell
+- [x] Unauthenticated users cannot edit Studio content (Sanity login)
+- [x] Nav reaches `/`, `/school`, `/fairs` without About visible
+- [x] ContactLocation shows map + video slot (placeholder when URL empty) + mailto form
+- [x] Shared Button / Skeleton / Dialog exist and are used by the shell
+- [x] Brand logos + favicon in `public/brand/`

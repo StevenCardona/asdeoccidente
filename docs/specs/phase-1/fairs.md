@@ -1,6 +1,6 @@
 # Spec: Fairs — events (phase 1)
 
-> Status: **open**  
+> Status: **open** — routes exist as placeholders (title + skeleton); list/detail bodies not built  
 > Paths: `/fairs` (list) · `/fairs/[slug]` (detail)  
 > Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md)
 
