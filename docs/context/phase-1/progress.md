@@ -5,12 +5,13 @@
 | Context docs (overview, architecture, build-plan, workflow) | Done |
 | Spec foundation | Done (implemented) |
 | Spec home | Done (implemented) |
-| Spec school / fairs | Open — placeholder routes only |
+| Spec school | In progress — static page on `feature/school` (Sanity deferred) |
+| Spec fairs | Open — placeholder routes only |
 | Spec about | Deferred (route commented) |
 | App `web/` foundation shell | Done |
 | Sanity Studio (embedded `/studio`) | Wired — project `h9imk562` / `production` |
 | App Home `/` | Done |
-| App School `/school` | Placeholder |
+| App School `/school` | In progress (static sections) |
 | App Fairs `/fairs`, `/fairs/[slug]` | Placeholder |
 | Confirmed 2026 school fees | Pending association |
 
@@ -37,7 +38,17 @@
 - [x] SafeImage lazy + reserved space
 - [ ] Acceptance: mobile review + directions video URL when available
 
+## School checklist
+
+- [x] Hero + WhatsApp clase gratis (subtitle corto; sin línea de matrícula)
+- [x] Cómo es la clase (pasos + foto + ejes en cards)
+- [x] Galería → caballos → profesores
+- [x] Tarifas (tabs grupales/personalizadas + cards)
+- [x] Qué llevar + FAQ accordion
+- [ ] Sanity `school` document (deferred)
+- [ ] Acceptance: mobile review + fee sign-off 2026
+
 ## Next
 
-1. Implement **School** per [`../../specs/phase-1/school.md`](../../specs/phase-1/school.md)
+1. Finish School acceptance on `feature/school`
 2. Implement **Fairs** per [`../../specs/phase-1/fairs.md`](../../specs/phase-1/fairs.md)

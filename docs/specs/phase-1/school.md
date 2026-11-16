@@ -1,6 +1,6 @@
 # Spec: School (phase 1)
 
-> Status: **open** — route `/school` exists as placeholder (title + skeleton); body not built  
+> Status: **in progress** — `/school` body implemented with static content; Sanity CMS deferred  
 > Path: `/school`  
 > Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md) § Escuela
 
@@ -15,88 +15,56 @@
 
 ## Goal
 
-Convert interest into a free first class via WhatsApp. Explain personalized teaching, what enrollment includes, and what the school provides — with institutional clarity, no invented prices.
+Convert interest into a free first class via WhatsApp. Explain personalized teaching and what the school provides — with institutional clarity.
 
 ## Expected result
 
 - Page `/school` with sections below
 - Primary CTA: Quiero mi clase gratis → WhatsApp school template
-- Fees shown only with confirmed numbers; otherwise structure + `[por confirmar]` in CMS draft, hidden or labeled in prod
-- Skeletons; shared UI; layout ContactLocation/Footer unchanged
+- Fee cards personalizadas (1/2/3/4) with Socio / No socio / Hijo montador
+- Carousels with arrows + dots (Home pattern) for method axes, horses, staff
+- Shared UI; layout ContactLocation/Footer unchanged
 - SEO for `/school`
+- Content in `features/school/models/school.ts` (static). **Sanity deferred.**
 
 ## Scope / out of scope
 
-**In:** school story, method, inclusions, FAQ, staff if confirmed, fee tables when confirmed.
+**In:** method, horses (dark band), gallery, staff, fees, FAQ (6 clave).
 
-**Out:** About, full map (global ContactLocation handles location), chatbot, promising competition titles without approval.
+**Out:** About, map duplicate, sticky CTA, “Antes de venir”, grupales tabs, Sanity school doc (later).
 
-## Copy base (KB recommended)
+## Sections (order)
 
-| | |
-| --- | --- |
-| **Title** | Aprende a montar con un maestro solo para ti. |
-| **Subtitle** | Clases totalmente personalizadas para niños y adultos. Traemos el caballo, la montura y el equipo; tú llegas con ganas. Tu primera clase es gratis. |
-| **Button** | Quiero mi clase gratis |
-| **Support** | La matrícula incluye seguro, gorra y buzo de la escuela. |
+1. **Hero** — GoogleReviewsBadge (`tone="dark"`, link) encima de “Clase de cortesía”
+2. **Cómo es la clase** — steps + axes carousel (icon beside text; flechas/puntos)
+3. **Caballos** — fondo `bg-secondary`; same cards as staff; carousel controls
+4. **Galería** — bento + degradado oscuro tipo banner
+5. **Profesores** — carousel controls
+6. **Tarifas** — personalizadas only; notas matrícula
+7. **FAQ** — 6 preguntas (gratis+agenda, equipo, matrícula+eventos, qué llevar, socio, sede)
 
-## Confirmed facts (must appear)
+## Matrícula (bajo tarifas)
 
-- Classes are **fully personalized** (one student with instructor)
-- School provides horse, saddle, and needed equipment
-- Student brings attitude — not horse/saddle
-- Enrollment includes **insurance, cap (gorra), and school hoodie (buzo)**
-- First class free (site)
+1. Matrícula $190.000: incluye póliza, gorra y buzo de la escuela.
+2. Con ella tienes beneficios en eventos: entrada gratuita o descuentos.
 
-## Sections
+## Fees
 
-### Mobile (priority)
+No-socio: 1→$90.000 · 2→$180.000 · 3→$280.000 · 4→$370.000 (socio/hijo promediados en model).
 
-1. **Hero** — title, subtitle, CTA
-2. **Para quién** — children, youth, adults; with/without experience (ages `[por confirmar]` if used)
-3. **Cómo es la clase** — personalized method; optional 4 axes if confirmed (equilibrio, conducción, concentración, preparación física y técnica)
-4. **Matrícula incluye** — seguro, gorra, buzo (icons Lucide, same style)
-5. **Equipo incluido** — caballo, montura, casco/equipo
-6. **Tarifas** — packs in words (4/3/2/1); socio vs no socio wording; **numbers only if confirmed 2026**
-7. **Qué llevar / qué no** — short list
-8. **FAQ** — accordion (shared component)
-9. Sticky or recurring WhatsApp CTA
-
-### Desktop adds
-
-- Director / teachers (Diego Hincapié; Rubén Aparicio, Yudi Mendoza, Yadi Sánchez) — photos only when approved
-- Note under fees clarifying packs
-- Optional testimonials if approved
-
-## Fees note
-
-KB has conflicting site vs Agronegocios figures. Until the association signs off 2026:
-
-- UI can show fee **structure** (personalized packs)
-- Do not hardcode contested amounts in production copy
-- Prefer single CMS fee table read by this page only
-
-## CMS
+## Data source
 
 | Field | Notes |
 | --- | --- |
-| hero*, cta | |
-| audience, method, enrollmentIncludes[], equipmentIncludes[] | |
-| feeTable | rows; publish flag |
-| faq[] | |
-| staff[] | name, role, photo, bio short |
-| seo | |
-
-## SEO
-
-- One h1; title/description emphasizing chalanería personalizada + clase gratis
-- No medical/cure claims
+| All page copy | `web/src/features/school/models/school.ts` |
+| CMS | Deferred |
 
 ## Acceptance criteria
 
-- [ ] Free-class WhatsApp path works with school message
-- [ ] Enrollment inclusions (seguro, gorra, buzo) visible
-- [ ] Personalized classes + school-provided horse/equipment clear
-- [ ] No unverified fee numbers in prod
-- [ ] Shared components only; skeletons on load
-- [ ] ContactLocation not duplicated
+- [x] WhatsApp clase gratis
+- [x] Caballos antes de galería, fondo oscuro
+- [x] Carousels con flechas y puntos
+- [x] FAQ reducido a dudas no obvias; sin sección “Antes de venir”
+- [x] Google reviews en hero
+- [x] ContactLocation no duplicado
+- [ ] Sanity school document (later)
