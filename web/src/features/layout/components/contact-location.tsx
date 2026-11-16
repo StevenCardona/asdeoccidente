@@ -1,104 +1,104 @@
-import { MapPin, Phone, Mail, MessageCircle, Play } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
-import { buildWhatsAppUrl, siteConfig } from "@/shared/config/site";
+"use client";
+
+import { useState } from "react";
+import { Play } from "lucide-react";
+import { ContactMiniForm } from "@/features/layout/components/contact-mini-form";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/shared/components/ui/dialog";
+import { siteConfig } from "@/shared/config/site";
 
 export function ContactLocation() {
-  const hasMap = Boolean(siteConfig.mapEmbedUrl);
-  const hasVideo = Boolean(siteConfig.directionsVideoUrl);
+  const mapSrc = siteConfig.mapEmbedUrl;
+  const videoSrc = siteConfig.directionsVideoUrl.trim();
+  const hasVideo = Boolean(videoSrc);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   return (
     <section
-      className="border-t border-border bg-surface"
+      className="bg-background"
       aria-labelledby="contact-location-heading"
     >
-      <div className="mx-auto max-w-7xl px-5 py-12 md:px-12 md:py-16">
-        <p className="text-xs font-bold uppercase tracking-wider text-tertiary">
-          Contacto y ubicación
-        </p>
-        <h2
-          id="contact-location-heading"
-          className="mt-2 font-display text-2xl font-bold text-secondary md:text-3xl"
-        >
-          Visítanos o escríbenos
-        </h2>
-
-        <div className="mt-8 grid gap-10 lg:grid-cols-2">
-          <div className="space-y-5 text-sm text-muted-foreground">
-            <p className="flex gap-3">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
-              <span>{siteConfig.address}</span>
-            </p>
-            {siteConfig.phonePbx ? (
-              <p className="flex gap-3">
-                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
-                <span>
-                  PBX {siteConfig.phonePbx}
-                  {siteConfig.phoneMobile
-                    ? ` · Cel ${siteConfig.phoneMobile}`
-                    : null}
-                  {siteConfig.phoneMobileAlt
-                    ? ` / ${siteConfig.phoneMobileAlt}`
-                    : null}
-                </span>
+      <div className="mx-auto max-w-7xl px-5 py-16 md:px-12 md:py-20">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
+          <div className="flex min-h-0 flex-col gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-tertiary">
+                Contacto y ubicación
               </p>
-            ) : null}
-            {siteConfig.email ? (
-              <p className="flex gap-3">
-                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="text-secondary underline-offset-2 hover:underline"
-                >
-                  {siteConfig.email}
-                </a>
-              </p>
-            ) : null}
-
-            <Button asChild variant="whatsapp" className="mt-2">
-              <a
-                href={buildWhatsAppUrl("general")}
-                target="_blank"
-                rel="noopener noreferrer"
+              <h2
+                id="contact-location-heading"
+                className="mt-2 font-display text-2xl font-bold text-secondary md:text-3xl"
               >
-                <MessageCircle className="h-4 w-4" aria-hidden />
-                Escríbenos por WhatsApp
-              </a>
-            </Button>
-          </div>
+                Escríbenos y ubica la sede
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+                Déjanos tus datos y te respondemos por correo. Dirección y
+                teléfonos están en el pie de página.
+              </p>
+            </div>
 
-          <div className="space-y-4">
-            {hasMap ? (
-              <div className="overflow-hidden rounded-lg border border-border bg-background">
-                <iframe
-                  title="Mapa de la sede"
-                  src={siteConfig.mapEmbedUrl}
-                  className="h-56 w-full"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-            ) : (
-              <div className="flex h-56 items-center justify-center rounded-lg border border-dashed border-border bg-background px-4 text-center text-sm text-muted-foreground">
-                Mapa disponible cuando configuremos la URL de embed.
-              </div>
-            )}
+            <div className="h-64 min-h-[16rem] flex-1 overflow-hidden rounded-lg border border-border bg-surface md:h-72">
+              <iframe
+                title="Mapa de la sede Asdeoccidente"
+                src={mapSrc}
+                className="h-full w-full border-0"
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            </div>
 
             {hasVideo ? (
-              <div className="overflow-hidden rounded-lg border border-border bg-background">
-                <iframe
-                  title="Cómo llegar a la sede"
-                  src={siteConfig.directionsVideoUrl}
-                  className="aspect-video w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+              <>
+                <button
+                  type="button"
+                  onClick={() => setVideoOpen(true)}
+                  className="group relative aspect-video w-full overflow-hidden rounded-lg border border-border bg-secondary text-left"
+                  aria-label="Ver video cómo llegar a la sede"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-t from-black/50 to-black/20" />
+                  <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white">
+                    <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform group-hover:scale-105">
+                      <Play className="h-6 w-6 fill-current" aria-hidden />
+                    </span>
+                    <span className="text-sm font-semibold">
+                      Cómo llegar a la sede
+                    </span>
+                  </span>
+                </button>
+
+                <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
+                  <DialogContent className="w-[min(70vw,56rem)] max-w-[min(70vw,56rem)] border-0 bg-secondary p-3 pt-10 text-secondary-foreground shadow-2xl [&_button.absolute]:text-white">
+                    <DialogTitle className="sr-only">
+                      Cómo llegar a la sede
+                    </DialogTitle>
+                    <div className="aspect-video max-h-[70vh] w-full overflow-hidden rounded-md">
+                      {videoOpen ? (
+                        <iframe
+                          title="Cómo llegar a la sede"
+                          src={videoSrc}
+                          className="h-full w-full border-0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : null}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </>
             ) : (
-              <div className="flex items-center gap-3 rounded-lg border border-dashed border-border bg-background px-4 py-3 text-sm text-muted-foreground">
-                <Play className="h-4 w-4 text-primary" aria-hidden />
-                Video “Cómo llegar” pendiente de URL.
+              <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-surface px-4 text-center text-sm text-muted-foreground">
+                <Play className="h-5 w-5 text-primary" aria-hidden />
+                <span>Video “Cómo llegar” pendiente de URL.</span>
               </div>
             )}
+          </div>
+
+          <div className="flex h-full flex-col">
+            <ContactMiniForm />
           </div>
         </div>
       </div>

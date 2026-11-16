@@ -126,8 +126,8 @@ Skeletons must mirror this shell while data loads.
 - Project `h9imk562`, dataset `production` (`NEXT_PUBLIC_SANITY_*` in `web/.env`)
 - **Access:** Sanity login / project members only — no anonymous edit
 - CORS: allow `http://localhost:3000` (and the production domain) in [sanity.io/manage](https://www.sanity.io/manage) → API → CORS origins
-- Editable without code: singleton **Configuración general** (`siteSettings`), later home/school copy and **fair** documents
-- **Fair model (events):** `slug`, title, banner, `startDate` / `endDate` (optional day list), `featured`, summary, body, CTAs, `updatedAt` for “Última actualización”
+- Editable without code: singleton **Configuración general** (`siteSettings`), singleton **Inicio** (`home`), and **fair** documents (school copy lands with school feature)
+- **Fair model (events):** `slug`, title, banner, `startDate` / `endDate` (optional day list), `featured`, summary; body/CTAs/`updatedAt` expand with the fairs feature
 - One featured fair for banners (Home teaser + `/fairs` hero); many cards for the rest
 
 ---

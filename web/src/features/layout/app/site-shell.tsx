@@ -8,9 +8,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
-      <main className="flex-1 pb-20 md:pb-0">{children}</main>
+      <main className="flex-1">{children}</main>
       <ContactLocation />
-      <SiteFooter />
+      <div className="pb-20 md:pb-0">
+        <SiteFooter />
+      </div>
       <Suspense fallback={null}>
         <MobileNav />
       </Suspense>

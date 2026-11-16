@@ -88,7 +88,10 @@ Prioridad del mensaje (orden de verdad): primero el caballo y montar bien; forma
 | Profesores | Certificados Fedequinas; formación en primeros auxilios | Agronegocios `[por confirmar]` |
 | Director | Diego Hincapié; acreditación MinDeporte como entrenador `[por confirmar]` | Sitio + Agronegocios |
 | Docentes (sitio) | Rubén Aparicio, Yudi Mendoza, Yadi Sánchez | Sitio `[por confirmar]` vigencia |
-| Alumnos / trayectoria | Sitio habla de “más de 200 alumnos” históricos; Agronegocios cita ~63 activos (ene 2026) | Ambas `[por confirmar]` cuál usar en copy |
+| Alumnos / trayectoria | Sitio habla de “más de 200 alumnos” históricos; Agronegocios cita ~63 activos (ene 2026) | UI Home usa **+200** (histórico sitio) por decisión de producto 2026-11; Agronegocios ~63 sigue `[por confirmar]` si se quiere “activos” |
+| Año en brand lockup | `Fomento equino del Valle · 1975` | Publicado en header/footer/Home stats “Desde 1975” (lockup de marca) |
+| Google (listing) | **4,6** · **299** opiniones | Badge hero + cifra `299` (“Personas que nos recomiendan”); rating 4,6 solo en hero |
+| Socios (UI Home) | **+180** | Provisional en franja cifras hasta confirmar con la asociación |
 | Logros / nombres | Campeones y podios regionales/nacionales/internacionales citados en prensa | Agronegocios `[por confirmar]` antes de publicar nombres |
 
 **Contacto escuela**  

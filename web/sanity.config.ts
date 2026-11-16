@@ -26,8 +26,15 @@ export default defineConfig({
                   .schemaType("siteSettings")
                   .documentId("siteSettings"),
               ),
+            S.listItem()
+              .title("Inicio")
+              .id("home")
+              .child(
+                S.document().schemaType("home").documentId("home"),
+              ),
             ...S.documentTypeListItems().filter(
-              (item) => item.getId() !== "siteSettings",
+              (item) =>
+                item.getId() !== "siteSettings" && item.getId() !== "home",
             ),
           ]),
     }),

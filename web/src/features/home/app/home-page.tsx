@@ -1,23 +1,44 @@
-import { Skeleton } from "@/shared/components/ui/skeleton";
+"use client";
 
-export function HomePage() {
+import { HomeEssence } from "@/features/home/components/home-essence";
+import { HomeGaits } from "@/features/home/components/home-gaits";
+import { HomeHero } from "@/features/home/components/home-hero";
+import { HomePageSkeleton } from "@/features/home/components/home-page-skeleton";
+import { HomePhotoGallery } from "@/features/home/components/home-photo-gallery";
+import { HomeServices } from "@/features/home/components/home-services";
+import { HomeSocialVideos } from "@/features/home/components/home-social-videos";
+import { HomeStats } from "@/features/home/components/home-stats";
+import { useHomeContent } from "@/features/home/hooks/use-home";
+import type { HomeContent } from "@/features/home/models/home";
+
+type HomePageProps = {
+  initialHome?: HomeContent;
+};
+
+export function HomePage({ initialHome }: HomePageProps) {
+  const homeQuery = useHomeContent(initialHome);
+  const home = homeQuery.data;
+  const isBootstrapping = homeQuery.isPending && !home;
+
+  if (isBootstrapping || !home) {
+    return <HomePageSkeleton />;
+  }
+
   return (
-    <div className="mx-auto max-w-7xl px-5 py-12 md:px-12 md:py-16">
-      <p className="text-xs font-bold uppercase tracking-wider text-primary">
-        Inicio
-      </p>
-      <h1 className="mt-3 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-secondary md:text-5xl">
-        Aprende, compite y celebra con el caballo criollo colombiano.
-      </h1>
-      <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-        Contenido de la página de inicio en construcción (spec Home). El cascarón
-        de navegación, contacto y pie ya está activo.
-      </p>
-      <div className="mt-10 space-y-3" aria-hidden>
-        <Skeleton className="h-40 w-full max-w-3xl" />
-        <Skeleton className="h-4 w-2/3 max-w-md" />
-        <Skeleton className="h-4 w-1/2 max-w-sm" />
-      </div>
+    <div>
+      <HomeHero
+        title={home.heroTitle}
+        subtitle={home.heroSubtitle}
+        primaryCta={home.primaryCta}
+        secondaryCta={home.secondaryCta}
+        heroImage={home.heroImage}
+      />
+      <HomeEssence items={home.essenceItems} />
+      <HomeStats show={home.showStats} stats={home.stats} />
+      <HomeServices />
+      <HomePhotoGallery />
+      <HomeGaits />
+      <HomeSocialVideos videos={home.socialVideos} />
     </div>
   );
 }
