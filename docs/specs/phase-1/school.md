@@ -1,6 +1,6 @@
 # Spec: School (phase 1)
 
-> Status: **open**  
+> Status: **open** — route `/school` exists as placeholder (title + skeleton); body not built  
 > Path: `/school`  
 > Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md) § Escuela
 

@@ -49,6 +49,15 @@ export function ContactMiniForm() {
     >
       <div className="space-y-4">
         <div>
+          <h3 className="font-display text-xl font-bold tracking-tight text-secondary md:text-2xl">
+            Cuéntanos qué necesitas
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            Te respondemos por correo.
+          </p>
+        </div>
+
+        <div>
           <label
             htmlFor="contact-name"
             className="text-xs font-semibold uppercase tracking-wide text-secondary"
@@ -126,14 +135,20 @@ export function ContactMiniForm() {
         </div>
       </div>
 
-      <div className="space-y-3 pt-2">
+      <div className="space-y-4 pt-2">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-secondary">
+            Después de enviar
+          </p>
+          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
+            <li>Leemos cada mensaje y te contactamos pronto.</li>
+            <li>Tu consulta es importante para nosotros.</li>
+          </ul>
+        </div>
+
         <Button type="submit" variant="primary" size="lg" className="w-full">
           Enviar mensaje
         </Button>
-        <ul className="list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
-          <li>Leemos cada mensaje y te contactamos pronto.</li>
-          <li>Tu consulta es importante para nosotros.</li>
-        </ul>
       </div>
     </form>
   );

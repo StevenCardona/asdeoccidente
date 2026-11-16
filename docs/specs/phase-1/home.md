@@ -1,8 +1,9 @@
 # Spec: Home (phase 1)
 
-> Status: **in progress**  
+> Status: **implemented**  
 > Path: `/`  
-> Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md)
+> Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md)  
+> Feature: `web/src/features/home`
 
 ## Identification
 
@@ -15,45 +16,79 @@
 
 ## Goal
 
-Prestigious, human Home: horse, method, culture. CTAs to free class and fairs. Mobile-first. Progressive image load with reserved space.
+Prestigious, human Home: horse, method, culture. CTAs to free class (WhatsApp) and fairs. Mobile-first. Progressive image load with reserved space (`SafeImage`).
 
 ## Section order
 
-1. **Hero** — banner1 / CMS; Google reviews + Fedequinas logo; h1; CTAs WhatsApp / ferias  
-2. **Esencia** — beats + photo mosaic  
-3. **Cifras** — count-up with icons: 1975 · +200 · Google opiniones · 4 andares  
-4. **Servicios** — 4 cards with photo; CTA inert  
-5. **Galería** — horizontal carousel  
-6. **Cuatro andares** — tabs  
-7. **Videos** — 4 fixed slots (2 vertical 9:16, 2 horizontal 16:9) Instagram reels  
-8. **ContactLocation** — mini form → WhatsApp; map/video right  
-9. Layout **Footer** — full address (quoted env so `#` is not truncated)
+Rendered by `HomePage` after shared Header; ContactLocation + Footer come from the site shell.
 
-Removed: “Qué quieres hacer”; school/fair teasers.
+1. **Hero** — full-bleed banner (`/imgs/banner.png` or CMS `heroImage`); Google reviews badge + Fedequinas logo; `h1` + subtitle; primary CTA WhatsApp (clase gratis) · secondary CTA `/fairs`
+2. **Esencia** — four beats (title, text, Lucide icon) + 2×2 photo mosaic (`/imgs/escuela*.jpg`)
+3. **Cifras** — navy slab, count-up with icons: **1975** · **+200** alumnos · Google opiniones (env) · **+180** socios
+4. **Servicios** — four photo cards (trámites, escuela, equinoterapia, alquiler); CTA labels inert (“Próximamente” / “Ver escuela” without navigation)
+5. **Galería** — horizontal carousel (`SafeImage`, 2-up mobile / 4-up desktop)
+6. **Cuatro andares** — tabs (Paso Fino, Trocha, Trocha y Galope, Trote y Galope) on crimson section
+7. **Videos** — four fixed slots, **all 9:16**; desktop one row; mobile 1-up carousel; Instagram/TikTok embeds (URLs from CMS or `NEXT_PUBLIC_HOME_VIDEO_URL_*`)
+
+Shared after the feature body (not inside `HomePage`):
+
+8. **ContactLocation** — map + optional “Cómo llegar” video (dialog) · mini form → `mailto:` site email  
+9. **Footer** — full address, phones, WhatsApp, socials from env
+
+Not rendered on the page: “¿Qué quieres hacer?” entry cards (field may exist in Sanity/model for later; UI does not mount it).
+
+## Default copy (code fallbacks)
+
+| Element | Value |
+| --- | --- |
+| Hero title | Aprende, compite y celebra con el caballo criollo colombiano. |
+| Hero subtitle | Clases de chalanería personalizadas para niños y adultos, y ferias en el Valle del Cauca. Te acompañamos desde el primer paso. |
+| Primary CTA | Quiero mi clase gratis → WhatsApp topic `school` |
+| Secondary CTA | Ver la próxima feria → `/fairs` |
+| Stats | 1975 · +200 · Google review count · +180 socios |
 
 ## Videos (defaults)
 
-| Orient. | URL |
+Four Instagram reel URLs (overridable via env / CMS). Display aspect is always **9:16**.
+
+| Slot | Default URL |
 | --- | --- |
-| Vertical | `https://www.instagram.com/linaje_equino/reel/Deae7fnRIX0/` |
-| Vertical | `https://www.instagram.com/asdeoccidente.oficial/reel/DfLdlWOi7bS/` |
-| Horizontal | `https://www.instagram.com/asdeoccidente.oficial/reel/DfKvIoeCawv/` |
-| Horizontal | `https://www.instagram.com/asdeoccidente.oficial/reel/DfIJvrnCVkk/` |
+| 1 | `https://www.instagram.com/linaje_equino/reel/Deae7fnRIX0/` |
+| 2 | `https://www.instagram.com/asdeoccidente.oficial/reel/DfLdlWOi7bS/` |
+| 3 | `https://www.instagram.com/asdeoccidente.oficial/reel/DfKvIoeCawv/` |
+| 4 | `https://www.instagram.com/asdeoccidente.oficial/reel/DfIJvrnCVkk/` |
 
-## Loading
+## CMS (`home` singleton)
 
-- Hero `priority`; below-fold `SafeImage` lazy + `bg-muted` fallback + aspect boxes  
-- Iframes `loading="lazy"`
+Editable in Studio and merged with `defaultHomeContent`:
+
+| Field | Used on page |
+| --- | --- |
+| `heroTitle`, `heroSubtitle`, `heroImage` | Yes |
+| `primaryCta`, `secondaryCta` | Yes |
+| `essenceItems[]` | Yes |
+| `showStats`, `stats[]` | Yes |
+| `socialVideos[]` (max 4) | Yes |
+| `seoTitle`, `seoDescription` | Yes (`generateMetadata`) |
+| `culturalLabel`, `entryCards[]` | In schema/model; **not rendered** |
+
+## Loading & media
+
+- Hero image `priority`; below-fold `SafeImage` lazy + muted fallback + aspect boxes
+- Video iframes `loading="lazy"`
+- Brand: `/brand/fedeequinas.png`; Google rating/count from `NEXT_PUBLIC_GOOGLE_*`
 
 ## Address
 
-Env must quote: `NEXT_PUBLIC_SITE_ADDRESS="Transversal 5 # 1 - 60, ..."` (KB canonical UI).
+Env must quote: `NEXT_PUBLIC_SITE_ADDRESS="Transversal 5 # 1 - 60, ..."` (KB canonical UI). Footer shows the full line.
 
 ## Acceptance
 
-- [ ] Address shows full Transversal 5 line (not truncated at `#`)
-- [ ] Hero shows Google + Fedequinas (not Asdeoccidente/Valle eyebrows)
-- [ ] Lockup subtitle one line
-- [ ] No “Qué quieres hacer”
-- [ ] Four stats with icons; videos occupy 4 slots with correct aspects
-- [ ] Contact is mini-form; data details in footer
+- [x] Address shows full Transversal 5 line (quoted env; not truncated at `#`)
+- [x] Hero shows Google reviews + Fedequinas
+- [x] Brand lockup subtitle one line (“Fomento equino del Valle · 1975”)
+- [x] No “¿Qué quieres hacer?” section on the page
+- [x] Four stats with icons (1975 · +200 · Google · +180 socios)
+- [x] Four video slots at 9:16 (desktop row / mobile carousel)
+- [x] Contact is mini-form (`mailto`); contact details in footer
+- [ ] Mobile review pass + directions video URL when available

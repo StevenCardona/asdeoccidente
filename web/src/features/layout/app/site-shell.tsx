@@ -10,7 +10,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <ContactLocation />
-      <div className="pb-20 md:pb-0">
+      <div className="pb-14 md:pb-0">
         <SiteFooter />
       </div>
       <Suspense fallback={null}>

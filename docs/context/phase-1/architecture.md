@@ -10,10 +10,12 @@ Why and how the phase-1 app is structured. Delivery checklist lives in [`../../s
 | --- | --- | --- |
 | App | Next.js (App Router) + TypeScript (strict) | Routes, SSR/SSG, SEO |
 | UI | Tailwind CSS + shadcn/ui + Lucide | Design-system components, icons |
-| Data fetching | TanStack React Query | Reads and mutations against documented APIs |
+| Brand icons | Shared SVGs (WhatsApp, Instagram, Google, YouTube, TikTok) | Social / reviews marks |
+| Data fetching | TanStack React Query | Client reads against Sanity / defaults |
 | URL state | nuqs | Typed search params when needed |
 | Client UI state | Zustand | Only if a small global UI need appears; default prefer local state |
 | CMS | Sanity (Studio at `/studio`) | Admins edit content; **access control required** |
+| Site identity | `NEXT_PUBLIC_*` → `siteConfig` | Name, address, phones, WhatsApp, email, map, videos, Google proof |
 | Hosting (later) | Vercel | Deploy + previews |
 
 No separate custom backend in phase 1 beyond Next route handlers / Sanity client. Chatbot and payments are out of scope.
@@ -34,14 +36,14 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 
 | UI label (ES) | Path | Status |
 | --- | --- | --- |
-| Inicio | `/` | Active |
-| Escuela | `/school` | Active |
-| Ferias | `/fairs` | Active |
-| Feria (detalle) | `/fairs/[slug]` | Active |
-| Nosotros | `/about` | **Commented / deferred** |
-| Studio | `/studio` | Active + **authenticated** |
+| Inicio | `/` | **Implemented** (Home feature) |
+| Escuela | `/school` | Placeholder (title + skeleton) |
+| Ferias | `/fairs` | Placeholder (title + skeleton) |
+| Feria (detalle) | `/fairs/[slug]` | Placeholder (slug + skeleton) |
+| Nosotros | `/about` | **Commented / deferred** (`page.tsx.deferred`) |
+| Studio | `/studio` | Active + **authenticated** (Sanity login) |
 
-Old Spanish WordPress paths get 301 redirects at launch (document at cutover; not required to block docs).
+Old Spanish WordPress paths get 301 redirects at launch (document at cutover).
 
 ---
 
@@ -53,29 +55,32 @@ web/
     app/
       layout.tsx                 # html lang, fonts, providers
       (site)/
-        layout.tsx               # Header + ContactLocation + Footer + mobile nav
-        page.tsx                 # Home → features/home
-        school/page.tsx
+        layout.tsx               # SiteShell
+        page.tsx                 # Home → features/home (SSR fetch + metadata)
+        school/page.tsx          # placeholder
         fairs/
-          page.tsx               # list
-          [slug]/page.tsx        # detail
-        # about/page.tsx         # DEFERRED — keep commented or omitted until spec
+          page.tsx               # list placeholder
+          [slug]/page.tsx        # detail placeholder
+        # about → page.tsx.deferred
       studio/[[...tool]]/        # Sanity Studio (outside public chrome)
     features/
       home/
-        app/                     # smart page composition
-        hooks/
-        components/              # dumb UI
-        models/
-        utils/
-      school/                    # same shape
-      fairs/                     # same shape (list + detail)
-      layout/                    # Header, Footer, ContactLocation, MobileNav
-      # about/                   # deferred
+        app/                     # HomePage (smart)
+        hooks/                   # useHomeContent, useCountUp
+        components/              # hero, essence, stats, services, gallery, gaits, videos, …
+        models/                  # HomeContent + fetchHomeContent
+        utils/                   # cta, icons
+      school/app/                # SchoolPage placeholder
+      fairs/app/                 # FairsListPage + FairDetailPage placeholders
+      layout/                    # SiteShell, Header, Footer, ContactLocation, MobileNav, BrandLockup
     shared/
-      components/ui/             # shadcn primitives (Button, Dialog, Skeleton, …)
-      lib/                       # react-query client, nuqs, sanity client, utils
-      config/                    # env helpers, constants
+      components/ui/             # Button, Dialog, Skeleton
+      components/                # SafeImage, brand-icons
+      lib/                       # react-query, utils, sanity-image
+      config/site.ts             # env-driven siteConfig + WhatsApp helpers + navItems
+    sanity/
+      schemaTypes/               # home, siteSettings, fair
+      lib/client.ts
 ```
 
 **Flow:** light route in `app/` → feature `app/` (smart: data / React Query) → feature `components/` (dumb) → `shared/components/ui`.
@@ -89,8 +94,8 @@ web/
 Source: [`DESIGN.md`](../../design/DESIGN.md) + [`design-system.png`](../../design/design-system.png).
 
 - Tokens: primary crimson, secondary navy/slate, tertiary amber (sparingly), neutrals, Plus Jakarta Sans (display) + Inter (body)
-- Same Button / Dialog / Card / Skeleton everywhere — no per-page restyling
-- Lucide only; consistent stroke weight
+- Same Button / Dialog / Skeleton everywhere — no per-page restyling
+- Lucide for UI icons; brand marks only via shared brand-icons
 - **Do:** editorial whitespace, real equestrian photography, restrained hairlines, institutional calm
 - **Don’t:** purple gradients, neon glow, emoji rows, floating badge stickers on heroes, multi-layer candy shadows, dashboard chrome, generic startup fluff copy
 
@@ -100,44 +105,45 @@ Mockups under `docs/design/mobile|web/` are atmosphere references, not pixel man
 
 ## Shared layout
 
-Every public page:
+Every public page (`SiteShell`):
 
-1. **Header** — logo, nav (Inicio · Escuela · Ferias), WhatsApp CTA. Nosotros link commented.
+1. **Header** — BrandLockup, nav (Inicio · Escuela · Ferias), WhatsApp CTA. Nosotros commented.
 2. **Body** — feature content only
-3. **Contact & location** — address, phones/WhatsApp, Google Maps iframe, embed/iframe for “cómo llegar” video
-4. **Footer** — identical sitewide
-5. **Mobile bottom nav** — Inicio · Escuela · Ferias (+ optional 4th only if needed); Nosotros commented
+3. **Contact & location** — mini form (`mailto`) + Maps iframe + optional directions video dialog
+4. **Footer** — address, phones, WhatsApp, email, socials from `siteConfig`
+5. **Mobile bottom nav** — Inicio · Escuela · Ferias; Nosotros commented
 
-Skeletons must mirror this shell while data loads.
+Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`).
 
 ---
 
 ## APIs & React Query
 
-- Document endpoints (Sanity queries / thin Next handlers) in feature `models` or `shared/lib`
-- All server reads/mutations from the client go through React Query hooks in `features/*/hooks`
-- Skeletons for pending; clear empty and error states (same components sitewide)
+- Document endpoints (Sanity queries / defaults) in feature `models`
+- Client reads go through React Query hooks in `features/*/hooks` (Home: `useHomeContent` with SSR `initialHome`)
+- Skeletons for pending; clear empty and error states
 
 ---
 
 ## Sanity
 
-- **Embedded in the Next app** at `/studio` (same deploy as the site — easiest for admins). Not a sibling Studio folder.
-- Project `h9imk562`, dataset `production` (`NEXT_PUBLIC_SANITY_*` in `web/.env`)
-- **Access:** Sanity login / project members only — no anonymous edit
-- CORS: allow `http://localhost:3000` (and the production domain) in [sanity.io/manage](https://www.sanity.io/manage) → API → CORS origins
-- Editable without code: singleton **Configuración general** (`siteSettings`), singleton **Inicio** (`home`), and **fair** documents (school copy lands with school feature)
-- **Fair model (events):** `slug`, title, banner, `startDate` / `endDate` (optional day list), `featured`, summary; body/CTAs/`updatedAt` expand with the fairs feature
-- One featured fair for banners (Home teaser + `/fairs` hero); many cards for the rest
+- **Embedded** at `/studio` (same deploy as the site)
+- Project `h9imk562`, dataset `production` (`NEXT_PUBLIC_SANITY_*`)
+- **Access:** Sanity login / project members only
+- CORS: allow `http://localhost:3000` and `https://asdeoccidente.vercel.app`
+- Schemas:
+  - **Inicio** (`home` singleton) — hero, CTAs, essence, stats, social videos, SEO
+  - **Configuración general** (`siteSettings`) — venue/contact fields in Studio (UI currently uses env)
+  - **Feria** (`fair`) — title, slug, banner, dates, featured, summary (expand with fairs feature)
 
 ---
 
 ## SEO
 
-- `metadataBase`, per-route `generateMetadata`, single `h1`
+- `metadataBase`, per-route metadata (`generateMetadata` on Home), single `h1`
 - `sitemap.ts`, `robots.ts`
 - Hero image prioritized for LCP on mobile
-- Spanish content; English URLs are fine with clear titles/descriptions in ES
+- Spanish content; English URLs with ES titles/descriptions
 
 ---
 
