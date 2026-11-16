@@ -1,0 +1,10 @@
+/**
+ * DEFERRED — About / Nosotros
+ *
+ * When the About spec is ready:
+ * 1. Rename this file to page.tsx
+ * 2. Uncomment the About item in shared/config/site.ts (navItems)
+ * 3. Uncomment the About item in features/layout/components/mobile-nav.tsx
+ *
+ * Path: /about
+ */
