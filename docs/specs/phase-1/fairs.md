@@ -1,6 +1,6 @@
 # Spec: Fairs — events (phase 1)
 
-> Status: **open** — routes exist as placeholders (title + skeleton); list/detail bodies not built  
+> Status: **in progress** — phase A static layout + detail; Sanity / React Query deferred (phase B)  
 > Paths: `/fairs` (list) · `/fairs/[slug]` (detail)  
 > Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md)
 
@@ -15,103 +15,118 @@
 
 ## Goal
 
-Treat fairs as an **events** product: many fairs/dates, one featured highlight, cards for the rest, deep detail per fair. Admins publish several events in a month without code.
+Treat fairs as an **events** product: one featured highlight, a calendar of fairs (upcoming and past), and a rich detail page per fair. The detail page is the product; the list routes and orients.
 
-## Expected result
+## Phases
 
-- `/fairs` shows featured banner + card grid
-- `/fairs/[slug]` shows full detail for one fair
-- Home teaser can resolve to featured or nearest upcoming slug
-- React Query for list + detail; skeletons for both
-- “Última actualización” when schedule content exists
-- SEO for list and each slug
+| Phase | In scope | Out |
+| --- | --- | --- |
+| **A (this work)** | Static models + defaults, list UI, detail UI, KB copy, WhatsApp CTAs | Sanity wiring, React Query |
+| **B (later)** | CMS `fair` expansion, `useFairs` / `useFair`, sitemap slugs, Studio rules | Online checkout |
+
+## Expected result (phase A)
+
+- `/fairs` shows featured hero banner → detail CTA, calendar grid (4 cols desktop / 1 mobile) with status badges, short gallery, short FAQ
+- `/fairs/[slug]` shows full detail: hero, summary, tickets (general first), CTAs, program or calm empty, updatedAt, back link
+- Filters by `kind` only when categories exist in data
+- No invented grades, prices, ICA deadlines, or testimonials
 - Shared layout ContactLocation + Footer
+- Metadata via `buildPageMetadata` (indexable when content is real)
 
 ## Scope / out of scope
 
-**In:** list + detail UX, fair CMS model, CTAs (entradas / WhatsApp ferias message), empty states.
+**In:** list + detail UX, static fair model, status badges, optional kind filters, CTAs (entradas / WhatsApp ferias), empty states, “Última actualización”.
 
-**Out:** Online ticket checkout; ICA full bureaucracy dump unless content provided; About; inventing Copa dates.
+**Out:** Online ticket checkout; inventing Copa dates/prices; fake scarcity pills; review quotes without approval; Sanity connection in phase A.
 
 ## Information architecture
 
 ```text
 /fairs
-  ├─ Featured fair (banner) → /fairs/[slug]
-  └─ Cards (other upcoming / current) → /fairs/[slug]
+  1. Featured hero (banner image background + text + CTAs) → /fairs/[slug]
+  2. Calendar / list (filters if kinds present; cards 4/1)
+  3. Short gallery (how the fair feels)
+  4. Short FAQ (generic entradas / palcos / sede)
+  → ContactLocation + Footer (shell)
 
 /fairs/[slug]
-  └─ Detail: dates, place, program, tickets summary, CTAs, updatedAt
+  1. Hero + dates + badges
+  2. Summary
+  3. Entradas (general first) + palcos via WhatsApp until prices confirmed
+  4. CTAs: Ver entradas · Inscribir mi ejemplar (WhatsApp)
+  5. Programa / sessions (or calm empty)
+  6. Última actualización
+  7. Back to /fairs
 ```
 
-**Date flexibility:** a fair may use `startDate` + `endDate` and/or an array of session days. Multiple fairs may fall in the same month. Sort cards by start date ascending; featured pinned to banner (if `featured == true`, prefer one; if several, CMS rule: latest edited featured wins — document in Studio).
+**Featured rule:** prefer `featured == true`; if several, first by start date ascending for phase A static list.
+
+**Status badges:** `proxima` | `en_curso` | `inscripciones` | `boleteria` | `finalizada` (explicit or derived from dates).
+
+**Kind / grade:** optional controlled string (`grado-a`, `grado-b`, `exposicion`, `festival`, `remate`). UI filters only if at least one fair has a kind.
 
 ## List page `/fairs`
 
 ### Sections
 
-1. **Page intro** — short h1 (e.g. Ferias y eventos) + one support line
-2. **Featured** — large banner image, title, date range, short summary, primary CTA “Ver detalle”
-3. **Más ferias** — responsive cards: image, title, dates, place line, badge status (Próxima / En curso) via shared chip styles
-4. Empty: calm message if no published fairs
+1. **Featured hero** — full-bleed banner (official afiche or admin photo), overlay, left copy (badges, title, summary, date/place facts), optional secondary media, primary CTA to detail
+2. **Calendario** — intro + filter tabs (Todas + kinds present) + cards: image, kind chip, status chip, dates, place, summary, “Ver detalle”
+3. **Galería** — 6–8 ambient photos; no invented captions beyond alt
+4. **FAQ** — 3–5 generic questions (entradas, palcos, sede, inscripción)
+5. Empty calendar: calm message if no fairs
 
 ### Mobile / desktop
 
-- Mobile: featured stacked, then vertical cards
-- Desktop: featured full width; cards in grid (2–3 cols)
+- Mobile: hero stacked; cards 1 column
+- Desktop: hero full width; cards 4 columns
 
 ## Detail page `/fairs/[slug]`
 
 ### Sections
 
-1. Hero / banner + title (h1) + date range
+1. Hero / banner + h1 + date range + status/kind badges
 2. Summary
-3. Schedule / program (by day if provided)
-4. Tickets / entradas summary (general admission before boxes when applicable)
-5. CTAs — WhatsApp ferias message; optional external ticket URL
-6. “Última actualización” from `updatedAt` or explicit field
+3. Tickets / entradas — general admission first; palcos = WhatsApp ask (no invented box prices)
+4. CTAs — WhatsApp ferias message (“Ver entradas”, “Inscribir mi ejemplar”); optional external URL only if real
+5. Schedule / program by day if provided; else calm “La programación oficial se publica con el afiche”
+6. “Última actualización”
 7. Back link to `/fairs`
 
-404 if slug missing/unpublished.
+404 if slug missing.
 
-## CMS model `fair`
+## Static model (phase A) / CMS later
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| title | string | ES |
-| slug | slug | unique |
-| featured | boolean | banner candidate |
-| banner | image + alt | |
-| startDate | datetime | required |
-| endDate | datetime | optional |
-| sessions[] | date + label | optional multi-day detail |
-| placeLabel | string | short |
-| summary | text | |
-| body / program | portable text or blocks | |
-| ticketNotes | text | |
-| whatsAppTopic | default `ferias` | |
-| externalTicketUrl | url | optional |
-| seo | | |
-| published | boolean | |
+| Field | Notes |
+| --- | --- |
+| title, slug, featured, banner+alt | |
+| startDate, endDate | ISO date strings |
+| sessions[] | optional `{ date, label }` |
+| placeLabel, summary, ticketNotes | |
+| kind | optional controlled |
+| status | explicit or derived |
+| updatedAt | ISO datetime for “Última actualización” |
+| seo title/description | |
+| published | phase B |
 
-## React Query
+## Copy rules (KB)
 
-- `useFairs()` — list published, sorted
-- `useFair(slug)` — detail
-- Mutations only in Studio (no public write)
+- Example featured: XXXIV Copa América Equina; dates marked adjustable; entradas desde $10.000 `[por confirmar]`
+- Buttons: Ver entradas · Inscribir mi ejemplar
+- WhatsApp topic `fairs` from site settings
+- Do not invent ICA PDFs, pesebrera counts, or “cupos limitados” without data
 
 ## SEO
 
-- List: indexable
-- Detail: unique title/description per fair; OG from banner
-- Include slugs in sitemap when published
+- List + detail: `buildPageMetadata`; drop `noIndex` when pages have real body copy
+- Sitemap: add `/fairs` and published slugs in phase B (or when content ships)
 
 ## Acceptance criteria
 
-- [ ] Featured banner + at least card navigation to detail
-- [ ] Multiple fairs in same month display correctly
-- [ ] Date range / sessions render without fake data
-- [ ] Home can link to featured or slug
-- [ ] Skeletons on list and detail
-- [ ] Shared buttons/chips only; institutional calm
-- [ ] Unpublished slugs 404
+- [ ] Featured hero CTA navigates to detail
+- [ ] Cards link to detail; 4-col desktop / 1-col mobile
+- [ ] Status badges render; filters only when kinds exist
+- [ ] Detail: tickets order general → palcos CTA; no fake prices
+- [ ] Program empty state calm; updatedAt shown when present
+- [ ] Unknown slug 404
+- [ ] Shared Button / institutional calm; portal tokens (not mock navy/purple)
+- [ ] Sanity not required for phase A

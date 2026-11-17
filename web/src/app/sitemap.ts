@@ -1,9 +1,17 @@
 import type { MetadataRoute } from "next";
+import { getFairSlugs } from "@/features/fairs/models";
 import { siteConfig } from "@/shared/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.siteUrl;
   const lastModified = new Date();
+  const fairEntries = getFairSlugs().map((slug) => ({
+    url: `${base}/fairs/${slug}`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   return [
     {
       url: `${base}/`,
@@ -17,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    // /fairs omitted while placeholder (noindex) — add when fairs content ships
+    {
+      url: `${base}/fairs`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...fairEntries,
   ];
 }

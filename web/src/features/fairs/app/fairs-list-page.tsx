@@ -1,22 +1,37 @@
-import { Skeleton } from "@/shared/components/ui/skeleton";
+import { FairsCalendar } from "@/features/fairs/components/fairs-calendar";
+import { FairsFaq } from "@/features/fairs/components/fairs-faq";
+import { FairsFeaturedHero } from "@/features/fairs/components/fairs-featured-hero";
+import { FairsGallery } from "@/features/fairs/components/fairs-gallery";
+import { FairsReviews } from "@/features/fairs/components/fairs-reviews";
+import {
+  getFeaturedFair,
+  type FairsContent,
+} from "@/features/fairs/models";
 
-export function FairsListPage() {
+type FairsListPageProps = {
+  content: FairsContent;
+};
+
+export function FairsListPage({ content }: FairsListPageProps) {
+  const featured = getFeaturedFair(content.fairs);
+
   return (
-    <div className="mx-auto max-w-7xl px-5 py-12 md:px-12 md:py-16">
-      <p className="text-xs font-bold uppercase tracking-wider text-primary">
-        Ferias
-      </p>
-      <h1 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-secondary md:text-5xl">
-        Ferias y eventos
-      </h1>
-      <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-        Listado de ferias (destacada + cards) en construcción.
-      </p>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
-        <Skeleton className="h-48 w-full" />
-        <Skeleton className="h-48 w-full" />
-        <Skeleton className="h-48 w-full" />
-      </div>
+    <div>
+      {featured ? <FairsFeaturedHero fair={featured} /> : null}
+      <FairsCalendar
+        fairs={content.fairs}
+        intro={content.list.calendarIntro}
+        emptyMessage={content.list.emptyCalendarMessage}
+      />
+      <FairsReviews
+        intro={content.list.reviewsIntro}
+        reviews={content.list.reviews}
+      />
+      <FairsGallery
+        intro={content.list.galleryIntro}
+        photos={content.list.gallery}
+      />
+      <FairsFaq intro={content.list.faqIntro} items={content.list.faq} />
     </div>
   );
 }

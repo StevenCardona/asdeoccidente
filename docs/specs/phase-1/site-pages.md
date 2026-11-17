@@ -11,8 +11,8 @@ Progress: [`../../context/phase-1/progress.md`](../../context/phase-1/progress.m
 | --- | --- | --- | --- | --- |
 | 1 | Foundation | shell + `/studio` | [`foundation.md`](foundation.md) | Implemented |
 | 2 | Home | `/` | [`home.md`](home.md) | Implemented |
-| 3 | School | `/school` | [`school.md`](school.md) | Open (placeholder) |
-| 4 | Fairs | `/fairs`, `/fairs/[slug]` | [`fairs.md`](fairs.md) | Open (placeholder) |
+| 3 | School | `/school` | [`school.md`](school.md) | In progress |
+| 4 | Fairs | `/fairs`, `/fairs/[slug]` | [`fairs.md`](fairs.md) | In progress (phase A static) |
 
 ## Deferred
 
