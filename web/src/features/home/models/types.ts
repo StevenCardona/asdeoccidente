@@ -25,7 +25,9 @@ export type HomeStat = {
 };
 
 export type HomeSocialVideo = {
-  url: string;
+  kind: "url" | "file";
+  /** Embed/page URL for kind=url, or CDN file URL for kind=file. */
+  src: string;
   label?: string;
 };
 

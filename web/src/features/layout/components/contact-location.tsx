@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Play } from "lucide-react";
 import { ContactMiniForm } from "@/features/layout/components/contact-mini-form";
 import type { SiteSettings } from "@/features/site/models";
@@ -9,6 +10,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/shared/components/ui/dialog";
+import { cn } from "@/shared/lib/utils";
 
 type ContactLocationProps = {
   settings: SiteSettings;
@@ -16,8 +18,10 @@ type ContactLocationProps = {
 
 export function ContactLocation({ settings }: ContactLocationProps) {
   const mapSrc = settings.mapEmbedUrl;
-  const videoSrc = settings.directionsVideoUrl.trim();
+  const video = settings.directionsVideo;
+  const videoSrc = video.src.trim();
   const hasVideo = Boolean(videoSrc);
+  const posterSrc = video.posterSrc?.trim() || "";
   const [videoOpen, setVideoOpen] = useState(false);
 
   return (
@@ -60,10 +64,19 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                 <button
                   type="button"
                   onClick={() => setVideoOpen(true)}
-                  className="group relative aspect-video w-full overflow-hidden rounded-lg border border-border bg-secondary text-left"
+                  className="group relative h-28 w-full cursor-pointer overflow-hidden rounded-lg border border-border bg-secondary text-left md:h-32"
                   aria-label="Ver video cómo llegar a la sede"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-t from-black/50 to-black/20" />
+                  {posterSrc ? (
+                    <Image
+                      src={posterSrc}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  ) : null}
+                  <span className="absolute inset-0 bg-gradient-to-t from-black/55 to-black/25" />
                   <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white">
                     <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform group-hover:scale-105">
                       <Play className="h-6 w-6 fill-current" aria-hidden />
@@ -75,30 +88,49 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                 </button>
 
                 <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
-                  <DialogContent className="w-[min(70vw,56rem)] max-w-[min(70vw,56rem)] border-0 bg-secondary p-3 pt-10 text-secondary-foreground shadow-2xl [&_button.absolute]:text-white">
+                  <DialogContent
+                    className={cn(
+                      "border-0 bg-secondary p-2 pt-10 text-secondary-foreground shadow-2xl sm:p-3 sm:pt-10",
+                      "w-[calc(100%-0.75rem)] max-w-[calc(100%-0.75rem)]",
+                      "sm:w-[min(92vw,56rem)] sm:max-w-[min(92vw,56rem)]",
+                      "[&_button.absolute]:text-white",
+                    )}
+                  >
                     <DialogTitle className="sr-only">
                       Cómo llegar a la sede
                     </DialogTitle>
-                    <div className="aspect-video max-h-[70vh] w-full overflow-hidden rounded-md">
+                    <div
+                      className={cn(
+                        "mx-auto w-full overflow-hidden rounded-md bg-black",
+                        "h-[min(78dvh,42rem)] sm:h-auto sm:max-h-[min(85dvh,56rem)] sm:aspect-video",
+                      )}
+                    >
                       {videoOpen ? (
-                        <iframe
-                          title="Cómo llegar a la sede"
-                          src={videoSrc}
-                          className="h-full w-full border-0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
+                        video.kind === "file" ? (
+                          <video
+                            key={videoSrc}
+                            src={videoSrc}
+                            poster={posterSrc || undefined}
+                            controls
+                            playsInline
+                            preload="metadata"
+                            className="h-full w-full bg-black object-contain"
+                          />
+                        ) : (
+                          <iframe
+                            title="Cómo llegar a la sede"
+                            src={videoSrc}
+                            className="h-full w-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        )
                       ) : null}
                     </div>
                   </DialogContent>
                 </Dialog>
               </>
-            ) : (
-              <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-surface px-4 text-center text-sm text-muted-foreground">
-                <Play className="h-5 w-5 text-primary" aria-hidden />
-                <span>Video “Cómo llegar” pendiente de URL.</span>
-              </div>
-            )}
+            ) : null}
           </div>
 
           <div className="flex h-full flex-col">

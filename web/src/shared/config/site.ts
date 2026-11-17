@@ -17,7 +17,7 @@ export const siteConfig = {
 export const navItems = [
   { href: "/", label: "Inicio", icon: "Home" as const },
   { href: "/school", label: "Escuela", icon: "GraduationCap" as const },
-  { href: "/fairs", label: "Ferias", icon: "CalendarDays" as const },
+  { href: "/events", label: "Eventos", icon: "CalendarDays" as const },
   // { href: "/about", label: "Nosotros", icon: "Users" as const }, // deferred
 ] as const;
 

@@ -17,7 +17,7 @@ export const cta = defineType({
       title: "Enlace (página o web)",
       type: "string",
       description:
-        "Ruta interna o URL. Ej. /school o /fairs. Déjalo vacío si el botón abre WhatsApp.",
+        "Ruta interna o URL. Ej. /school o /events. Déjalo vacío si el botón abre WhatsApp.",
     }),
     defineField({
       name: "whatsappTopic",
@@ -28,7 +28,7 @@ export const cta = defineType({
       options: {
         list: [
           { title: "Escuela (clase gratis)", value: "school" },
-          { title: "Ferias", value: "fairs" },
+          { title: "Eventos", value: "fairs" },
           { title: "Consulta general", value: "general" },
         ],
       },

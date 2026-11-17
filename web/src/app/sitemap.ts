@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getFairSlugs } from "@/features/fairs/models";
+import { fetchEventSlugs } from "@/features/events/models";
 import { siteConfig } from "@/shared/config/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = siteConfig.siteUrl;
   const lastModified = new Date();
-  const fairEntries = getFairSlugs().map((slug) => ({
-    url: `${base}/fairs/${slug}`,
+  const eventSlugs = await fetchEventSlugs();
+  const eventEntries = eventSlugs.map((slug) => ({
+    url: `${base}/events/${slug}`,
     lastModified,
     changeFrequency: "weekly" as const,
     priority: 0.8,
@@ -26,11 +27,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${base}/fairs`,
+      url: `${base}/events`,
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    ...fairEntries,
+    ...eventEntries,
   ];
 }

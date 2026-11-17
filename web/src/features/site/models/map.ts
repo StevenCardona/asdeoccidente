@@ -1,3 +1,5 @@
+import { resolveSanityImageUrl } from "@/shared/lib/resolve-image";
+import { toEmbeddableVideoUrl } from "@/shared/lib/video-src";
 import {
   defaultSiteSettings,
   mapEmbedFromAddress,
@@ -52,9 +54,22 @@ export function mergeSiteSettings(doc: SiteSettingsDoc | null): SiteSettings {
       tiktok: pick(doc.tiktokUrl, defaultSiteSettings.social.tiktok),
     },
     mapEmbedUrl,
-    directionsVideoUrl:
-      doc.directionsVideoUrl?.trim() ??
-      defaultSiteSettings.directionsVideoUrl,
+    directionsVideo: (() => {
+      const posterSrc =
+        resolveSanityImageUrl(doc.directionsVideoPoster ?? null, 1200) ??
+        undefined;
+      const fileUrl = doc.directionsVideoFileUrl?.trim() || "";
+      const source = doc.directionsVideoSource?.trim();
+      if (source === "file" || (!source && fileUrl)) {
+        return { kind: "file" as const, src: fileUrl, posterSrc };
+      }
+      const rawUrl = doc.directionsVideoUrl?.trim() || "";
+      return {
+        kind: "url" as const,
+        src: rawUrl ? toEmbeddableVideoUrl(rawUrl) : "",
+        posterSrc,
+      };
+    })(),
     google: {
       rating: pick(doc.googleRating, defaultSiteSettings.google.rating),
       reviewCount: pick(

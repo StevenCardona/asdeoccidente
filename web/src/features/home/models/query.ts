@@ -1,5 +1,5 @@
 import type { SanityImageSource } from "@sanity/image-url";
-import type { HomeCta, HomeEssenceItem, HomeSocialVideo } from "./types";
+import type { HomeCta, HomeEssenceItem } from "./types";
 
 export const homeQuery = `*[_type == "home" && _id == "home"][0]{
   hero{
@@ -57,7 +57,12 @@ export const homeQuery = `*[_type == "home" && _id == "home"][0]{
   },
   videos{
     intro{ eyebrow, title, subtitle },
-    items[]{ url, label }
+    items[]{
+      source,
+      url,
+      label,
+      "fileUrl": file.asset->url
+    }
   },
   seo{ title, description }
 }`;
@@ -125,7 +130,12 @@ export type HomeDoc = {
   } | null;
   videos?: {
     intro?: IntroDoc | null;
-    items?: HomeSocialVideo[] | null;
+    items?: Array<{
+      source?: string;
+      url?: string;
+      label?: string;
+      fileUrl?: string | null;
+    }> | null;
   } | null;
   seo?: {
     title?: string;

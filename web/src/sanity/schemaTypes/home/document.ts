@@ -70,7 +70,8 @@ export const home = defineType({
       title: "Videos de Instagram / TikTok",
       type: "homeVideos",
       group: "videos",
-      description: "Hasta 4 enlaces de reels o videos. Se muestran en formato vertical.",
+      description:
+        "Hasta 4 videos: enlace de Instagram/TikTok o archivo MP4. Se muestran en formato vertical.",
     }),
     defineField({
       name: "seo",

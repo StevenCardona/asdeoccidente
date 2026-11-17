@@ -11,6 +11,7 @@ import type {
   HomeGalleryPhoto,
   HomeSectionIntro,
   HomeServiceItem,
+  HomeSocialVideo,
   HomeStat,
 } from "./types";
 
@@ -189,8 +190,22 @@ export function mergeHome(
     });
   }
 
-  const fromCmsVideos =
-    doc.videos?.items?.filter((item) => Boolean(item.url?.trim())) ?? [];
+  const fromCmsVideos: HomeSocialVideo[] = [];
+  for (const item of doc.videos?.items ?? []) {
+    const label = item.label?.trim() || undefined;
+    const fileUrl = item.fileUrl?.trim() || "";
+    const pageUrl = item.url?.trim() || "";
+    const source = item.source?.trim();
+
+    if (source === "file" || (!source && fileUrl && !pageUrl)) {
+      if (!fileUrl) continue;
+      fromCmsVideos.push({ kind: "file", src: fileUrl, label });
+      continue;
+    }
+
+    if (!pageUrl) continue;
+    fromCmsVideos.push({ kind: "url", src: pageUrl, label });
+  }
 
   return {
     heroTitle: hero?.title?.trim() || "",

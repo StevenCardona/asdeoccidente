@@ -18,7 +18,13 @@ export type SiteSettings = {
     tiktok: string;
   };
   mapEmbedUrl: string;
-  directionsVideoUrl: string;
+  /** Directions video for Contact & location; empty src means none. */
+  directionsVideo: {
+    kind: "url" | "file";
+    src: string;
+    /** Optional cover shown on the trigger and as HTML video poster. */
+    posterSrc?: string;
+  };
   google: {
     rating: string;
     reviewCount: string;
