@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { getSiteSettings } from "@/features/site/models";
 import { AppProviders } from "@/shared/lib/providers";
 import { siteConfig } from "@/shared/config/site";
 import "./globals.css";
+
+export const revalidate = 60;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,19 +19,23 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.siteUrl),
-  title: {
-    default: siteConfig.name,
-    template: `%s · ${siteConfig.name}`,
-  },
-  description:
-    "Asociación de criadores del caballo criollo colombiano en el Valle del Cauca. Escuela de chalanería, ferias y comunidad.",
-  icons: {
-    icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
-    shortcut: ["/favicon.ico"],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    metadataBase: new URL(siteConfig.siteUrl),
+    title: {
+      default: settings.name,
+      template: `%s · ${settings.name}`,
+    },
+    description:
+      settings.footerBlurb ||
+      "Asociación de criadores del caballo criollo colombiano en el Valle del Cauca. Escuela de chalanería, ferias y comunidad.",
+    icons: {
+      icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+      shortcut: ["/favicon.ico"],
+    },
+  };
+}
 
 export default function RootLayout({
   children,

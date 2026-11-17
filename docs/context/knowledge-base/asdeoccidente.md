@@ -50,7 +50,7 @@ WhatsApp principal (sitio): 573186669622
 | Analista administrativa | Paola Andrea Martínez R. | asdeoccidente@asdeoccidente.org.co | (+57) 318 666 96 22 |
 | Coordinador chalanería | Diego Fernando Hincapié | escueladechalaneria@asdeoccidente.org.co | (+57) 318 666 96 23 |
 
-Datos globales de UI también viven en `.env` / `.env.example` (`NEXT_PUBLIC_*`).
+Datos globales de UI viven en Sanity (`siteSettings`). `.env` solo guarda URL del sitio y credenciales de Sanity.
 
 ---
 

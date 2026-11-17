@@ -13,7 +13,7 @@
 
 ## Goal
 
-Next.js app shell: packages, config, feature folders, design tokens, shared layout, embedded Sanity Studio, base SEO. Contact and social identity from env (`siteConfig`), never hardcoded in components.
+Next.js app shell: packages, config, feature folders, design tokens, shared layout, embedded Sanity Studio, base SEO. Contact and social identity from Sanity (`siteSettings` / `getSiteSettings()`), never hardcoded in components.
 
 ## Expected result
 
@@ -82,7 +82,7 @@ Institutional look: clean, prestigious.
 - Sanity login / project membership only — **no anonymous access**
 - CORS: `http://localhost:3000` + `https://asdeoccidente.vercel.app` in manage → API
 - Documents: singleton **Configuración general** (`siteSettings`), singleton **Inicio** (`home`), document type **Feria** (`fair` — minimal fields until fairs feature)
-- **UI contact/social today read from env** via `siteConfig` (`web/src/shared/config/site.ts`). `siteSettings` is editable in Studio for future wiring.
+- **UI contact/social** from Sanity singleton `siteSettings` via `getSiteSettings()` (`features/site/models`). Env keeps only `NEXT_PUBLIC_SITE_URL` and Sanity credentials.
 
 ## SEO base
 

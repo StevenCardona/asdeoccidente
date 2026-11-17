@@ -15,7 +15,7 @@ Why and how the phase-1 app is structured. Delivery checklist lives in [`../../s
 | URL state | nuqs | Typed search params when needed |
 | Client UI state | Zustand | Only if a small global UI need appears; default prefer local state |
 | CMS | Sanity (Studio at `/studio`) | Admins edit content; **access control required** |
-| Site identity | `NEXT_PUBLIC_*` → `siteConfig` | Name, address, phones, WhatsApp, email, map, videos, Google proof |
+| Site identity | Sanity `siteSettings` → `getSiteSettings()` | Name, address, phones, WhatsApp, email, map, Google proof (env: site URL + Sanity only) |
 | Hosting (later) | Vercel | Deploy + previews |
 
 No separate custom backend in phase 1 beyond Next route handlers / Sanity client. Chatbot and payments are out of scope.
@@ -68,18 +68,23 @@ web/
         app/                     # HomePage (smart)
         hooks/                   # useHomeContent, useCountUp
         components/              # hero, essence, stats, services, gallery, gaits, videos, …
-        models/                  # HomeContent + fetchHomeContent
+        models/                  # types, defaults, query, map, fetchHomeContent
         utils/                   # cta, icons
-      school/app/                # SchoolPage placeholder
+      school/
+        app/                     # SchoolPage
+        hooks/                   # useSchoolContent
+        components/              # hero, method, horses, gallery, staff, fees, faq
+        models/                  # types, defaults, query, map, fetchSchoolContent
+      site/models/               # getSiteSettings (contact/identity from Sanity)
       fairs/app/                 # FairsListPage + FairDetailPage placeholders
       layout/                    # SiteShell, Header, Footer, ContactLocation, MobileNav, BrandLockup
     shared/
       components/ui/             # Button, Dialog, Skeleton
       components/                # SafeImage, brand-icons
       lib/                       # react-query, utils, sanity-image
-      config/site.ts             # env-driven siteConfig + WhatsApp helpers + navItems
+      config/site.ts             # siteUrl + WhatsApp helpers + navItems
     sanity/
-      schemaTypes/               # home, siteSettings, fair
+      schemaTypes/               # objects/, site/, home/, school/, fairs/
       lib/client.ts
 ```
 
@@ -110,7 +115,7 @@ Every public page (`SiteShell`):
 1. **Header** — BrandLockup, nav (Inicio · Escuela · Ferias), WhatsApp CTA. Nosotros commented.
 2. **Body** — feature content only
 3. **Contact & location** — mini form (`mailto`) + Maps iframe + optional directions video dialog
-4. **Footer** — address, phones, WhatsApp, email, socials from `siteConfig`
+4. **Footer** — address, phones, WhatsApp, email, socials from `getSiteSettings()`
 5. **Mobile bottom nav** — Inicio · Escuela · Ferias; Nosotros commented
 
 Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`).
@@ -131,9 +136,10 @@ Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`
 - Project `h9imk562`, dataset `production` (`NEXT_PUBLIC_SANITY_*`)
 - **Access:** Sanity login / project members only
 - CORS: allow `http://localhost:3000` and `https://asdeoccidente.vercel.app`
-- Schemas:
-  - **Inicio** (`home` singleton) — hero, CTAs, essence, stats, social videos, SEO
-  - **Configuración general** (`siteSettings`) — venue/contact fields in Studio (UI currently uses env)
+- Schemas (folder per page under `schemaTypes/`):
+  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages
+  - **Inicio** (`home` singleton) — hero, essence, stats, services, gallery, gaits, videos, SEO
+  - **Escuela** (`school` singleton) — hero, method, horses, gallery, staff, fees, FAQ, SEO
   - **Feria** (`fair`) — title, slug, banner, dates, featured, summary (expand with fairs feature)
 
 ---

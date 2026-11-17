@@ -7,7 +7,7 @@ How humans and agents work through phase-1 docs and code.
 1. Read [`overview.md`](overview.md) → [`architecture.md`](architecture.md) → this file → the **open spec** → [`progress.md`](progress.md)
 2. Domain facts only from [`../knowledge-base/asdeoccidente.md`](../knowledge-base/asdeoccidente.md). Do not invent prices, dates, or names.
 3. Visual rules from [`../../design/DESIGN.md`](../../design/DESIGN.md). Prefer institutional calm over “AI landing” tropes.
-4. Site-wide contact/social from env / `siteConfig` — never hardcode in components.
+4. Site-wide contact/social from Sanity `siteSettings` / `getSiteSettings()` — never hardcode in components.
 
 ## Spec discipline
 

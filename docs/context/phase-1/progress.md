@@ -22,7 +22,7 @@
 - [x] Layout: Header, ContactLocation (mailto + map + video dialog), Footer, MobileNav
 - [x] Routes `/`, `/school`, `/fairs`, `/fairs/[slug]`
 - [x] `/about` deferred
-- [x] Env-driven contact/social (`siteConfig` / `NEXT_PUBLIC_*`) — address quoted for `#`
+- [x] Contact/social from Sanity `siteSettings` (env: site URL + Sanity credentials only)
 - [x] Brand logos + favicon + Fedequinas asset
 - [x] `/studio` embedded — project id `h9imk562`
 - [x] SEO: metadata, sitemap, robots
@@ -45,7 +45,7 @@
 - [x] Galería → caballos → profesores
 - [x] Tarifas (tabs grupales/personalizadas + cards)
 - [x] Qué llevar + FAQ accordion
-- [ ] Sanity `school` document (deferred)
+- [x] Sanity `school` document schema (content editable in Studio; defaults until published)
 - [ ] Acceptance: mobile review + fee sign-off 2026
 
 ## Next

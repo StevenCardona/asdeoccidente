@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { GoogleReviewsBadge } from "@/features/home/components/google-reviews-badge";
+import type { HomeCta, HomeHeroImage } from "@/features/home/models";
+import { isExternalCta, resolveCtaHref } from "@/features/home/utils/cta";
+import type { SiteSettings } from "@/features/site/models";
 import { WhatsAppIcon } from "@/shared/components/brand-icons";
 import { Button } from "@/shared/components/ui/button";
-import { urlForImage } from "@/shared/lib/sanity-image";
-import type { HomeCta, HomeHeroImage } from "@/features/home/models/home";
-import { isExternalCta, resolveCtaHref } from "@/features/home/utils/cta";
+import { resolveSanityImageUrl } from "@/shared/lib/resolve-image";
 
 type HomeHeroProps = {
   title: string;
@@ -14,18 +15,23 @@ type HomeHeroProps = {
   primaryCta: HomeCta;
   secondaryCta: HomeCta;
   heroImage: HomeHeroImage | null;
+  settings: SiteSettings;
 };
 
 function CtaButton({
   cta,
   variant,
   icon,
+  settings,
 }: {
   cta: HomeCta;
   variant: "primary" | "outline";
   icon: "whatsapp" | "arrow";
+  settings: SiteSettings;
 }) {
-  const href = resolveCtaHref(cta);
+  if (!cta.label.trim()) return null;
+
+  const href = resolveCtaHref(cta, settings);
   const external = isExternalCta(cta);
   const className =
     variant === "outline"
@@ -66,25 +72,44 @@ export function HomeHero({
   primaryCta,
   secondaryCta,
   heroImage,
+  settings,
 }: HomeHeroProps) {
-  const cmsUrl = heroImage
-    ? urlForImage(heroImage.source)?.width(1800).height(1200).quality(80).url()
+  const imageUrl = heroImage
+    ? resolveSanityImageUrl(heroImage.source, 1600, 75)
     : null;
-  const imageUrl = cmsUrl ?? "/imgs/banner.png";
-  const imageAlt =
-    heroImage?.alt ??
-    "Jinetes del caballo criollo colombiano en la sede de Asdeoccidente";
+  const imageAlt = heroImage?.alt?.trim() || title.trim() || "";
+  const hasCtas = Boolean(primaryCta.label.trim() || secondaryCta.label.trim());
+  const hasReviews = Boolean(
+    settings.google.rating.trim() || settings.google.reviewCount.trim(),
+  );
+
+  if (
+    !title.trim() &&
+    !subtitle.trim() &&
+    !imageUrl &&
+    !hasCtas &&
+    !hasReviews
+  ) {
+    return null;
+  }
 
   return (
     <section className="relative isolate min-h-[min(78dvh,640px)] overflow-hidden bg-secondary text-white md:min-h-[min(88dvh,760px)]">
-      <Image
-        src={imageUrl}
-        alt={imageAlt}
-        fill
-        priority
-        className="object-cover object-center"
-        sizes="100vw"
-      />
+      {imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt={imageAlt}
+          fill
+          priority
+          loading="eager"
+          fetchPriority="high"
+          quality={75}
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-secondary" aria-hidden />
+      )}
 
       <div
         className="absolute inset-0 bg-gradient-to-r from-secondary/95 via-secondary/75 to-secondary/35"
@@ -92,8 +117,26 @@ export function HomeHero({
       />
 
       <div className="relative mx-auto flex min-h-[min(78dvh,640px)] max-w-7xl flex-col justify-end px-4 pb-14 pt-5 md:min-h-[min(88dvh,760px)] md:justify-center md:px-8 md:pb-16 md:pt-12">
-        <div className="flex flex-wrap items-center gap-2">
-          <GoogleReviewsBadge tone="dark" />
+        {hasReviews ? (
+          <div className="flex flex-wrap items-center gap-2">
+            <GoogleReviewsBadge
+              tone="dark"
+              rating={settings.google.rating}
+              reviewCount={settings.google.reviewCount}
+              reviewsUrl={settings.google.reviewsUrl}
+            />
+            <div className="relative h-9 w-[96px] shrink-0 overflow-hidden rounded-md bg-white md:h-10 md:w-[110px]">
+              <Image
+                src="/brand/fedeequinas.png"
+                alt="Fedequinas"
+                fill
+                className="object-contain p-1"
+                sizes="110px"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        ) : (
           <div className="relative h-9 w-[96px] shrink-0 overflow-hidden rounded-md bg-white md:h-10 md:w-[110px]">
             <Image
               src="/brand/fedeequinas.png"
@@ -101,22 +144,38 @@ export function HomeHero({
               fill
               className="object-contain p-1"
               sizes="110px"
-              priority
+              loading="lazy"
             />
           </div>
-        </div>
+        )}
 
-        <h1 className="mt-6 max-w-3xl font-display text-[2.25rem] font-extrabold leading-[1.15] tracking-tight md:mt-6 md:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
-          {title}
-        </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:mt-5 md:text-lg">
-          {subtitle}
-        </p>
+        {title.trim() ? (
+          <h1 className="mt-6 max-w-3xl font-display text-[2.25rem] font-extrabold leading-[1.15] tracking-tight md:mt-6 md:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
+            {title}
+          </h1>
+        ) : null}
+        {subtitle.trim() ? (
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:mt-5 md:text-lg">
+            {subtitle}
+          </p>
+        ) : null}
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
-          <CtaButton cta={primaryCta} variant="primary" icon="whatsapp" />
-          <CtaButton cta={secondaryCta} variant="outline" icon="arrow" />
-        </div>
+        {hasCtas ? (
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
+            <CtaButton
+              cta={primaryCta}
+              variant="primary"
+              icon="whatsapp"
+              settings={settings}
+            />
+            <CtaButton
+              cta={secondaryCta}
+              variant="outline"
+              icon="arrow"
+              settings={settings}
+            />
+          </div>
+        ) : null}
       </div>
     </section>
   );

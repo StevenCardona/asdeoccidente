@@ -22,7 +22,7 @@ export function SafeImage({
 
   return (
     <div className={cn("relative overflow-hidden bg-muted", wrapperClassName)}>
-      {failed || !src ? (
+      {failed || src == null || src === "" ? (
         <div
           className={cn("absolute inset-0 bg-muted", fallbackClassName)}
           aria-hidden
@@ -34,7 +34,7 @@ export function SafeImage({
           alt={alt}
           className={cn("object-cover", className)}
           priority={priority}
-          loading={priority ? undefined : "lazy"}
+          loading={priority ? "eager" : "lazy"}
           onError={() => setFailed(true)}
         />
       )}

@@ -1,16 +1,18 @@
 import Image from "next/image";
 import { GoogleReviewsBadge } from "@/features/home/components/google-reviews-badge";
+import type { SchoolContent } from "@/features/school/models";
+import type { SiteSettings } from "@/features/site/models";
 import { WhatsAppIcon } from "@/shared/components/brand-icons";
 import { Button } from "@/shared/components/ui/button";
 import { buildWhatsAppUrl } from "@/shared/config/site";
-import type { SchoolContent } from "@/features/school/models/school";
 
 type SchoolHeroProps = {
   content: SchoolContent["hero"];
+  settings: SiteSettings;
 };
 
-export function SchoolHero({ content }: SchoolHeroProps) {
-  const whatsappHref = buildWhatsAppUrl("school");
+export function SchoolHero({ content, settings }: SchoolHeroProps) {
+  const whatsappHref = buildWhatsAppUrl(settings, "school");
 
   return (
     <section className="relative isolate min-h-[min(72dvh,600px)] overflow-hidden bg-secondary text-white md:min-h-[min(80dvh,700px)]">
@@ -19,6 +21,8 @@ export function SchoolHero({ content }: SchoolHeroProps) {
         alt={content.imageAlt}
         fill
         priority
+        fetchPriority="high"
+        quality={75}
         className="object-cover object-center"
         sizes="100vw"
       />
@@ -28,7 +32,13 @@ export function SchoolHero({ content }: SchoolHeroProps) {
       />
 
       <div className="relative mx-auto flex min-h-[min(72dvh,600px)] max-w-7xl flex-col justify-end px-4 pb-14 pt-8 md:min-h-[min(80dvh,700px)] md:justify-center md:px-8 md:pb-16">
-        <GoogleReviewsBadge tone="dark" as="link" />
+        <GoogleReviewsBadge
+          tone="dark"
+          as="link"
+          rating={settings.google.rating}
+          reviewCount={settings.google.reviewCount}
+          reviewsUrl={settings.google.reviewsUrl}
+        />
         <span className="mt-4 inline-flex w-fit items-center rounded-md bg-primary px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-primary-foreground">
           {content.badge}
         </span>
@@ -40,7 +50,7 @@ export function SchoolHero({ content }: SchoolHeroProps) {
         </p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {whatsappHref ? (
+          {whatsappHref !== "#" ? (
             <Button asChild variant="primary" size="lg">
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
                 <WhatsAppIcon className="h-4 w-4" />
