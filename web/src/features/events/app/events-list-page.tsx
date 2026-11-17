@@ -32,25 +32,26 @@ export function EventsListPage({
     return <EventsPageSkeleton />;
   }
 
-  if (isEventsContentEmpty(content)) {
-    return (
-      <EventsEmptyState
-        settings={settings}
-        message={content.list.emptyCalendarMessage}
-      />
-    );
-  }
-
-  const featured = getFeaturedEvent(content.events);
+  const noEvents = isEventsContentEmpty(content);
+  const featured = noEvents ? null : getFeaturedEvent(content.events);
 
   return (
     <div>
       {featured ? <EventsFeaturedHero event={featured} /> : null}
-      <EventsCalendar
-        events={content.events}
-        intro={content.list.calendarIntro}
-        emptyMessage={content.list.emptyCalendarMessage}
-      />
+      {noEvents ? (
+        <EventsEmptyState
+          settings={settings}
+          eyebrow={content.list.calendarIntro.eyebrow || "Calendario"}
+          title={content.list.calendarIntro.title || "Próximos eventos"}
+          message={content.list.emptyCalendarMessage}
+        />
+      ) : (
+        <EventsCalendar
+          events={content.events}
+          intro={content.list.calendarIntro}
+          emptyMessage={content.list.emptyCalendarMessage}
+        />
+      )}
       <EventsReviews
         intro={content.list.reviewsIntro}
         reviews={content.list.reviews}

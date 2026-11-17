@@ -64,7 +64,7 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                 <button
                   type="button"
                   onClick={() => setVideoOpen(true)}
-                  className="group relative aspect-video w-full overflow-hidden rounded-lg border border-border bg-secondary text-left"
+                  className="group relative h-28 w-full cursor-pointer overflow-hidden rounded-lg border border-border bg-secondary text-left md:h-32"
                   aria-label="Ver video cómo llegar a la sede"
                 >
                   {posterSrc ? (
