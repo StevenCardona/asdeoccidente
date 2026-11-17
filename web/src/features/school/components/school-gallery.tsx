@@ -1,16 +1,16 @@
 import { SafeImage } from "@/shared/components/safe-image";
 import { cn } from "@/shared/lib/utils";
-import type { SchoolContent } from "@/features/school/models/school";
+import type { SchoolContent } from "@/features/school/models";
 
 type SchoolGalleryProps = {
   content: SchoolContent["gallery"];
 };
 
 const spanClass: Record<SchoolContent["gallery"]["tiles"][number]["span"], string> = {
-  large: "md:col-span-2 md:row-span-2 min-h-[280px] md:min-h-0",
-  tall: "min-h-[200px]",
-  wide: "md:col-span-2 min-h-[180px]",
-  small: "min-h-[180px]",
+  large: "min-h-[280px] md:col-span-2 md:row-span-2 md:min-h-0",
+  tall: "min-h-[280px] md:min-h-[200px]",
+  wide: "min-h-[280px] md:col-span-2 md:min-h-[180px]",
+  small: "min-h-[280px] md:min-h-[180px]",
 };
 
 export function SchoolGallery({ content }: SchoolGalleryProps) {
@@ -27,7 +27,7 @@ export function SchoolGallery({ content }: SchoolGalleryProps) {
           {content.subtitle}
         </p>
 
-        <ul className="mt-10 grid auto-rows-[minmax(200px,auto)] gap-3 md:grid-cols-3 md:gap-4">
+        <ul className="mt-10 grid auto-rows-[280px] gap-3 md:grid-cols-3 md:auto-rows-[minmax(200px,auto)] md:gap-4">
           {content.tiles.map((tile) => (
             <li
               key={`${tile.badge}-${tile.title}`}

@@ -1,15 +1,17 @@
+import { formatCop, type SchoolContent } from "@/features/school/models";
+import type { SiteSettings } from "@/features/site/models";
 import { WhatsAppIcon } from "@/shared/components/brand-icons";
 import { Button } from "@/shared/components/ui/button";
 import { buildWhatsAppUrl } from "@/shared/config/site";
 import { cn } from "@/shared/lib/utils";
-import { formatCop, type SchoolContent } from "@/features/school/models/school";
 
 type SchoolFeesProps = {
   content: SchoolContent["fees"];
+  settings: SiteSettings;
 };
 
-export function SchoolFees({ content }: SchoolFeesProps) {
-  const whatsappHref = buildWhatsAppUrl("school");
+export function SchoolFees({ content, settings }: SchoolFeesProps) {
+  const whatsappHref = buildWhatsAppUrl(settings, "school");
 
   return (
     <section

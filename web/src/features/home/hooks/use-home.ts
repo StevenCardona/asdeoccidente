@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   fetchHomeContent,
   type HomeContent,
-} from "@/features/home/models/home";
+} from "@/features/home/models";
 
 export const homeQueryKey = ["home", "content"] as const;
 
@@ -13,6 +13,9 @@ export function useHomeContent(initialData?: HomeContent) {
     queryKey: homeQueryKey,
     queryFn: fetchHomeContent,
     initialData,
-    staleTime: 60_000,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 }

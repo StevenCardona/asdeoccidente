@@ -1,7 +1,7 @@
 "use client";
 
 import { SafeImage } from "@/shared/components/safe-image";
-import type { SchoolContent } from "@/features/school/models/school";
+import type { SchoolContent } from "@/features/school/models";
 import { resolveSchoolIcon } from "@/features/school/utils/icons";
 import {
   SchoolCarouselArrows,

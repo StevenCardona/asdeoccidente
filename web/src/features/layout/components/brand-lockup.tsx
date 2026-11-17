@@ -1,15 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/shared/lib/utils";
-import { siteConfig } from "@/shared/config/site";
 
 type BrandLockupProps = {
+  name: string;
   variant?: "light" | "dark";
   className?: string;
   priority?: boolean;
 };
 
 export function BrandLockup({
+  name,
   variant = "light",
   className,
   priority = false,
@@ -20,7 +21,7 @@ export function BrandLockup({
     <Link
       href="/"
       className={cn("flex min-w-0 items-center gap-2", className)}
-      aria-label={siteConfig.name}
+      aria-label={name}
     >
       <span className="relative h-12 w-12 shrink-0 overflow-hidden md:h-[52px] md:w-[52px]">
         <Image

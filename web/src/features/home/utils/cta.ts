@@ -1,12 +1,13 @@
-import {
-  buildWhatsAppUrl,
-  type WhatsappTopic,
-} from "@/shared/config/site";
-import type { HomeCta } from "@/features/home/models/home";
+import type { SiteSettings, WhatsappTopic } from "@/features/site/models";
+import type { HomeCta } from "@/features/home/models";
+import { buildWhatsAppUrl } from "@/shared/config/site";
 
-export function resolveCtaHref(cta: HomeCta): string {
+export function resolveCtaHref(
+  cta: HomeCta,
+  settings: Pick<SiteSettings, "whatsappNumber" | "whatsappMessages">,
+): string {
   if (cta.whatsappTopic) {
-    return buildWhatsAppUrl(cta.whatsappTopic);
+    return buildWhatsAppUrl(settings, cta.whatsappTopic);
   }
   if (cta.href) return cta.href;
   return "#";

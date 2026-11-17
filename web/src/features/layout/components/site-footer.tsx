@@ -1,45 +1,50 @@
 import Link from "next/link";
 import { ChevronRight, Mail, MapPin, Phone } from "lucide-react";
 import { BrandLockup } from "@/features/layout/components/brand-lockup";
+import type { SiteSettings } from "@/features/site/models";
 import {
   InstagramIcon,
   TikTokIcon,
   WhatsAppIcon,
   YoutubeIcon,
 } from "@/shared/components/brand-icons";
-import {
-  buildWhatsAppUrl,
-  navItems,
-  siteConfig,
-} from "@/shared/config/site";
+import { buildWhatsAppUrl, navItems } from "@/shared/config/site";
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  settings: SiteSettings;
+};
+
+export function SiteFooter({ settings }: SiteFooterProps) {
   const socialLinks = [
     {
-      href: siteConfig.social.instagram,
+      href: settings.social.instagram,
       label: "Instagram",
       icon: InstagramIcon,
     },
     {
-      href: siteConfig.social.youtube,
+      href: settings.social.youtube,
       label: "YouTube",
       icon: YoutubeIcon,
     },
     {
-      href: siteConfig.social.tiktok,
+      href: settings.social.tiktok,
       label: "TikTok",
       icon: TikTokIcon,
     },
   ].filter((item) => Boolean(item.href));
 
+  const phones = [
+    settings.phoneMobile,
+    settings.phoneMobileAlt,
+  ].filter(Boolean);
+
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-3 md:px-12 md:py-14">
         <div>
-          <BrandLockup variant="dark" />
+          <BrandLockup name={settings.name} variant="dark" />
           <p className="mt-4 text-sm leading-relaxed text-white/70">
-            {siteConfig.legalName}. Dedicada a la preservación, competencia y
-            difusión del caballo criollo colombiano desde 1975.
+            {settings.legalName}. {settings.footerBlurb}
           </p>
         </div>
 
@@ -69,35 +74,41 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-3 text-sm text-white/80">
             <li className="flex gap-2.5">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
-              <span>{siteConfig.address}</span>
+              <span>{settings.address}</span>
             </li>
-            {siteConfig.phonePbx ? (
+            {settings.phonePbx ? (
               <li className="flex gap-2.5">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
-                <span>PBX {siteConfig.phonePbx}</span>
+                <span>PBX {settings.phonePbx}</span>
               </li>
             ) : null}
-            {siteConfig.whatsappNumber ? (
+            {phones.length > 0 ? (
+              <li className="flex gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
+                <span>{phones.join(" · ")}</span>
+              </li>
+            ) : null}
+            {settings.whatsappNumber ? (
               <li className="flex gap-2.5">
                 <WhatsAppIcon className="mt-0.5 h-4 w-4 shrink-0 text-white" />
                 <a
-                  href={buildWhatsAppUrl("general")}
+                  href={buildWhatsAppUrl(settings, "general")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white"
                 >
-                  WhatsApp {siteConfig.whatsappNumber}
+                  WhatsApp {settings.whatsappNumber}
                 </a>
               </li>
             ) : null}
-            {siteConfig.email ? (
+            {settings.email ? (
               <li className="flex gap-2.5">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={`mailto:${settings.email}`}
                   className="text-white/70 hover:text-white"
                 >
-                  {siteConfig.email}
+                  {settings.email}
                 </a>
               </li>
             ) : null}
@@ -123,7 +134,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-white/10 px-5 py-4 text-center text-xs text-white/50 md:px-12">
-        © {new Date().getFullYear()} {siteConfig.name}. Todos los derechos
+        © {new Date().getFullYear()} {settings.name}. Todos los derechos
         reservados.
       </div>
     </footer>

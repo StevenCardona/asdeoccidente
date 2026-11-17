@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
-import type { SchoolContent } from "@/features/school/models/school";
+import type { SchoolContent } from "@/features/school/models";
 
 type SchoolFaqProps = {
   content: SchoolContent["faq"];

@@ -2,39 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { HomeGalleryPhoto, HomeSectionIntro } from "@/features/home/models";
 import { SafeImage } from "@/shared/components/safe-image";
 import { cn } from "@/shared/lib/utils";
 
-const photos = [
-  {
-    src: "/imgs/banner2.jpg",
-    alt: "Ambiente de feria en Asdeoccidente",
-  },
-  {
-    src: "/imgs/banner3.webp",
-    alt: "Competencia y público en la sede",
-  },
-  {
-    src: "/imgs/escuela2.jpg",
-    alt: "Escuela de chalanería",
-  },
-  {
-    src: "/imgs/escuela4.jpg",
-    alt: "Práctica de monta",
-  },
-  {
-    src: "/imgs/escuela5.jpg",
-    alt: "Alumnos e instructores",
-  },
-  {
-    src: "/imgs/lugar.webp",
-    alt: "Instalaciones de la sede",
-  },
-] as const;
-
 const MOBILE_VISIBLE = 2;
 
-export function HomePhotoGallery() {
+type HomePhotoGalleryProps = {
+  intro: HomeSectionIntro;
+  photos: HomeGalleryPhoto[];
+};
+
+export function HomePhotoGallery({ intro, photos }: HomePhotoGalleryProps) {
   const scrollerRef = useRef<HTMLUListElement>(null);
   const pageCount = Math.ceil(photos.length / MOBILE_VISIBLE);
   const [activePage, setActivePage] = useState(0);
@@ -42,7 +21,6 @@ export function HomePhotoGallery() {
   const getPageCount = () => {
     const node = scrollerRef.current;
     if (!node) return pageCount;
-    // Desktop shows 4 per view; mobile 2. Derive pages from item width.
     const first = node.querySelector("li");
     if (!first) return pageCount;
     const itemWidth = first.getBoundingClientRect().width;
@@ -94,24 +72,35 @@ export function HomePhotoGallery() {
       node.removeEventListener("scroll", updateActivePage);
       observer.disconnect();
     };
-  }, [pageCount]);
+  }, [pageCount, photos.length]);
 
   const mobilePageCount = pageCount;
+  const hasIntro = Boolean(
+    intro.eyebrow.trim() || intro.title.trim() || intro.subtitle.trim(),
+  );
+
+  if (!hasIntro && photos.length === 0) return null;
 
   return (
     <section className="border-y border-border bg-surface px-5 py-16 md:px-12 md:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
-              Galería
-            </p>
-            <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-secondary md:text-3xl">
-              Así se vive Asdeoccidente
-            </h2>
-            <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Escuela, ferias y sede: un vistazo a lo que pasa en el Valle.
-            </p>
+            {intro.eyebrow.trim() ? (
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                {intro.eyebrow}
+              </p>
+            ) : null}
+            {intro.title.trim() ? (
+              <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-secondary md:text-3xl">
+                {intro.title}
+              </h2>
+            ) : null}
+            {intro.subtitle.trim() ? (
+              <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+                {intro.subtitle}
+              </p>
+            ) : null}
           </div>
           <div className="hidden shrink-0 gap-2 sm:flex">
             <button
@@ -139,7 +128,7 @@ export function HomePhotoGallery() {
         >
           {photos.map((photo) => (
             <li
-              key={photo.src}
+              key={`${photo.src}-${photo.alt}`}
               className="w-[calc(50%-0.375rem)] shrink-0 snap-start md:w-[calc(25%-0.75rem)]"
             >
               <SafeImage

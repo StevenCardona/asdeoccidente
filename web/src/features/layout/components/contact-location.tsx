@@ -3,21 +3,26 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
 import { ContactMiniForm } from "@/features/layout/components/contact-mini-form";
+import type { SiteSettings } from "@/features/site/models";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
 } from "@/shared/components/ui/dialog";
-import { siteConfig } from "@/shared/config/site";
 
-export function ContactLocation() {
-  const mapSrc = siteConfig.mapEmbedUrl;
-  const videoSrc = siteConfig.directionsVideoUrl.trim();
+type ContactLocationProps = {
+  settings: SiteSettings;
+};
+
+export function ContactLocation({ settings }: ContactLocationProps) {
+  const mapSrc = settings.mapEmbedUrl;
+  const videoSrc = settings.directionsVideoUrl.trim();
   const hasVideo = Boolean(videoSrc);
   const [videoOpen, setVideoOpen] = useState(false);
 
   return (
     <section
+      id="contacto"
       className="bg-background"
       aria-labelledby="contact-location-heading"
     >
@@ -97,7 +102,7 @@ export function ContactLocation() {
           </div>
 
           <div className="flex h-full flex-col">
-            <ContactMiniForm />
+            <ContactMiniForm settings={settings} />
           </div>
         </div>
       </div>

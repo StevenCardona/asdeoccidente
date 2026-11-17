@@ -1,12 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import type { SiteSettings, WhatsappTopic } from "@/features/site/models";
 import { Button } from "@/shared/components/ui/button";
-import {
-  siteConfig,
-  type WhatsappTopic,
-  whatsappMessages,
-} from "@/shared/config/site";
 
 const topics: Array<{ value: WhatsappTopic; label: string }> = [
   { value: "school", label: "Escuela / clase gratis" },
@@ -14,7 +10,11 @@ const topics: Array<{ value: WhatsappTopic; label: string }> = [
   { value: "general", label: "Consulta general" },
 ];
 
-export function ContactMiniForm() {
+type ContactMiniFormProps = {
+  settings: SiteSettings;
+};
+
+export function ContactMiniForm({ settings }: ContactMiniFormProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [topic, setTopic] = useState<WhatsappTopic>("school");
@@ -22,7 +22,7 @@ export function ContactMiniForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const email = siteConfig.email.trim();
+    const email = settings.email.trim();
     if (!email) return;
 
     const topicLabel =
@@ -31,7 +31,7 @@ export function ContactMiniForm() {
       `Consulta Asdeoccidente — ${topicLabel}`,
     );
     const bodyLines = [
-      whatsappMessages[topic],
+      settings.whatsappMessages[topic],
       "",
       name.trim() ? `Nombre: ${name.trim()}` : null,
       phone.trim() ? `Teléfono: ${phone.trim()}` : null,

@@ -2,18 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { HomeSectionIntro } from "@/features/home/models";
 import { InstagramIcon } from "@/shared/components/brand-icons";
-import { siteConfig } from "@/shared/config/site";
 import { cn } from "@/shared/lib/utils";
 
 type SocialVideo = {
   url: string;
   label?: string;
-  orientation?: "vertical" | "horizontal";
 };
 
 type HomeSocialVideosProps = {
-  videos?: SocialVideo[];
+  intro: HomeSectionIntro;
+  videos: SocialVideo[];
 };
 
 function detectPlatform(url: string): "instagram" | "tiktok" | "unknown" {
@@ -90,35 +90,22 @@ function VideoSlot({
         >
           <InstagramIcon className="h-8 w-8 text-primary" />
           <span className="text-sm font-semibold text-primary underline-offset-2 hover:underline">
-            Ver en Instagram
+            {item.label?.trim() || "Ver video"}
           </span>
         </a>
-      ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center">
-          <InstagramIcon className="h-7 w-7 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">Espacio para reel</p>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 }
 
-export function HomeSocialVideos({ videos }: HomeSocialVideosProps) {
-  const fromProps = videos?.filter((item) => Boolean(item.url?.trim())) ?? [];
-  const defaults = siteConfig.homeVideos;
-  const items: SocialVideo[] =
-    fromProps.length > 0
-      ? fromProps.map((item, index) => ({
-          ...item,
-          orientation:
-            item.orientation ?? defaults[index]?.orientation ?? "vertical",
-        }))
-      : defaults;
-
-  const slots = Array.from({ length: 4 }, (_, index) => items[index] ?? null);
-  const count = slots.length;
+export function HomeSocialVideos({ intro, videos }: HomeSocialVideosProps) {
+  const items = videos.filter((item) => Boolean(item.url?.trim()));
+  const count = items.length;
   const scrollerRef = useRef<HTMLUListElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const hasIntro = Boolean(
+    intro.eyebrow.trim() || intro.title.trim() || intro.subtitle.trim(),
+  );
 
   const scrollToIndex = (index: number) => {
     const node = scrollerRef.current;
@@ -153,40 +140,55 @@ export function HomeSocialVideos({ videos }: HomeSocialVideosProps) {
     };
   }, [count]);
 
+  if (items.length === 0) return null;
+
   return (
     <section className="bg-surface px-5 py-16 md:px-12 md:py-20">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
-            En movimiento
-          </p>
-          <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-secondary md:text-3xl">
-            Videos de la comunidad
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-            Reels de escuela y feria — Instagram en vivo, sin salir del ritmo de
-            la página.
-          </p>
-        </div>
-
-        {/* Desktop: 4 equal in one row */}
-        <ul className="mt-10 hidden gap-3 md:grid md:grid-cols-4 md:gap-4">
-          {slots.map((item, index) => (
-            <li key={item?.url ?? `slot-${index}`}>
+        {hasIntro ? (
+          <div className="max-w-2xl">
+            {intro.eyebrow.trim() ? (
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                {intro.eyebrow}
+              </p>
+            ) : null}
+            {intro.title.trim() ? (
+              <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-secondary md:text-3xl">
+                {intro.title}
+              </h2>
+            ) : null}
+            {intro.subtitle.trim() ? (
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                {intro.subtitle}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+        <ul
+          className={cn(
+            "hidden gap-3 md:grid md:gap-4",
+            hasIntro ? "mt-10" : undefined,
+            items.length === 1 && "md:grid-cols-1",
+            items.length === 2 && "md:grid-cols-2",
+            items.length === 3 && "md:grid-cols-3",
+            items.length >= 4 && "md:grid-cols-4",
+          )}
+        >
+          {items.map((item, index) => (
+            <li key={item.url}>
               <VideoSlot item={item} index={index} />
             </li>
           ))}
         </ul>
 
-        {/* Mobile: 1-up carousel */}
-        <div className="mt-10 md:hidden">
+        <div className={cn("md:hidden", hasIntro && "mt-10")}>
           <ul
             ref={scrollerRef}
             className="flex snap-x snap-mandatory gap-0 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {slots.map((item, index) => (
+            {items.map((item, index) => (
               <li
-                key={item?.url ?? `slot-mobile-${index}`}
+                key={`mobile-${item.url}`}
                 className="w-full min-w-full shrink-0 snap-start"
               >
                 <div className="mx-auto w-full max-w-[min(100%,22rem)]">
@@ -210,11 +212,11 @@ export function HomeSocialVideos({ videos }: HomeSocialVideosProps) {
               role="tablist"
               aria-label="Videos"
             >
-              {slots.map((item, index) => {
+              {items.map((item, index) => {
                 const selected = index === activeIndex;
                 return (
                   <button
-                    key={item?.url ?? `dot-${index}`}
+                    key={`dot-${item.url}`}
                     type="button"
                     role="tab"
                     aria-selected={selected}

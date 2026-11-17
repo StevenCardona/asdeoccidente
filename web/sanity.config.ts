@@ -32,10 +32,16 @@ export default defineConfig({
               .child(
                 S.document().schemaType("home").documentId("home"),
               ),
-            ...S.documentTypeListItems().filter(
-              (item) =>
-                item.getId() !== "siteSettings" && item.getId() !== "home",
-            ),
+            S.listItem()
+              .title("Escuela")
+              .id("school")
+              .child(
+                S.document().schemaType("school").documentId("school"),
+              ),
+            S.listItem()
+              .title("Ferias")
+              .id("fairs")
+              .child(S.documentTypeList("fair").title("Ferias")),
           ]),
     }),
     visionTool(),
