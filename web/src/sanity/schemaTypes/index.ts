@@ -1,4 +1,4 @@
-import { fairTypes } from "./fairs";
+import { eventTypes } from "./events";
 import { homeTypes } from "./home";
 import { objectTypes } from "./objects";
 import { schoolTypes } from "./school";
@@ -9,5 +9,5 @@ export const schemaTypes = [
   siteSettings,
   ...homeTypes,
   ...schoolTypes,
-  ...fairTypes,
+  ...eventTypes,
 ];

@@ -55,10 +55,10 @@ export const homeHero = defineType({
       title: "Botón secundario",
       type: "cta",
       description:
-        "Normalmente lleva a Ferias. Texto ej. Ver la próxima feria · Enlace: /fairs",
+        "Normalmente lleva a Eventos. Texto ej. Ver el próximo evento · Enlace: /events",
       initialValue: {
-        label: "Ver la próxima feria",
-        href: "/fairs",
+        label: "Ver el próximo evento",
+        href: "/events",
       },
     }),
   ],

@@ -39,14 +39,47 @@ export default defineConfig({
                 S.document().schemaType("school").documentId("school"),
               ),
             S.listItem()
-              .title("Ferias")
-              .id("fairs")
-              .child(S.documentTypeList("fair").title("Ferias")),
+              .title("Página Eventos")
+              .id("eventsPage")
+              .child(
+                S.document()
+                  .schemaType("eventsPage")
+                  .documentId("eventsPage"),
+              ),
+            S.listItem()
+              .title("Eventos")
+              .id("events")
+              .child(
+                S.documentTypeList("event")
+                  .title("Eventos")
+                  .defaultOrdering([
+                    { field: "startDate", direction: "desc" },
+                  ])
+                  .initialValueTemplates([
+                    S.initialValueTemplateItem("event-new"),
+                  ]),
+              ),
           ]),
     }),
     visionTool(),
   ],
   schema: {
     types: schemaTypes,
+    templates: (prev) => [
+      ...prev.filter(
+        (template) =>
+          template.id !== "event" && template.id !== "fair",
+      ),
+      {
+        id: "event-new",
+        title: "Nuevo evento",
+        schemaType: "event",
+        value: {
+          featured: false,
+          ticketNotes:
+            "Entrada general, palcos e inscripción de ejemplares por WhatsApp.",
+        },
+      },
+    ],
   },
 });

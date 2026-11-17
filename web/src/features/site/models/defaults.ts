@@ -25,7 +25,7 @@ export const defaultSiteSettings: SiteSettings = {
     tiktok: "https://www.tiktok.com/@asdeoccidente?lang=es",
   },
   mapEmbedUrl: mapEmbedFromAddress(DEFAULT_ADDRESS),
-  directionsVideoUrl: "",
+  directionsVideo: { kind: "url", src: "", posterSrc: undefined },
   google: {
     rating: "4.6",
     reviewCount: "299",

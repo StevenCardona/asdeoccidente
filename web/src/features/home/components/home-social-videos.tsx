@@ -2,18 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { HomeSectionIntro } from "@/features/home/models";
+import type {
+  HomeSectionIntro,
+  HomeSocialVideo,
+} from "@/features/home/models";
 import { InstagramIcon } from "@/shared/components/brand-icons";
 import { cn } from "@/shared/lib/utils";
 
-type SocialVideo = {
-  url: string;
-  label?: string;
-};
-
 type HomeSocialVideosProps = {
   intro: HomeSectionIntro;
-  videos: SocialVideo[];
+  videos: HomeSocialVideo[];
 };
 
 function detectPlatform(url: string): "instagram" | "tiktok" | "unknown" {
@@ -60,10 +58,32 @@ function VideoSlot({
   item,
   index,
 }: {
-  item: SocialVideo | null;
+  item: HomeSocialVideo | null;
   index: number;
 }) {
-  const embed = item ? toEmbedSrc(item.url) : null;
+  if (!item?.src) return null;
+
+  if (item.kind === "file") {
+    return (
+      <div
+        className={cn(
+          "relative aspect-[9/16] w-full overflow-hidden rounded-2xl bg-black",
+          "shadow-[0_18px_40px_rgba(0,0,0,0.45)] ring-1 ring-black/10",
+        )}
+      >
+        <video
+          src={item.src}
+          controls
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-label={item.label || `Video ${index + 1}`}
+        />
+      </div>
+    );
+  }
+
+  const embed = toEmbedSrc(item.src);
 
   return (
     <div
@@ -74,16 +94,16 @@ function VideoSlot({
     >
       {embed ? (
         <iframe
-          title={item?.label || `Video ${index + 1}`}
+          title={item.label || `Video ${index + 1}`}
           src={embed}
           className="absolute inset-x-0 top-0 h-[175%] w-full origin-top scale-[1.06] border-0"
           loading="lazy"
           allow="encrypted-media; picture-in-picture; clipboard-write"
           allowFullScreen
         />
-      ) : item?.url ? (
+      ) : (
         <a
-          href={item.url}
+          href={item.src}
           target="_blank"
           rel="noopener noreferrer"
           className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-4 text-center"
@@ -93,13 +113,13 @@ function VideoSlot({
             {item.label?.trim() || "Ver video"}
           </span>
         </a>
-      ) : null}
+      )}
     </div>
   );
 }
 
 export function HomeSocialVideos({ intro, videos }: HomeSocialVideosProps) {
-  const items = videos.filter((item) => Boolean(item.url?.trim()));
+  const items = videos.filter((item) => Boolean(item.src?.trim()));
   const count = items.length;
   const scrollerRef = useRef<HTMLUListElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -140,7 +160,7 @@ export function HomeSocialVideos({ intro, videos }: HomeSocialVideosProps) {
     };
   }, [count]);
 
-  if (items.length === 0) return null;
+  if (count === 0) return null;
 
   return (
     <section className="bg-surface px-5 py-16 md:px-12 md:py-20">
@@ -175,7 +195,7 @@ export function HomeSocialVideos({ intro, videos }: HomeSocialVideosProps) {
           )}
         >
           {items.map((item, index) => (
-            <li key={item.url}>
+            <li key={`${item.kind}-${item.src}-${index}`}>
               <VideoSlot item={item} index={index} />
             </li>
           ))}
@@ -188,7 +208,7 @@ export function HomeSocialVideos({ intro, videos }: HomeSocialVideosProps) {
           >
             {items.map((item, index) => (
               <li
-                key={`mobile-${item.url}`}
+                key={`mobile-${item.kind}-${item.src}-${index}`}
                 className="w-full min-w-full shrink-0 snap-start"
               >
                 <div className="mx-auto w-full max-w-[min(100%,22rem)]">
@@ -216,7 +236,7 @@ export function HomeSocialVideos({ intro, videos }: HomeSocialVideosProps) {
                 const selected = index === activeIndex;
                 return (
                   <button
-                    key={`dot-${item.url}`}
+                    key={`dot-${item.kind}-${item.src}-${index}`}
                     type="button"
                     role="tab"
                     aria-selected={selected}

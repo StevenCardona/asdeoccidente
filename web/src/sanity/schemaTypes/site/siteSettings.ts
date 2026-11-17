@@ -141,13 +141,48 @@ export const siteSettings = defineType({
       initialValue: DEFAULT_MAP,
     }),
     defineField({
-      name: "directionsVideoUrl",
-      title: "Video “cómo llegar”",
+      name: "directionsVideoSource",
+      title: "Fuente del video “cómo llegar”",
       type: "string",
       group: "location",
+      options: {
+        list: [
+          { title: "Enlace (YouTube u otra URL)", value: "url" },
+          { title: "Archivo subido (MP4)", value: "file" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "url",
       description:
-        "Opcional. YouTube → Compartir → Insertar → copia solo el src del iframe. Déjalo vacío si aún no hay video.",
+        "Opcional. Elige si pegas un enlace o subes un video desde tu equipo.",
+    }),
+    defineField({
+      name: "directionsVideoUrl",
+      title: "Enlace del video “cómo llegar”",
+      type: "string",
+      group: "location",
+      hidden: ({ parent }) => parent?.directionsVideoSource === "file",
+      description:
+        "Opcional. Pega el enlace de YouTube (ver o compartir) o el src del iframe. Déjalo vacío si aún no hay video.",
       initialValue: "",
+    }),
+    defineField({
+      name: "directionsVideoFile",
+      title: "Archivo del video “cómo llegar”",
+      type: "file",
+      group: "location",
+      options: { accept: "video/*" },
+      hidden: ({ parent }) => parent?.directionsVideoSource !== "file",
+      description:
+        "Opcional. Sube un MP4 liviano (recomendado menos de ~50 MB).",
+    }),
+    defineField({
+      name: "directionsVideoPoster",
+      title: "Portada del video “cómo llegar”",
+      type: "imageWithAlt",
+      group: "location",
+      description:
+        "Opcional. Imagen que se ve antes de reproducir (evita el negro vacío). Recomendada si subes un MP4.",
     }),
     defineField({
       name: "googleRating",
@@ -188,7 +223,7 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: "whatsappMessageFairs",
-      title: "Mensaje WhatsApp — Ferias",
+      title: "Mensaje WhatsApp — Eventos",
       type: "text",
       rows: 2,
       group: "whatsapp",
