@@ -7,6 +7,7 @@ import { Button } from "@/shared/components/ui/button";
 const topics: Array<{ value: WhatsappTopic; label: string }> = [
   { value: "school", label: "Escuela / clase gratis" },
   { value: "fairs", label: "Eventos" },
+  { value: "venue", label: "Alquiler sede" },
   { value: "general", label: "Consulta general" },
 ];
 

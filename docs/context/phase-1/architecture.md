@@ -41,7 +41,7 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | Eventos | `/events` | Implemented (list + detail) |
 | Evento (detalle) | `/events/[slug]` | Implemented |
 | Servicios (trámites) | `/services` | In progress — Sanity sections + PDFs |
-| Alquiler | `/venue` | Spec / stub |
+| Alquiler | `/venue` | In progress — Sanity `venuePage` |
 | Socios | `/membership` | Spec / stub |
 | Equinoterapia | `/equinotherapy` | Spec / stub |
 | Directorio | `/directory` | Spec / stub (search UI later) |
@@ -80,6 +80,10 @@ web/
         hooks/                   # useSchoolContent
         components/              # hero, method, horses, gallery, staff, fees, faq
         models/                  # types, defaults, query, map, fetchSchoolContent
+      venue/
+        app/                     # VenuePage
+        components/              # hero, intro, spaces, gallery, reviews
+        models/                  # types, defaults, query, map, fetchVenueContent
       site/models/               # getSiteSettings (contact/identity from Sanity)
       fairs/app/                 # FairsListPage + FairDetailPage placeholders
       layout/                    # SiteShell, Header, Footer, ContactLocation, MobileNav, BrandLockup
@@ -142,10 +146,12 @@ Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`
 - **Access:** Sanity login / project members only
 - CORS: allow `http://localhost:3000` and `https://asdeoccidente.vercel.app`
 - Schemas (folder per page under `schemaTypes/`):
-  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages
+  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages (school / fairs / venue / general)
   - **Inicio** (`home` singleton) — hero, essence, stats, services, gallery, gaits, videos, SEO
   - **Escuela** (`school` singleton) — hero, method, horses, gallery, staff, fees, FAQ, SEO
-  - **Feria** (`fair`) — title, slug, banner, dates, featured, summary (expand with fairs feature)
+  - **Servicios** (`servicesPage`) — trámites sections + PDFs
+  - **Alquiler** (`venuePage`) — hero (incl. contactLine), intro, spaces, gallery, reviews, SEO
+  - **Eventos** (`eventsPage` + `event`) — list page + calendar documents
 
 ---
 

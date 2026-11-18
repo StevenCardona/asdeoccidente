@@ -8,7 +8,8 @@
 | Spec school | In progress — Sanity schema + page (acceptance pending) |
 | Spec fairs / events | In progress — `/events` Sanity-backed |
 | Spec services (registros/trámites) | In progress — Sanity + page |
-| Specs venue, membership, equinotherapy, directory | Spec / stub |
+| Spec venue (alquiler sede) | In progress — Sanity + full page |
+| Specs membership, equinotherapy, directory | Spec / stub |
 | Spec about | Deferred (route commented) |
 | App `web/` foundation shell | Done |
 | Sanity Studio (embedded `/studio`) | Wired — project `h9imk562` / `production` |
@@ -16,7 +17,8 @@
 | App School `/school` | In progress |
 | App Events `/events`, `/events/[slug]` | In progress |
 | App Services `/services` | In progress |
-| Offer stubs `/venue` `/membership` `/equinotherapy` `/directory` | Stub |
+| App Venue `/venue` | In progress |
+| Offer stubs `/membership` `/equinotherapy` `/directory` | Stub |
 | Confirmed 2026 school fees | Pending association |
 
 ## Foundation checklist
@@ -68,15 +70,23 @@
 - [ ] Association fills official fees and PDFs
 - [ ] Acceptance: mobile review
 
+## Venue checklist
+
+- [x] Spec for alquiler sede + spaces/measures
+- [x] Sanity `venuePage` + WhatsApp topic `venue`
+- [x] Page UI (hero + contactLine, intro, spaces, gallery, reviews)
+- [ ] Association uploads venue photos / reviews in Studio
+- [ ] Acceptance: mobile review
+
 ## Offer stubs checklist
 
-- [x] Specs for venue, membership, equinotherapy, directory
+- [x] Specs for membership, equinotherapy, directory
 - [x] Stub pages + nav (desktop + mobile full set; mobile active shows label)
-- [ ] Full page builds
+- [ ] Full page builds (membership, equinotherapy)
 - [ ] Directory Sanity schemas + search UI
 
 ## Next
 
-1. Finish School / Events acceptance
-2. Full builds of offer pages as prioritized
+1. Finish School / Events / Services / Venue acceptance
+2. Full builds of remaining offer pages as prioritized
 3. Directory CMS + search UI per `directory.md`

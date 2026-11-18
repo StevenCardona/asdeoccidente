@@ -31,10 +31,10 @@ export function MobileNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 backdrop-blur md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 h-14 border-t border-border bg-background/95 backdrop-blur md:hidden"
       aria-label="Navegación móvil"
     >
-      <ul className="mx-auto flex w-full max-w-7xl items-stretch justify-evenly px-1 py-1">
+      <ul className="mx-auto flex h-14 w-full max-w-7xl items-center gap-0.5 px-1.5">
         {navItems.map((item) => {
           const Icon = icons[item.icon];
           const active =
@@ -42,21 +42,34 @@ export function MobileNav() {
               ? pathname === "/"
               : pathname.startsWith(item.href);
           return (
-            <li key={item.href} className="flex min-w-0 flex-1 justify-center">
+            <li
+              key={item.href}
+              className={cn(
+                "flex min-w-0 justify-center transition-all duration-200",
+                active ? "flex-[1.75]" : "flex-[0.65]",
+              )}
+            >
               <Link
                 href={item.href}
                 aria-label={item.label}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex w-full max-w-[4.5rem] flex-col items-center justify-center gap-0.5 rounded-md px-1 py-1.5 text-[9px] font-semibold uppercase tracking-wide",
+                  "flex w-full flex-col items-center justify-center rounded-md text-[9px] font-semibold uppercase tracking-wide transition-all duration-200",
                   active
-                    ? "bg-primary text-primary-foreground"
-                    : "text-secondary hover:bg-secondary/5",
+                    ? "gap-0.5 bg-primary px-2.5 py-1.5 text-primary-foreground"
+                    : "px-1 py-1.5 text-secondary hover:bg-secondary/5",
                 )}
               >
-                <Icon className="h-5 w-5 shrink-0" aria-hidden strokeWidth={1.75} />
+                <Icon
+                  className={cn(
+                    "shrink-0 transition-all duration-200",
+                    active ? "h-6 w-6" : "h-5 w-5",
+                  )}
+                  aria-hidden
+                  strokeWidth={1.75}
+                />
                 {active ? (
-                  <span className="max-w-full truncate leading-none">
+                  <span className="max-w-full truncate px-0.5 leading-none">
                     {item.label}
                   </span>
                 ) : (

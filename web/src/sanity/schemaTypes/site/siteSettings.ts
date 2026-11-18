@@ -233,6 +233,15 @@ export const siteSettings = defineType({
         "Hola, quiero información sobre entradas y palcos para la Copa América Equina.",
     }),
     defineField({
+      name: "whatsappMessageVenue",
+      title: "Mensaje WhatsApp — Alquiler sede",
+      type: "text",
+      rows: 2,
+      group: "whatsapp",
+      description: "Ej. Hola, quiero cotizar un evento en la sede.",
+      initialValue: "Hola, quiero cotizar un evento en la sede.",
+    }),
+    defineField({
       name: "whatsappMessageGeneral",
       title: "Mensaje WhatsApp — General",
       type: "text",
