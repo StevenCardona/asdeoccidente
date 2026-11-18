@@ -58,9 +58,13 @@ function mapStory(
   story: EquinotherapyPageDoc["storyIntro"],
   fallback: EquinotherapyStory,
   defaultPosition: "left" | "right",
+  options?: { includeBenefits?: boolean },
 ): EquinotherapyStory {
   const paragraphs = mapParagraphs(story?.paragraphs);
-  const benefits = mapBenefits(story?.benefits);
+  const includeBenefits = options?.includeBenefits === true;
+  const benefits = includeBenefits
+    ? mapBenefits(story?.benefits)
+    : [];
   const image =
     mapImage(
       story?.image,
@@ -77,7 +81,11 @@ function mapStory(
     eyebrow: story?.eyebrow?.trim() || fallback.eyebrow,
     title: story?.title?.trim() || fallback.title,
     paragraphs: paragraphs.length > 0 ? paragraphs : [...fallback.paragraphs],
-    benefits: benefits.length > 0 ? benefits : [...fallback.benefits],
+    benefits: includeBenefits
+      ? benefits.length > 0
+        ? benefits
+        : [...fallback.benefits]
+      : [],
     image,
     imagePosition: position,
   };
@@ -206,7 +214,12 @@ export function mergeEquinotherapy(
           ? galleryPhotos
           : defaults.gallery.photos.map((photo) => ({ ...photo })),
     },
-    storyBenefits: mapStory(doc.storyBenefits, defaults.storyBenefits, "left"),
+    storyBenefits: mapStory(
+      doc.storyBenefits,
+      defaults.storyBenefits,
+      "left",
+      { includeBenefits: true },
+    ),
     reviewsIntro: mapIntro(doc.reviewsIntro, defaults.reviewsIntro),
     reviews:
       reviews.length > 0
