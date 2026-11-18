@@ -1,5 +1,6 @@
 import { eventTypes } from "./events";
 import { homeTypes } from "./home";
+import { membershipTypes } from "./membership";
 import { objectTypes } from "./objects";
 import { schoolTypes } from "./school";
 import { servicesTypes } from "./services";
@@ -14,4 +15,5 @@ export const schemaTypes = [
   ...eventTypes,
   ...servicesTypes,
   ...venueTypes,
+  ...membershipTypes,
 ];

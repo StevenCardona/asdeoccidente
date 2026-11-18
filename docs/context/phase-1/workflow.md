@@ -18,7 +18,7 @@ How humans and agents work through phase-1 docs and code.
 
 ## Current focus
 
-Foundation and Home are implemented. Next open unit: **School** (`docs/specs/phase-1/school.md`). Fairs remains open after School. About stays deferred.
+Foundation, Home, and several offer pages are in flight. Current open unit: **Membership** (`docs/specs/phase-1/membership.md`). About stays deferred.
 
 ## UI congruence checklist
 

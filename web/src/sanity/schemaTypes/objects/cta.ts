@@ -30,6 +30,7 @@ export const cta = defineType({
           { title: "Escuela (clase gratis)", value: "school" },
           { title: "Eventos", value: "fairs" },
           { title: "Alquiler sede", value: "venue" },
+          { title: "Socios", value: "membership" },
           { title: "Consulta general", value: "general" },
         ],
       },

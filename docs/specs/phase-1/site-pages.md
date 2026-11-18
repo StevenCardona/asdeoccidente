@@ -15,7 +15,7 @@ Progress: [`../../context/phase-1/progress.md`](../../context/phase-1/progress.m
 | 4 | Fairs / Events | `/events`, `/events/[slug]` | [`fairs.md`](fairs.md) | In progress |
 | 5 | Services (registros/trámites) | `/services` | [`services.md`](services.md) | In progress |
 | 6 | Venue | `/venue` | [`venue.md`](venue.md) | In progress |
-| 7 | Membership | `/membership` | [`membership.md`](membership.md) | Spec / stub |
+| 7 | Membership | `/membership` | [`membership.md`](membership.md) | In progress |
 | 8 | Equinotherapy | `/equinotherapy` | [`equinotherapy.md`](equinotherapy.md) | Spec / stub |
 | 9 | Directory | `/directory` | [`directory.md`](directory.md) | Spec / stub (search UI later) |
 

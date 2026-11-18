@@ -84,6 +84,14 @@ export default defineConfig({
                   .schemaType("venuePage")
                   .documentId("venuePage"),
               ),
+            S.listItem()
+              .title("Socios")
+              .id("membershipPage")
+              .child(
+                S.document()
+                  .schemaType("membershipPage")
+                  .documentId("membershipPage"),
+              ),
           ]),
     }),
     visionTool(),

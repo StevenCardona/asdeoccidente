@@ -1,4 +1,9 @@
-export type WhatsappTopic = "school" | "fairs" | "venue" | "general";
+export type WhatsappTopic =
+  | "school"
+  | "fairs"
+  | "venue"
+  | "membership"
+  | "general";
 
 export type WhatsappMessages = Record<WhatsappTopic, string>;
 

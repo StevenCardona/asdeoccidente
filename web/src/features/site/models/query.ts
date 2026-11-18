@@ -24,6 +24,7 @@ export const siteSettingsQuery = `*[_type == "siteSettings" && _id == "siteSetti
   whatsappMessageSchool,
   whatsappMessageFairs,
   whatsappMessageVenue,
+  whatsappMessageMembership,
   whatsappMessageGeneral
 }`;
 
@@ -51,5 +52,6 @@ export type SiteSettingsDoc = {
   whatsappMessageSchool?: string;
   whatsappMessageFairs?: string;
   whatsappMessageVenue?: string;
+  whatsappMessageMembership?: string;
   whatsappMessageGeneral?: string;
 };

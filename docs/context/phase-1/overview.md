@@ -29,7 +29,7 @@ Shared on every page: Header · page body · **Contact & location** (mailto form
 | --- | --- |
 | About `/about` | Route and nav item **commented** in foundation; no page yet |
 | Chatbot | Phase 2 |
-| Extra pages (membership, records, venue, contact page, equinotherapy) | Phase 3 |
+| Extra pages (contact page; full equinotherapy) | Phase 3 (membership/venue/services are phase-1) |
 | Dense mockup blocks (trámites grid, portal socios, full rental) | Not on Home phase 1 (services cards are informational only) |
 
 ## Product principles

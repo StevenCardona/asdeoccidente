@@ -242,6 +242,17 @@ export const siteSettings = defineType({
       initialValue: "Hola, quiero cotizar un evento en la sede.",
     }),
     defineField({
+      name: "whatsappMessageMembership",
+      title: "Mensaje WhatsApp — Socios",
+      type: "text",
+      rows: 2,
+      group: "whatsapp",
+      description:
+        "Texto del botón «Quiero ser socio» en /membership. Ej. Hola, quiero información para ser socio de Asdeoccidente.",
+      initialValue:
+        "Hola, quiero información para ser socio de Asdeoccidente.",
+    }),
+    defineField({
       name: "whatsappMessageGeneral",
       title: "Mensaje WhatsApp — General",
       type: "text",
