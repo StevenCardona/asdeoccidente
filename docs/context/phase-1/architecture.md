@@ -27,7 +27,7 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | Layer | Language |
 | --- | --- |
 | File names, components, hooks, models, utils, API keys in code | English |
-| URL paths | English (`/school`, `/fairs`, …) |
+| URL paths | English (`/school`, `/events`, …) |
 | User-visible copy, CMS content, `lang` on pages | Spanish (`es-CO`) |
 
 ---
@@ -37,9 +37,14 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | UI label (ES) | Path | Status |
 | --- | --- | --- |
 | Inicio | `/` | **Implemented** (Home feature) |
-| Escuela | `/school` | Placeholder (title + skeleton) |
-| Ferias | `/fairs` | Placeholder (title + skeleton) |
-| Feria (detalle) | `/fairs/[slug]` | Placeholder (slug + skeleton) |
+| Escuela | `/school` | Implemented (acceptance pending) |
+| Eventos | `/events` | Implemented (list + detail) |
+| Evento (detalle) | `/events/[slug]` | Implemented |
+| Servicios (trámites) | `/services` | In progress — Sanity sections + PDFs |
+| Alquiler | `/venue` | Spec / stub |
+| Socios | `/membership` | Spec / stub |
+| Equinoterapia | `/equinotherapy` | Spec / stub |
+| Directorio | `/directory` | Spec / stub (search UI later) |
 | Nosotros | `/about` | **Commented / deferred** (`page.tsx.deferred`) |
 | Studio | `/studio` | Active + **authenticated** (Sanity login) |
 

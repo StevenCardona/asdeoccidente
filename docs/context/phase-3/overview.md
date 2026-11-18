@@ -3,7 +3,7 @@
 **Expected outcomes**
 
 - Finer detail on existing pages
-- Additional pages deferred from phase 1 (equinotherapy, membership, records, venue, contact, and similar)
+- Full builds of phase-1 offer stubs; directory search UI; contact / about; records if still separate
 - Organize and refine the chatbot after phase 2
 
 Spec stub: [`../../specs/phase-3/deferred-pages.md`](../../specs/phase-3/deferred-pages.md)

@@ -3,6 +3,11 @@ import {
   resolveSanityImage,
   resolveSanityImageUrl,
 } from "@/shared/lib/resolve-image";
+import {
+  defaultHomeServiceItems,
+  isPlaceholderCta,
+  matchDefaultService,
+} from "./default-services";
 import { emptyHomeContent } from "./defaults";
 import type { HomeDoc } from "./query";
 import type {
@@ -75,6 +80,61 @@ function parseStats(
   return { showStats: true, stats: parsed };
 }
 
+function mergeHomeServices(
+  items: NonNullable<HomeDoc["services"]>["items"],
+): HomeServiceItem[] {
+  const fromCms: HomeServiceItem[] = [];
+
+  for (const item of items ?? []) {
+    if (!item?.title?.trim()) continue;
+    const title = item.title.trim();
+    const fallback = matchDefaultService(title, item.href);
+    const resolved = resolveSanityImage(
+      item.image as SanityImageSource | null | undefined,
+      item.imageAlt,
+      undefined,
+      title,
+    );
+    const image = resolved.src || fallback?.image || "";
+    if (!image) continue;
+
+    const href =
+      item.href?.trim() || fallback?.href || matchDefaultService(title)?.href;
+    const rawCta = item.cta?.trim() || "";
+    const cta =
+      !rawCta || isPlaceholderCta(rawCta)
+        ? fallback?.cta || rawCta
+        : rawCta;
+
+    fromCms.push({
+      title: fallback?.title || title,
+      description: item.description?.trim() || fallback?.description || "",
+      cta,
+      href,
+      image,
+      imageAlt: resolved.alt || fallback?.imageAlt || title,
+    });
+  }
+
+  return defaultHomeServiceItems.map((fallback) => {
+    const match = fromCms.find(
+      (item) =>
+        item.href === fallback.href ||
+        matchDefaultService(item.title, item.href)?.href === fallback.href,
+    );
+    if (!match) return fallback;
+    return {
+      title: match.title || fallback.title,
+      description: match.description || fallback.description,
+      cta:
+        !match.cta || isPlaceholderCta(match.cta) ? fallback.cta : match.cta,
+      href: match.href || fallback.href,
+      image: match.image || fallback.image,
+      imageAlt: match.imageAlt || fallback.imageAlt,
+    };
+  });
+}
+
 function hasHeroAsset(image: SanityImageSource | null | undefined): boolean {
   if (!image || typeof image !== "object") return false;
   const asset = (image as { asset?: { _ref?: string } }).asset;
@@ -104,29 +164,7 @@ export function mergeHome(
     googleReviewCount,
   );
 
-  const serviceItems: HomeServiceItem[] = [];
-  for (const item of doc.services?.items ?? []) {
-    if (!item?.title?.trim()) continue;
-    const resolved = resolveSanityImage(
-      item.image as SanityImageSource | null | undefined,
-      item.imageAlt,
-      undefined,
-      item.title,
-    );
-    if (!resolved.src) continue;
-    const title = item.title.trim();
-    const href =
-      item.href?.trim() ||
-      (title.toLowerCase() === "escuela de chalanería" ? "/school" : undefined);
-    serviceItems.push({
-      title,
-      description: item.description?.trim() || "",
-      cta: item.cta?.trim() || "",
-      href,
-      image: resolved.src,
-      imageAlt: resolved.alt || title,
-    });
-  }
+  const serviceItems = mergeHomeServices(doc.services?.items);
 
   const galleryPhotos: HomeGalleryPhoto[] = [];
   for (const photo of doc.gallery?.photos ?? []) {

@@ -4,21 +4,22 @@
 
 ## Expected outcomes
 
-- Extra pages not built in phase 1
+- Full builds of phase-1 offer stubs (services, venue, membership, equinotherapy)
+- Directorio equino search UI + Sanity `directoryType` / `directoryEntry` (see phase-1 [`../phase-1/directory.md`](../phase-1/directory.md))
 - Finer detail and polish on existing pages
 - Organize / refine the chatbot after phase 2
 
-## Deferred pages (grouped)
+## Still deferred here
 
-| Page | Path |
-| --- | --- |
-| Equinotherapy | `/equinoterapia` |
-| Membership | `/hazte-socio` |
-| Records | `/registros-y-tramites` |
-| Venue and events | `/sede-y-eventos` |
-| Contact | `/contacto` |
+| Page | Path | Notes |
+| --- | --- | --- |
+| Contact | `/contact` (English) | Was `/contacto`; respuesta en un día hábil |
+| Records / trámites hub | TBD | Fee table `[por confirmar]`; may fold into services or stay separate |
+| About | `/about` | Spec + uncomment nav later |
 
-Domain facts for these offers live in [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md). Page-level specs will be expanded here later.
+Promoted to phase-1 **specs/stubs** (not phase-3 outlines): `/services`, `/venue`, `/membership`, `/equinotherapy`, `/directory`.
+
+Domain facts live in [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md).
 
 ## Related
 

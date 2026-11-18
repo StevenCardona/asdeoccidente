@@ -59,6 +59,14 @@ export default defineConfig({
                     S.initialValueTemplateItem("event-new"),
                   ]),
               ),
+            S.listItem()
+              .title("Página Servicios")
+              .id("servicesPage")
+              .child(
+                S.document()
+                  .schemaType("servicesPage")
+                  .documentId("servicesPage"),
+              ),
           ]),
     }),
     visionTool(),

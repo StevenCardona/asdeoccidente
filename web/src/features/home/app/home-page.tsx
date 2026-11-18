@@ -3,7 +3,6 @@
 import { HomeEssence } from "@/features/home/components/home-essence";
 import { HomeGaits } from "@/features/home/components/home-gaits";
 import { HomeHero } from "@/features/home/components/home-hero";
-import { HomeLocationNote } from "@/features/home/components/home-location-note";
 import { HomePageSkeleton } from "@/features/home/components/home-page-skeleton";
 import { HomePhotoGallery } from "@/features/home/components/home-photo-gallery";
 import { HomeServices } from "@/features/home/components/home-services";
@@ -45,7 +44,6 @@ export function HomePage({ initialHome, settings }: HomePageProps) {
         heroImage={home.heroImage}
         settings={settings}
       />
-      <HomeLocationNote address={settings.address} />
       <HomeEssence
         intro={home.essence.intro}
         items={home.essence.items}

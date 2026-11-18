@@ -216,15 +216,17 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | **Botones** | Ver entradas · Inscribir mi ejemplar |
 | **Regla** | Producto de eventos: listado con destacada + cards, detalle por slug. Entrada general primero, luego palcos. Nombre oficial completo. Mostrar “Última actualización”. |
 
-### Ofertas diferidas (fase 3; hechos cortos)
+### Ofertas (fase 1 specs / stubs; hechos cortos)
 
-| Oferta | Ruta | Nota |
+| Oferta | Ruta app | Nota |
 | --- | --- | --- |
-| Equinoterapia | `/equinoterapia` | Sin promesas de cura; lenguaje médico validado por terapeutas. |
-| Hazte socio | `/hazte-socio` | Descuentos y voz en la asociación. |
-| Registros | `/registros-y-tramites` | Una sola tabla de tarifas para todo el sitio. |
-| Sede y eventos | `/sede-y-eventos` | Cotización por WhatsApp. |
-| Contacto | `/contacto` | Respuesta en un día hábil. |
+| Servicios (registros/trámites) | `/services` | Secciones con tarifas socio/no socio + PDFs; precios `[por confirmar]` hasta tabla oficial |
+| Equinoterapia | `/equinotherapy` | Sin promesas de cura; lenguaje médico validado por terapeutas. |
+| Socios | `/membership` | Descuentos y voz; “Quiero ser socio”. |
+| Alquiler sede | `/venue` | Cotización por WhatsApp. |
+| Directorio equino | `/directory` | Catálogo buscable (tipos dinámicos en Sanity); UI de búsqueda más adelante. Spec only. |
+
+**Aún diferido:** contacto dedicado, About, tabla única de tarifas de registros `[por confirmar]`.
 
 ---
 

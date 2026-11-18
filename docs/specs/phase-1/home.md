@@ -22,10 +22,10 @@ Prestigious, human Home: horse, method, culture. CTAs to free class (WhatsApp) a
 
 Rendered by `HomePage` after shared Header; ContactLocation + Footer come from the site shell.
 
-1. **Hero** — full-bleed banner (`/imgs/banner.png` or CMS `heroImage`); Google reviews badge + Fedequinas logo; `h1` + subtitle; primary CTA WhatsApp (clase gratis) · secondary CTA `/fairs`
+1. **Hero** — full-bleed banner (`/imgs/banner.png` or CMS `heroImage`); Google reviews badge + Fedequinas logo; `h1` + subtitle; primary CTA WhatsApp (clase gratis) · secondary CTA `/events`; **sede address** under CTAs (small, muted white, ≈ CTA row width; no separate tall band below the banner)
 2. **Esencia** — four beats (title, text, Lucide icon) + 2×2 photo mosaic (`/imgs/escuela*.jpg`)
-3. **Cifras** — navy slab, count-up with icons: **1975** · **+200** alumnos · Google opiniones (env) · **+180** socios
-4. **Servicios** — four photo cards (trámites, escuela, equinoterapia, alquiler); CTA labels inert (“Próximamente” / “Ver escuela” without navigation)
+3. **Cifras** — navy slab, count-up with icons: **1975** · **+200** alumnos · Google opiniones · **+180** socios
+4. **Servicios** — photo cards in **`md:grid-cols-3`** (offers + escuela); CTAs link to stub/live routes when `href` is set
 5. **Galería** — horizontal carousel (`SafeImage`, 2-up mobile / 4-up desktop)
 6. **Cuatro andares** — tabs (Paso Fino, Trocha, Trocha y Galope, Trote y Galope) on crimson section
 7. **Videos** — four fixed slots, **all 9:16**; desktop one row; mobile 1-up carousel; Instagram/TikTok embeds (URLs from CMS or `NEXT_PUBLIC_HOME_VIDEO_URL_*`)
@@ -44,7 +44,7 @@ Not rendered on the page: “¿Qué quieres hacer?” entry cards (field may exi
 | Hero title | Aprende, compite y celebra con el caballo criollo colombiano. |
 | Hero subtitle | Clases de chalanería personalizadas para niños y adultos, y ferias en el Valle del Cauca. Te acompañamos desde el primer paso. |
 | Primary CTA | Quiero mi clase gratis → WhatsApp topic `school` |
-| Secondary CTA | Ver la próxima feria → `/fairs` |
+| Secondary CTA | Ver el próximo evento → `/events` |
 | Stats | 1975 · +200 · Google review count · +180 socios |
 
 ## Videos (defaults)
@@ -80,15 +80,16 @@ Editable in Studio and merged with `defaultHomeContent`:
 
 ## Address
 
-Env must quote: `NEXT_PUBLIC_SITE_ADDRESS="Transversal 5 # 1 - 60, ..."` (KB canonical UI). Footer shows the full line.
+Canonical sede from Sanity `siteSettings.address` (KB UI line). Shown under hero CTAs and in the Footer — not as a tall band under the banner.
 
 ## Acceptance
 
-- [x] Address shows full Transversal 5 line (quoted env; not truncated at `#`)
+- [x] Address under hero CTAs (mobile + desktop) and full line in footer
 - [x] Hero shows Google reviews + Fedequinas
 - [x] Brand lockup subtitle one line (“Fomento equino del Valle · 1975”)
 - [x] No “¿Qué quieres hacer?” section on the page
 - [x] Four stats with icons (1975 · +200 · Google · +180 socios)
+- [x] Servicios grid three columns on desktop
 - [x] Four video slots at 9:16 (desktop row / mobile carousel)
 - [x] Contact is mini-form (`mailto`); contact details in footer
 - [ ] Mobile review pass + directions video URL when available

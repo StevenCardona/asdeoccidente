@@ -6,13 +6,17 @@
 | Spec foundation | Done (implemented) |
 | Spec home | Done (implemented) |
 | Spec school | In progress — Sanity schema + page (acceptance pending) |
-| Spec fairs | In progress — phase A static list + detail |
+| Spec fairs / events | In progress — `/events` Sanity-backed |
+| Spec services (registros/trámites) | In progress — Sanity + page |
+| Specs venue, membership, equinotherapy, directory | Spec / stub |
 | Spec about | Deferred (route commented) |
 | App `web/` foundation shell | Done |
 | Sanity Studio (embedded `/studio`) | Wired — project `h9imk562` / `production` |
 | App Home `/` | Done |
 | App School `/school` | In progress |
-| App Fairs `/fairs`, `/fairs/[slug]` | Phase A layout (static defaults; Sanity deferred) |
+| App Events `/events`, `/events/[slug]` | In progress |
+| App Services `/services` | In progress |
+| Offer stubs `/venue` `/membership` `/equinotherapy` `/directory` | Stub |
 | Confirmed 2026 school fees | Pending association |
 
 ## Foundation checklist
@@ -20,7 +24,8 @@
 - [x] Next.js + TS + Tailwind in `web/`
 - [x] Feature folders + shared UI (Button, Skeleton, Dialog)
 - [x] Layout: Header, ContactLocation (mailto + map + video dialog), Footer, MobileNav
-- [x] Routes `/`, `/school`, `/fairs`, `/fairs/[slug]`
+- [x] Routes `/`, `/school`, `/events`, `/events/[slug]`
+- [x] Offer stub routes (five)
 - [x] `/about` deferred
 - [x] Contact/social from Sanity `siteSettings` (env: site URL + Sanity credentials only)
 - [x] Brand logos + favicon + Fedequinas asset
@@ -30,9 +35,10 @@
 ## Home checklist
 
 - [x] Hero banner + Google reviews + Fedequinas
+- [x] Address line inside hero under CTAs (no tall band below banner)
 - [x] Esencia with photo mosaic
 - [x] Cifras count-up with icons (1975 · +200 · Google · +180 socios)
-- [x] Servicios (inert CTAs) + galería + andares tabs
+- [x] Servicios (`md:grid-cols-3`) + galería + andares tabs
 - [x] Four social video slots (9:16; desktop row / mobile carousel)
 - [x] Contact = mini form `mailto`; footer = datos + dirección completa
 - [x] SafeImage lazy + reserved space
@@ -41,6 +47,7 @@
 ## School checklist
 
 - [x] Hero + WhatsApp clase gratis (subtitle corto; sin línea de matrícula)
+- [x] Google reviews + stats under CTAs (compact)
 - [x] Cómo es la clase (pasos + foto + ejes en cards)
 - [x] Galería → caballos → profesores
 - [x] Tarifas (tabs grupales/personalizadas + cards)
@@ -48,19 +55,28 @@
 - [x] Sanity `school` document schema (content editable in Studio; defaults until published)
 - [ ] Acceptance: mobile review + fee sign-off 2026
 
-## Fairs checklist
+## Events checklist
 
-- [x] Spec updated (phase A static / phase B Sanity)
-- [x] Featured hero → detail CTA
-- [x] Calendar grid (4 desktop / 1 mobile) + status badges
-- [x] Detail: resumen, entradas/palcos, WhatsApp CTAs, programa empty, updatedAt, 404
-- [x] Gallery + FAQ on list
-- [ ] Sanity `fair` expansion + React Query (phase B)
-- [ ] Confirmed Copa dates, ticket prices, program from association
+- [x] Spec + `/events` list and detail
+- [ ] Acceptance: mobile review + confirmed Copa data
+
+## Services checklist
+
+- [x] Spec for registros/trámites + abstract Sanity sections
+- [x] Sanity `servicesPage` + fee rows + PDF downloads
+- [x] Page UI (hero, nav, tables, downloads, WhatsApp)
+- [ ] Association fills official fees and PDFs
 - [ ] Acceptance: mobile review
+
+## Offer stubs checklist
+
+- [x] Specs for venue, membership, equinotherapy, directory
+- [x] Stub pages + nav (desktop + mobile full set; mobile active shows label)
+- [ ] Full page builds
+- [ ] Directory Sanity schemas + search UI
 
 ## Next
 
-1. Fairs acceptance (mobile) + confirm Copa dates/entradas with association
-2. Fairs phase B: Sanity wiring
-3. Finish School acceptance
+1. Finish School / Events acceptance
+2. Full builds of offer pages as prioritized
+3. Directory CMS + search UI per `directory.md`
