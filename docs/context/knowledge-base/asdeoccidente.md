@@ -223,10 +223,24 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | Servicios (registros/trámites) | `/services` | Secciones con tarifas socio/no socio + PDFs; precios `[por confirmar]` hasta tabla oficial |
 | Equinoterapia | `/equinotherapy` | Sin promesas de cura; lenguaje médico validado por terapeutas. |
 | Socios | `/membership` | Descuentos y voz; “Quiero ser socio”. |
-| Alquiler sede | `/venue` | Cotización por WhatsApp. |
+| Alquiler sede | `/venue` | Cotización por WhatsApp (mensaje sede). Espacios y medidas abajo. |
 | Directorio equino | `/directory` | Catálogo buscable (tipos dinámicos en Sanity); UI de búsqueda más adelante. Spec only. |
 
-**Aún diferido:** contacto dedicado, About, tabla única de tarifas de registros `[por confirmar]`.
+#### Alquiler sede — espacios (medidas confirmadas)
+
+| Lugar | Medidas |
+| --- | --- |
+| Coliseo Principal | 1250 m² |
+| Coliseo Alterno | 546 m² |
+| Salón Nelson Garcés | 425 m² |
+| Parqueadero | ~800 vehículos |
+| Zonas verdes | ~600 m² aprox. c/u |
+
+**Cotización:** WhatsApp principal del sitio + mensaje sede. Contacto comercial (KB directorio): Steet Achury Mendoza · (+57) 300 322 0606 · comercial@asdeoccidente.org.co.
+
+**Copy UI de espacios:** descripciones cortas de producto en Sanity/defaults (no son hechos técnicos adicionales). **Sin lista de precios** hasta que la asociación confirme tarifas.
+
+**Aún diferido:** contacto dedicado, About, tabla única de tarifas de registros `[por confirmar]`, tarifas de alquiler de sede.
 
 ---
 

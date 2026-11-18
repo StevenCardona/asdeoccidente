@@ -76,6 +76,14 @@ export default defineConfig({
                   .schemaType("servicesPage")
                   .documentId("servicesPage"),
               ),
+            S.listItem()
+              .title("Alquiler")
+              .id("venuePage")
+              .child(
+                S.document()
+                  .schemaType("venuePage")
+                  .documentId("venuePage"),
+              ),
           ]),
     }),
     visionTool(),

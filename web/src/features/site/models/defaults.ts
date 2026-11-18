@@ -35,6 +35,7 @@ export const defaultSiteSettings: SiteSettings = {
     school: "Hola, quiero información sobre la clase gratis de chalanería.",
     fairs:
       "Hola, quiero información sobre entradas y palcos para la Copa América Equina.",
+    venue: "Hola, quiero cotizar un evento en la sede.",
     general: "Hola, quiero hacer una consulta.",
   },
 };

@@ -4,6 +4,7 @@ import { objectTypes } from "./objects";
 import { schoolTypes } from "./school";
 import { servicesTypes } from "./services";
 import { siteSettings } from "./site/siteSettings";
+import { venueTypes } from "./venue";
 
 export const schemaTypes = [
   ...objectTypes,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   ...schoolTypes,
   ...eventTypes,
   ...servicesTypes,
+  ...venueTypes,
 ];

@@ -16,8 +16,8 @@ Sequence only. Detail in specs under [`../../specs/phase-1/`](../../specs/phase-
    List (featured + cards) + `[slug]` detail. Routes: `/events`, `/events/[slug]`.
 5. **Offer stubs (specs)** — services, venue, membership, equinotherapy, directory  
    Specs + stub routes + nav/home cards. Full page builds and directory search UI later.  
-   - [`services.md`](../../specs/phase-1/services.md) `/services`  
-   - [`venue.md`](../../specs/phase-1/venue.md) `/venue`  
+   - [`services.md`](../../specs/phase-1/services.md) `/services` (in progress)  
+   - [`venue.md`](../../specs/phase-1/venue.md) `/venue` (in progress — Sanity + full page)  
    - [`membership.md`](../../specs/phase-1/membership.md) `/membership`  
    - [`equinotherapy.md`](../../specs/phase-1/equinotherapy.md) `/equinotherapy`  
    - [`directory.md`](../../specs/phase-1/directory.md) `/directory` (CMS model documented; implement later)
