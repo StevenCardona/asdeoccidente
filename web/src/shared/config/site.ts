@@ -18,10 +18,16 @@ export const navItems = [
   { href: "/", label: "Inicio", icon: "Home" as const },
   { href: "/school", label: "Escuela", icon: "GraduationCap" as const },
   { href: "/events", label: "Eventos", icon: "CalendarDays" as const },
+  { href: "/services", label: "Servicios", icon: "LayoutGrid" as const },
+  { href: "/venue", label: "Alquiler", icon: "Building2" as const },
+  { href: "/membership", label: "Socios", icon: "Handshake" as const },
+  { href: "/equinotherapy", label: "Equinoterapia", icon: "HeartPulse" as const },
+  { href: "/directory", label: "Directorio", icon: "BookUser" as const },
   // { href: "/about", label: "Nosotros", icon: "Users" as const }, // deferred
 ] as const;
 
 export type NavItem = (typeof navItems)[number];
+export type NavIconName = NavItem["icon"];
 
 export function buildWhatsAppUrl(
   settings: Pick<SiteSettings, "whatsappNumber" | "whatsappMessages">,

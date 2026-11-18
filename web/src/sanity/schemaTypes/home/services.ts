@@ -14,7 +14,7 @@ export const homeServices = defineType({
         eyebrow: "Qué ofrecemos",
         title: "Servicios para criadores y aficionados",
         subtitle:
-          "Escuela y ferias ya tienen camino en el sitio. El resto llega por fases; aquí puedes ver el panorama completo.",
+          "Escuela, eventos y más caminos en el sitio. Explora lo que puedes hacer con Asdeoccidente.",
       },
     }),
     defineField({
@@ -22,7 +22,7 @@ export const homeServices = defineType({
       title: "Tarjetas de servicio",
       type: "array",
       description:
-        "Cada tarjeta: título, texto, botón (aunque diga Próximamente) y foto. Fotos sugeridas: lugar.webp, escuela1.jpg, escuela3.jpg, banner2.jpg",
+        "Cada tarjeta: título, texto, botón y foto. Enlaces a /school, /services, /venue, /membership, /equinotherapy, /directory.",
       of: [
         defineArrayMember({
           type: "object",
@@ -44,14 +44,14 @@ export const homeServices = defineType({
               name: "cta",
               title: "Texto del botón / enlace",
               type: "string",
-              description: "Ej. Ver escuela  ·  o  Próximamente",
+              description: "Ej. Ver escuela  ·  Ver más",
             }),
             defineField({
               name: "href",
               title: "Enlace interno (opcional)",
               type: "string",
               description:
-                "Ruta del sitio cuando el botón debe llevar a otra página. Ej. /school. Déjalo vacío si aún no hay página (Próximamente).",
+                "Ruta del sitio. Ej. /school, /venue, /directory.",
             }),
             defineField({
               name: "image",
@@ -67,12 +67,6 @@ export const homeServices = defineType({
       ],
       initialValue: [
         {
-          title: "Trámites genealógicos",
-          description:
-            "Acompañamos el registro y los trámites de tu ejemplar con claridad y respaldo institucional.",
-          cta: "Próximamente",
-        },
-        {
           title: "Escuela de chalanería",
           description:
             "Clases totalmente personalizadas. Caballo y equipo los pone la escuela; tu primera clase es gratis.",
@@ -80,16 +74,39 @@ export const homeServices = defineType({
           href: "/school",
         },
         {
+          title: "Servicios",
+          description:
+            "Registros, traspasos, homologaciones y formularios. Consulta tarifas y descarga PDFs.",
+          cta: "Ver trámites",
+          href: "/services",
+        },
+        {
           title: "Equinoterapia",
           description:
             "Espacio terapéutico con el caballo, con lenguaje cuidadoso y acompañamiento profesional.",
-          cta: "Próximamente",
+          cta: "Ver equinoterapia",
+          href: "/equinotherapy",
         },
         {
-          title: "Alquiler de espacios",
+          title: "Alquiler de la sede",
           description:
-            "Sede campestre para ferias, eventos y encuentros. Cotización directa cuando la página esté lista.",
-          cta: "Próximamente",
+            "Sede campestre para ferias, eventos y encuentros. Cotiza por WhatsApp.",
+          cta: "Ver alquiler",
+          href: "/venue",
+        },
+        {
+          title: "Socios",
+          description:
+            "Descuentos y voz en la asociación. Únete como socio.",
+          cta: "Quiero ser socio",
+          href: "/membership",
+        },
+        {
+          title: "Directorio equino",
+          description:
+            "Escuelas, pesebreras, veterinarios, montadores y más contactos relacionados.",
+          cta: "Ver directorio",
+          href: "/directory",
         },
       ],
     }),

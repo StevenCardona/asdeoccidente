@@ -7,6 +7,7 @@ import { isExternalCta, resolveCtaHref } from "@/features/home/utils/cta";
 import type { SiteSettings } from "@/features/site/models";
 import { WhatsAppIcon } from "@/shared/components/brand-icons";
 import { Button } from "@/shared/components/ui/button";
+import { cn } from "@/shared/lib/utils";
 import { resolveSanityImageUrl } from "@/shared/lib/resolve-image";
 
 type HomeHeroProps = {
@@ -161,7 +162,7 @@ export function HomeHero({
         ) : null}
 
         {hasCtas ? (
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
+          <div className="mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
             <CtaButton
               cta={primaryCta}
               variant="primary"
@@ -175,6 +176,17 @@ export function HomeHero({
               settings={settings}
             />
           </div>
+        ) : null}
+
+        {settings.address.trim() ? (
+          <p
+            className={cn(
+              "max-w-xl text-xs leading-snug text-white/55 md:text-sm",
+              hasCtas ? "mt-4" : "mt-8",
+            )}
+          >
+            Nuestra sede está en {settings.address.trim()}.
+          </p>
         ) : null}
       </div>
     </section>

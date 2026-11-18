@@ -35,7 +35,7 @@ Convert interest into a free first class via WhatsApp. Explain personalized teac
 
 ## Sections (order)
 
-1. **Hero** — GoogleReviewsBadge (`tone="dark"`, link) encima de “Clase de cortesía”
+1. **Hero** — badge “Clase de cortesía” · `h1` · subtitle · CTAs; **below CTAs:** smaller `GoogleReviewsBadge` (`tone="dark"`, link) + compact stats **+200 alumnos** · **Desde 1975** (KB; no inventar otras cifras)
 2. **Cómo es la clase** — steps + axes carousel (icon beside text; flechas/puntos)
 3. **Caballos** — fondo `bg-secondary`; same cards as staff; carousel controls
 4. **Galería** — bento + degradado oscuro tipo banner
@@ -65,6 +65,7 @@ No-socio: 1→$90.000 · 2→$180.000 · 3→$280.000 · 4→$370.000 (socio/hij
 - [x] Caballos antes de galería, fondo oscuro
 - [x] Carousels con flechas y puntos
 - [x] FAQ reducido a dudas no obvias; sin sección “Antes de venir”
-- [x] Google reviews en hero
+- [x] Google reviews bajo CTAs (compacto) + cifras +200 / 1975
 - [x] ContactLocation no duplicado
-- [ ] Sanity school document (later)
+- [ ] Acceptance mobile + fee sign-off 2026
+- [ ] Sanity polish as needed

@@ -25,7 +25,10 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
           className="min-w-0 flex-1 md:flex-none"
         />
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Principal">
+        <nav
+          className="hidden max-w-[min(100%,36rem)] flex-wrap items-center justify-end gap-0.5 md:flex lg:max-w-[42rem] xl:max-w-none"
+          aria-label="Principal"
+        >
           {navItems.map((item) => {
             const active =
               item.href === "/"
@@ -36,7 +39,7 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-semibold transition-colors",
+                  "rounded-md px-2 py-1.5 text-xs font-semibold transition-colors xl:px-3 xl:py-2 xl:text-sm",
                   active
                     ? "bg-primary text-primary-foreground"
                     : "text-secondary hover:bg-primary hover:text-primary-foreground",

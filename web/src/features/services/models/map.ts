@@ -1,0 +1,122 @@
+import { defaultServicesContent } from "./defaults";
+import type { ServicesPageDoc } from "./query";
+import type {
+  ServicesContent,
+  ServicesDownload,
+  ServicesFeeRow,
+  ServicesSection,
+} from "./types";
+
+function slugify(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function parsePrice(value: number | undefined): number | null {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+    return null;
+  }
+  return value;
+}
+
+function mapFeeRows(
+  rows:
+    | Array<{
+        concepto?: string;
+        priceSocio?: number;
+        priceNoSocio?: number;
+      }>
+    | null
+    | undefined,
+): ServicesFeeRow[] {
+  const result: ServicesFeeRow[] = [];
+  for (const row of rows ?? []) {
+    const concepto = row?.concepto?.trim();
+    if (!concepto) continue;
+    result.push({
+      concepto,
+      priceSocio: parsePrice(row?.priceSocio),
+      priceNoSocio: parsePrice(row?.priceNoSocio),
+    });
+  }
+  return result;
+}
+
+function mapDownloads(
+  items: Array<{ label?: string; fileUrl?: string | null }> | null | undefined,
+): ServicesDownload[] {
+  const result: ServicesDownload[] = [];
+  for (const item of items ?? []) {
+    const label = item?.label?.trim();
+    if (!label) continue;
+    result.push({
+      label,
+      fileUrl: item?.fileUrl?.trim() || "",
+    });
+  }
+  return result;
+}
+
+function mapSections(
+  sections: ServicesPageDoc["sections"],
+): ServicesSection[] {
+  const result: ServicesSection[] = [];
+  for (const section of sections ?? []) {
+    const title = section?.title?.trim();
+    if (!title) continue;
+    const slug =
+      section?.slug?.current?.trim() ||
+      slugify(title) ||
+      `seccion-${result.length + 1}`;
+    result.push({
+      title,
+      slug,
+      description: section?.description?.trim() || "",
+      icon: section?.icon?.trim() || "",
+      feeRows: mapFeeRows(section?.feeRows),
+      downloads: mapDownloads(section?.downloads),
+    });
+  }
+  return result;
+}
+
+function cloneDefaults(): ServicesContent {
+  return {
+    ...defaultServicesContent,
+    hero: { ...defaultServicesContent.hero },
+    sections: defaultServicesContent.sections.map((section) => ({
+      ...section,
+      feeRows: section.feeRows.map((row) => ({ ...row })),
+      downloads: section.downloads.map((file) => ({ ...file })),
+    })),
+    seo: { ...defaultServicesContent.seo },
+  };
+}
+
+/** Prefer code seed until Studio publishes at least one titled section. */
+export function mergeServices(doc: ServicesPageDoc | null): ServicesContent {
+  if (!doc) return cloneDefaults();
+
+  const sections = mapSections(doc.sections);
+  if (sections.length === 0) return cloneDefaults();
+
+  const intro = doc.hero?.intro;
+
+  return {
+    hero: {
+      eyebrow: intro?.eyebrow?.trim() || defaultServicesContent.hero.eyebrow,
+      title: intro?.title?.trim() || defaultServicesContent.hero.title,
+      subtitle: intro?.subtitle?.trim() || defaultServicesContent.hero.subtitle,
+    },
+    sections,
+    seo: {
+      title: doc.seo?.title?.trim() || defaultServicesContent.seo.title,
+      description:
+        doc.seo?.description?.trim() || defaultServicesContent.seo.description,
+    },
+  };
+}

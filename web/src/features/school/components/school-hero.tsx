@@ -13,6 +13,9 @@ type SchoolHeroProps = {
 
 export function SchoolHero({ content, settings }: SchoolHeroProps) {
   const whatsappHref = buildWhatsAppUrl(settings, "school");
+  const hasReviews = Boolean(
+    settings.google.rating.trim() || settings.google.reviewCount.trim(),
+  );
 
   return (
     <section className="relative isolate min-h-[min(72dvh,600px)] overflow-hidden bg-secondary text-white md:min-h-[min(80dvh,700px)]">
@@ -32,14 +35,7 @@ export function SchoolHero({ content, settings }: SchoolHeroProps) {
       />
 
       <div className="relative mx-auto flex min-h-[min(72dvh,600px)] max-w-7xl flex-col justify-end px-4 pb-14 pt-8 md:min-h-[min(80dvh,700px)] md:justify-center md:px-8 md:pb-16">
-        <GoogleReviewsBadge
-          tone="dark"
-          as="link"
-          rating={settings.google.rating}
-          reviewCount={settings.google.reviewCount}
-          reviewsUrl={settings.google.reviewsUrl}
-        />
-        <span className="mt-4 inline-flex w-fit items-center rounded-md bg-primary px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-primary-foreground">
+        <span className="inline-flex w-fit items-center rounded-md bg-primary px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-primary-foreground">
           {content.badge}
         </span>
         <h1 className="mt-5 max-w-3xl font-display text-[2.1rem] font-extrabold leading-[1.15] tracking-tight md:text-5xl lg:text-[3.25rem]">
@@ -49,7 +45,7 @@ export function SchoolHero({ content, settings }: SchoolHeroProps) {
           {content.subtitle}
         </p>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:flex-wrap">
           {whatsappHref !== "#" ? (
             <Button asChild variant="primary" size="lg">
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
@@ -70,6 +66,26 @@ export function SchoolHero({ content, settings }: SchoolHeroProps) {
           >
             <a href="#tarifas">{content.secondaryCtaLabel}</a>
           </Button>
+        </div>
+
+        <div className="mt-4 flex max-w-xl flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
+          {hasReviews ? (
+            <GoogleReviewsBadge
+              tone="dark"
+              as="link"
+              rating={settings.google.rating}
+              reviewCount={settings.google.reviewCount}
+              reviewsUrl={settings.google.reviewsUrl}
+              className="h-7 gap-1.5 px-2 text-xs md:h-8"
+            />
+          ) : null}
+          <p className="text-xs leading-snug text-white/55 md:text-sm">
+            <span className="tabular-nums">+200</span> alumnos
+            <span className="mx-2 text-white/30" aria-hidden>
+              ·
+            </span>
+            Desde <span className="tabular-nums">1975</span>
+          </p>
         </div>
       </div>
     </section>

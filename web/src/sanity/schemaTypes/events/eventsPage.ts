@@ -5,9 +5,9 @@ const PUBLISH_HINT =
 
 export const eventsPage = defineType({
   name: "eventsPage",
-  title: "Página Eventos",
+  title: "Eventos · Página",
   type: "document",
-  description: `${PUBLISH_HINT} Configura el listado /events: intros, reseñas, galería y FAQ. Los eventos individuales se crean en la lista Eventos.`,
+  description: `${PUBLISH_HINT} Configura el listado /events: intros, reseñas, galería y FAQ. Los eventos del calendario se crean en Eventos → Calendario.`,
   groups: [
     { name: "calendar", title: "Calendario", default: true },
     { name: "reviews", title: "Reseñas" },

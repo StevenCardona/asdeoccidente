@@ -60,7 +60,7 @@ export function HomeServices({ intro, items }: HomeServicesProps) {
         ) : null}
 
         {items.length > 0 ? (
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             {items.map((service) => (
               <li
                 key={service.title}
@@ -70,7 +70,7 @@ export function HomeServices({ intro, items }: HomeServicesProps) {
                   src={service.image}
                   alt={service.imageAlt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                   wrapperClassName="aspect-[16/10]"
                 />
                 <div className="p-5 md:p-6">
