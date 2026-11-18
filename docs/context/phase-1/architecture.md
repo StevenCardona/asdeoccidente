@@ -42,8 +42,8 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | Evento (detalle) | `/events/[slug]` | Implemented |
 | Servicios (trámites) | `/services` | In progress — Sanity sections + PDFs |
 | Alquiler | `/venue` | In progress — Sanity `venuePage` |
-| Socios | `/membership` | Spec / stub |
-| Equinoterapia | `/equinotherapy` | Spec / stub |
+| Socios | `/membership` | In progress — Sanity `membershipPage` |
+| Equinoterapia | `/equinotherapy` | In progress — Sanity `equinotherapyPage` |
 | Directorio | `/directory` | Spec / stub (search UI later) |
 | Nosotros | `/about` | **Commented / deferred** (`page.tsx.deferred`) |
 | Studio | `/studio` | Active + **authenticated** (Sanity login) |
@@ -84,6 +84,10 @@ web/
         app/                     # VenuePage
         components/              # hero, intro, spaces, gallery, reviews
         models/                  # types, defaults, query, map, fetchVenueContent
+      membership/
+        app/                     # MembershipPage
+        components/              # hero, about, mission-vision, benefits, gallery, costs, requirements
+        models/                  # types, defaults, query, map, fetchMembershipContent
       site/models/               # getSiteSettings (contact/identity from Sanity)
       fairs/app/                 # FairsListPage + FairDetailPage placeholders
       layout/                    # SiteShell, Header, Footer, ContactLocation, MobileNav, BrandLockup
@@ -146,11 +150,12 @@ Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`
 - **Access:** Sanity login / project members only
 - CORS: allow `http://localhost:3000` and `https://asdeoccidente.vercel.app`
 - Schemas (folder per page under `schemaTypes/`):
-  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages (school / fairs / venue / general)
+  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages (school / fairs / venue / membership / general)
   - **Inicio** (`home` singleton) — hero, essence, stats, services, gallery, gaits, videos, SEO
   - **Escuela** (`school` singleton) — hero, method, horses, gallery, staff, fees, FAQ, SEO
   - **Servicios** (`servicesPage`) — trámites sections + PDFs
   - **Alquiler** (`venuePage`) — hero (incl. contactLine), intro, spaces, gallery, reviews, SEO
+  - **Socios** (`membershipPage`) — hero, about, mission/vision, benefits, costs, requirements + PDF, SEO
   - **Eventos** (`eventsPage` + `event`) — list page + calendar documents
 
 ---

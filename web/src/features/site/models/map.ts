@@ -93,6 +93,14 @@ export function mergeSiteSettings(doc: SiteSettingsDoc | null): SiteSettings {
         doc.whatsappMessageVenue,
         defaultSiteSettings.whatsappMessages.venue,
       ),
+      membership: pick(
+        doc.whatsappMessageMembership,
+        defaultSiteSettings.whatsappMessages.membership,
+      ),
+      equinotherapy: pick(
+        doc.whatsappMessageEquinotherapy,
+        defaultSiteSettings.whatsappMessages.equinotherapy,
+      ),
       general: pick(
         doc.whatsappMessageGeneral,
         defaultSiteSettings.whatsappMessages.general,

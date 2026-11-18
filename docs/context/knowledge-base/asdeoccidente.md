@@ -222,9 +222,64 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | --- | --- | --- |
 | Servicios (registros/trámites) | `/services` | Secciones con tarifas socio/no socio + PDFs; precios `[por confirmar]` hasta tabla oficial |
 | Equinoterapia | `/equinotherapy` | Sin promesas de cura; lenguaje médico validado por terapeutas. |
-| Socios | `/membership` | Descuentos y voz; “Quiero ser socio”. |
+| Socios | `/membership` | Quiénes somos, misión/visión, ser socio, ser afiliado, costos, requisitos + formato. CTA “Quiero ser socio”. |
 | Alquiler sede | `/venue` | Cotización por WhatsApp (mensaje sede). Espacios y medidas abajo. |
 | Directorio equino | `/directory` | Catálogo buscable (tipos dinámicos en Sanity); UI de búsqueda más adelante. Spec only. |
+
+#### Socios / afiliación (`/membership`)
+
+Seed de producto (editable en Sanity `membershipPage`).
+
+**Quiénes somos**  
+Fundada en 1975, más de 45 años trabajando en pro del caballo criollo colombiano. Asociación sin ánimo de lucro que promueve la cría, el desarrollo y la cultura del caballo criollo colombiano en el Valle del Cauca.
+
+**Visión (Objetivo en mockup)**  
+Promover, desarrollar y mejorar la raza del caballo criollo colombiano, fortaleciendo a criadores y aficionados.
+
+**Misión**  
+Representar a los criadores y promover la cultura y la pasión por el caballo criollo colombiano a través de servicios, eventos y comunidad.
+
+**Ser socio — derechos / beneficios (seed)**
+
+1. Voz y voto en las asambleas de la asociación  
+2. Elegir y ser elegido para cargos directivos  
+3. Uso de las instalaciones de la sede según reglamento  
+4. Participar en eventos y competencias oficiales  
+5. Acceso preferente a registros y trámites  
+6. Tarifas preferenciales en escuela y servicios  
+7. Representación gremial ante Fedequinas y entidades afines  
+8. Recibir información y comunicados de la asociación  
+9. Participar en actividades formativas y culturales  
+10. Uso del departamento veterinario según disponibilidad  
+11. Categorías de socio (incl. vitalicio) según reglamento interno  
+
+**Ser afiliado — beneficios (seed)**
+
+1. Registro de ejemplares ante la asociación  
+2. Uso del departamento veterinario  
+3. Participación en eventos y ferias  
+4. Acceso a trámites de registros y homologaciones  
+5. Información de la asociación y agenda  
+6. Condiciones preferenciales en servicios según categoría  
+
+**Costos (seed UI)**
+
+| Tipo | Cuota de sostenimiento | Valor |
+| --- | --- | --- |
+| Afiliado | $0 | $0 |
+| Socio | $0 | $0 |
+| Socio afiliado | $1.500.000 | $5.000.000 |
+| Socio vitalicio | $1.500.000 | Traspasable |
+
+**Requisitos**
+
+- Diligenciar el formato de Asdeoccidente con dos registros originales  
+- Presentar dos cartas de recomendación de socios de Asdeoccidente  
+- El ingreso está sujeto a aprobación por la junta directiva en el mes en curso  
+- Copia de la C.C.  
+
+**Hero:** Fedequinas arriba · título “Quiero ser socio” · subtítulo “Únete a la casa del caballo criollo colombiano. Beneficios, voz en la asociación y comunidad.”  
+**CTA:** Quiero ser socio → WhatsApp tema `membership`. Botón de descarga del formato PDF (archivo en Sanity).
 
 #### Alquiler sede — espacios (medidas confirmadas)
 
@@ -277,6 +332,7 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | Ferias | Hola, quiero información sobre entradas y palcos para la Copa América Equina. |
 | Registros | Hola, tengo una consulta sobre registros y trámites de ejemplares. |
 | Sede | Hola, quiero cotizar un evento en la sede. |
+| Socios | Hola, quiero información para ser socio de Asdeoccidente. |
 | General | Hola, quiero hacer una consulta. |
 
 ---

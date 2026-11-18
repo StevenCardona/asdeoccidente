@@ -1,8 +1,8 @@
 # Spec: Membership (phase 1)
 
-> Status: **spec / stub** — route and nav wired; full page later  
+> Status: **in progress** — full page + Sanity `membershipPage`  
 > Path: `/membership`  
-> Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md) § Ofertas / Hazte socio
+> Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md) § Socios / afiliación
 
 ## Identification
 
@@ -11,55 +11,66 @@
 | Id | `membership` |
 | Phase | 1 |
 | Depends on | `foundation` |
-| Feature folder | `features/offers` (stub) → later `features/membership` |
+| Feature folder | `features/membership` |
 
 ## Goal
 
-Invite creators and exhibitors to become members with a clear “Quiero ser socio” path — descuentos y voz en la asociación — without inventing dues or benefit lists.
+Invite creators and exhibitors to join as socios or afiliados with a clear “Quiero ser socio” path — quiénes somos, misión/visión, beneficios, costos, requisitos y formato.
 
 ## Expected result
 
-- Page `/membership` with Spanish UI
-- Voice: prefer **“Quiero ser socio”** (not “Postular como socio”)
-- CTA → WhatsApp general (or dedicated topic when confirmed)
+- Page `/membership` with Spanish UI and Occidente ADN (crimson/navy)
+- Primary CTA: WhatsApp topic `membership` — `Hola, quiero información para ser socio de Asdeoccidente.`
+- Sanity singleton `membershipPage`; code defaults until published
 - Shared layout; SEO
+- Voice: **“Quiero ser socio”** (not “Postular como socio”)
 
 ## Scope / out of scope
 
-**In (full build later):** value proposition, how to join, contact path.
+**In:** hero banner, quiénes somos, misión/visión, ser socio (cards + gallery), ser afiliado (cards), tabla de costos, requisitos + botón de formato PDF, WhatsApp CTA.
 
-**Out until confirmed:** cuota de afiliación, full benefits matrix, online application form, “portal socios”.
+**Out:** portal socios, formulario online de postulación (solo PDF + WhatsApp), sidebar vertical de mockups legacy.
 
-**Note:** School socio vs no-socio **class packs** live on `/school` — not membership dues.
+**Note:** School socio vs no-socio **class packs** live on `/school`. Services trámite fees live on `/services`.
 
-**Stub now:** title, short blurb, Próximamente, WhatsApp.
+## Layout (order)
 
-## Sections (full build order)
-
-1. **Hero** — Quiero ser socio + one-line value
-2. **Beneficios** — only association-confirmed items
-3. **Cómo unirte** — steps + WhatsApp / email
-4. FAQ (confirmed only)
+1. **Hero** — full-bleed; logo Fedequinas; título; subtítulo; WhatsApp “Quiero ser socio”
+2. **Quiénes somos** — essence-like: eyebrow + título + cuerpo + columna de fotos
+3. **Misión y Visión** — solo pilares (imagen + título + texto); sin intro de sección; imágenes compactas en desktop; mobile carousel
+4. **Ser socio** — intro + cards compactas (número junto al título) + galería snap
+5. **Ser afiliado** — intro + cards compactas
+6. **Costos** — tabla (Tipo · Cuota de sostenimiento · Valor); mobile cards apiladas
+7. **Requisitos** — lista + botón Descargar formato (PDF Sanity; disabled si vacío)
+8. **Reseñas** — intro + cards (patrón venue)
+9. Shared ContactLocation / Footer
 
 ## Default copy (KB-aligned)
 
 | Element | Value |
 | --- | --- |
-| Title | Quiero ser socio |
-| Subtitle | Descuentos y voz en la asociación. `[detalle de beneficios por confirmar]` |
-| Primary CTA | Quiero ser socio → WhatsApp |
-| Home cifra related | +180 socios (provisional on Home stats until association confirms) |
-
-## Open with association
-
-Dues, requirements, benefits list, who approves applications — `[por confirmar]`.
+| Hero mark | Fedequinas (`/brand/fedeequinas.png`) above title |
+| Hero title | Quiero ser socio |
+| Hero subtitle | Únete a la casa del caballo criollo colombiano. Beneficios, voz en la asociación y comunidad. |
+| Primary CTA | Quiero ser socio → WhatsApp `membership` |
+| Quiénes somos eyebrow | Quiénes somos |
+| Quiénes somos title | Fundada en 1975, más de 45 años trabajando en pro del caballo criollo colombiano. |
+| Costos seed | Afiliado / Socio $0·$0; Socio afiliado $1.500.000·$5.000.000; Socio vitalicio $1.500.000·Traspasable |
+| Formato CTA | Descargar formato |
 
 ## CMS
 
-Deferred.
+Singleton `membershipPage` (`_id: "membershipPage"`). Studio sidebar: **Socios**.
+
+Fields: `hero`, `about`, `missionVision` (pillars only), `memberBenefits` (+ gallery), `affiliateBenefits`, `costs`, `requirements` (+ PDF file), `reviewsIntro` + `reviews[]`, `seo`.
+
+`siteSettings.whatsappMessageMembership` + topic `membership`.
 
 ## Acceptance
 
-- [x] Spec written; stub `/membership` exists
-- [ ] Full page without invented dues
-- [ ] Voice matches KB table
+- [x] Spec written; stub `/membership` existed
+- [x] Full page: hero, quiénes somos, misión/visión, socio, afiliado, costos, requisitos
+- [x] WhatsApp topic `membership` in siteSettings
+- [x] Studio: Socios singleton editable
+- [x] Formato PDF opens in new tab when uploaded (disabled until file exists)
+- [x] Voice matches KB table

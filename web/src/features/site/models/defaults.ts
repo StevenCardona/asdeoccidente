@@ -36,6 +36,8 @@ export const defaultSiteSettings: SiteSettings = {
     fairs:
       "Hola, quiero información sobre entradas y palcos para la Copa América Equina.",
     venue: "Hola, quiero cotizar un evento en la sede.",
+    membership: "Hola, quiero información para ser socio de Asdeoccidente.",
+    equinotherapy: "Hola, quiero información sobre equinoterapia.",
     general: "Hola, quiero hacer una consulta.",
   },
 };
