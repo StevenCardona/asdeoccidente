@@ -92,6 +92,14 @@ export default defineConfig({
                   .schemaType("membershipPage")
                   .documentId("membershipPage"),
               ),
+            S.listItem()
+              .title("Equinoterapia")
+              .id("equinotherapyPage")
+              .child(
+                S.document()
+                  .schemaType("equinotherapyPage")
+                  .documentId("equinotherapyPage"),
+              ),
           ]),
     }),
     visionTool(),

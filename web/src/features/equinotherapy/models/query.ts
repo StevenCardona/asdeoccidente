@@ -64,7 +64,6 @@ export const equinotherapyPageQuery = `*[_type == "equinotherapyPage" && _id == 
     eyebrow,
     title,
     paragraphs,
-    benefits,
     image,
     "imageAlt": image.alt,
     imagePosition

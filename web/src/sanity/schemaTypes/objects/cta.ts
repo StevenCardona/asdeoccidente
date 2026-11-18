@@ -31,6 +31,7 @@ export const cta = defineType({
           { title: "Eventos", value: "fairs" },
           { title: "Alquiler sede", value: "venue" },
           { title: "Socios", value: "membership" },
+          { title: "Equinoterapia", value: "equinotherapy" },
           { title: "Consulta general", value: "general" },
         ],
       },

@@ -206,44 +206,10 @@ export const equinotherapyPage = defineType({
     defineField({
       name: "faq",
       title: "Preguntas frecuentes",
-      type: "object",
+      type: "equinotherapyFaq",
       group: "faq",
-      fields: [
-        defineField({
-          name: "intro",
-          title: "Títulos de la sección",
-          type: "sectionIntro",
-          initialValue: {
-            eyebrow: "Dudas frecuentes",
-            title: "Preguntas sobre equinoterapia",
-            subtitle: "Lo esencial antes de escribirnos.",
-          },
-        }),
-        defineField({
-          name: "items",
-          title: "Preguntas y respuestas",
-          type: "array",
-          of: [
-            defineArrayMember({
-              type: "object",
-              fields: [
-                defineField({
-                  name: "question",
-                  title: "Pregunta",
-                  type: "string",
-                }),
-                defineField({
-                  name: "answer",
-                  title: "Respuesta",
-                  type: "text",
-                  rows: 3,
-                }),
-              ],
-              preview: { select: { title: "question" } },
-            }),
-          ],
-        }),
-      ],
+      description:
+        "Preguntas prácticas. Sin promesas de cura ni lenguaje médico inventado.",
     }),
     defineField({
       name: "seo",

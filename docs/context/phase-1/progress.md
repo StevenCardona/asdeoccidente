@@ -96,6 +96,7 @@
 - [x] Nav + sitemap `/equinotherapy`
 - [x] Sanity `equinotherapyPage` + WhatsApp topic
 - [x] Page UI (hero, story blocks, gallery, reviews, FAQ)
+- [x] Studio desk singleton + FAQ object type + content guide §9
 - [ ] Association uploads therapy photos / reviews / FAQ refinements
 - [ ] Acceptance: mobile review
 
