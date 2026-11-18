@@ -9,6 +9,7 @@ const topics: Array<{ value: WhatsappTopic; label: string }> = [
   { value: "fairs", label: "Eventos" },
   { value: "venue", label: "Alquiler sede" },
   { value: "membership", label: "Socios" },
+  { value: "equinotherapy", label: "Equinoterapia" },
   { value: "general", label: "Consulta general" },
 ];
 

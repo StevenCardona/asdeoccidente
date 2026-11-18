@@ -10,7 +10,8 @@
 | Spec services (registros/trámites) | In progress — Sanity + page |
 | Spec venue (alquiler sede) | In progress — Sanity + full page |
 | Spec membership | In progress — Sanity + full page |
-| Specs equinotherapy, directory | Spec / stub |
+| Spec equinotherapy | In progress — Sanity + full page |
+| Spec directory | Spec / stub |
 | Spec about | Deferred (route commented) |
 | App `web/` foundation shell | Done |
 | Sanity Studio (embedded `/studio`) | Wired — project `h9imk562` / `production` |
@@ -20,7 +21,8 @@
 | App Services `/services` | In progress |
 | App Venue `/venue` | In progress |
 | App Membership `/membership` | In progress |
-| Offer stubs `/equinotherapy` `/directory` | Stub |
+| App Equinotherapy `/equinotherapy` | In progress |
+| Offer stub `/directory` | Stub |
 | Confirmed 2026 school fees | Pending association |
 
 ## Foundation checklist
@@ -88,15 +90,23 @@
 - [ ] Association uploads photos / formato PDF in Studio
 - [ ] Acceptance: mobile review
 
+## Equinotherapy checklist
+
+- [x] Spec for equinoterapia + careful tone (sin promesas de cura)
+- [x] Nav + sitemap `/equinotherapy`
+- [x] Sanity `equinotherapyPage` + WhatsApp topic
+- [x] Page UI (hero, story blocks, gallery, reviews, FAQ)
+- [ ] Association uploads therapy photos / reviews / FAQ refinements
+- [ ] Acceptance: mobile review
+
 ## Offer stubs checklist
 
-- [x] Specs for equinotherapy, directory
-- [x] Stub pages + nav (desktop + mobile full set; mobile active shows label)
-- [ ] Full page build (equinotherapy)
+- [x] Spec for directory
+- [x] Stub page + nav for directory
 - [ ] Directory Sanity schemas + search UI
 
 ## Next
 
 1. Finish School / Events / Services / Venue / Membership acceptance
-2. Full build of equinotherapy as prioritized
+2. Finish equinotherapy acceptance
 3. Directory CMS + search UI per `directory.md`

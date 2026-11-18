@@ -29,4 +29,4 @@ Also check [`docs/context/phase-1/progress.md`](docs/context/phase-1/progress.md
 
 ## Spec order
 
-`foundation` (done) → `home` (done) → `school` → `fairs`/`events` → `services` / `venue` / `membership` → offer stubs (`equinotherapy`, `directory` spec) → (about later)
+`foundation` (done) → `home` (done) → `school` → `fairs`/`events` → `services` / `venue` / `membership` → `equinotherapy` → offer stub (`directory` spec) → (about later)

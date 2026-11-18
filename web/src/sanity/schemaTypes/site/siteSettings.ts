@@ -253,6 +253,16 @@ export const siteSettings = defineType({
         "Hola, quiero información para ser socio de Asdeoccidente.",
     }),
     defineField({
+      name: "whatsappMessageEquinotherapy",
+      title: "Mensaje WhatsApp — Equinoterapia",
+      type: "text",
+      rows: 2,
+      group: "whatsapp",
+      description:
+        "Texto del botón en /equinotherapy. Ej. Hola, quiero información sobre equinoterapia.",
+      initialValue: "Hola, quiero información sobre equinoterapia.",
+    }),
+    defineField({
       name: "whatsappMessageGeneral",
       title: "Mensaje WhatsApp — General",
       type: "text",

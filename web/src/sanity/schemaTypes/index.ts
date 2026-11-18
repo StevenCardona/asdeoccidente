@@ -1,3 +1,4 @@
+import { equinotherapyTypes } from "./equinotherapy";
 import { eventTypes } from "./events";
 import { homeTypes } from "./home";
 import { membershipTypes } from "./membership";
@@ -16,4 +17,5 @@ export const schemaTypes = [
   ...servicesTypes,
   ...venueTypes,
   ...membershipTypes,
+  ...equinotherapyTypes,
 ];

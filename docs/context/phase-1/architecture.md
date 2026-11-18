@@ -43,7 +43,7 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | Servicios (trámites) | `/services` | In progress — Sanity sections + PDFs |
 | Alquiler | `/venue` | In progress — Sanity `venuePage` |
 | Socios | `/membership` | In progress — Sanity `membershipPage` |
-| Equinoterapia | `/equinotherapy` | Spec / stub |
+| Equinoterapia | `/equinotherapy` | In progress — Sanity `equinotherapyPage` |
 | Directorio | `/directory` | Spec / stub (search UI later) |
 | Nosotros | `/about` | **Commented / deferred** (`page.tsx.deferred`) |
 | Studio | `/studio` | Active + **authenticated** (Sanity login) |
