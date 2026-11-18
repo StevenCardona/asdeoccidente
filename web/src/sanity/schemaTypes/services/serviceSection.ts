@@ -28,21 +28,33 @@ export const serviceSection = defineType({
       title: "Descripción",
       type: "text",
       rows: 3,
-      description: "2 o 3 frases. Voz: Registra a tu ejemplar…",
+      description: "Texto corto bajo el título (2 o 3 frases).",
     }),
     defineField({
       name: "icon",
-      title: "Icono (Lucide)",
+      title: "Ícono",
       type: "string",
-      description:
-        "Escribe exactamente uno: FileText · ArrowLeftRight · ClipboardCheck · Copy · HeartHandshake · CalendarDays · Stamp · FolderOpen",
+      description: "Ícono que aparece junto al título en la página.",
+      options: {
+        list: [
+          { title: "Documento", value: "FileText" },
+          { title: "Traspaso", value: "ArrowLeftRight" },
+          { title: "Homologación", value: "ClipboardCheck" },
+          { title: "Duplicado", value: "Copy" },
+          { title: "Manos / apoyo", value: "HeartHandshake" },
+          { title: "Calendario", value: "CalendarDays" },
+          { title: "Sello", value: "Stamp" },
+          { title: "Carpeta", value: "FolderOpen" },
+        ],
+        layout: "dropdown",
+      },
     }),
     defineField({
       name: "feeRows",
       title: "Tarifas",
       type: "array",
       description:
-        "Filas Concepto · Socio · Público general. Puedes dejar precios vacíos hasta confirmar.",
+        "Filas Concepto · Socios · No socios. Precio vacío se muestra como — en la web.",
       of: [defineArrayMember({ type: "feeRow" })],
     }),
     defineField({

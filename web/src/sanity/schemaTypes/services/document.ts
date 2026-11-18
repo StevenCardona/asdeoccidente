@@ -3,61 +3,14 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 const PUBLISH_HINT =
   "Importante: después de editar, pulsa Publicar. Solo Guardar no actualiza la web pública.";
 
-const sectionShells = [
-  {
-    title: "Registro de ejemplares",
-    slug: { current: "registro-de-ejemplares" },
-    description:
-      "Registra a tu ejemplar con claridad y respaldo institucional.",
-    icon: "FileText",
-    feeRows: [],
-    downloads: [],
-  },
-  {
-    title: "Traspaso de ejemplares",
-    slug: { current: "traspaso-de-ejemplares" },
-    description: "Gestiona traspasos entre socios y criaderos.",
-    icon: "ArrowLeftRight",
-    feeRows: [],
-    downloads: [],
-  },
-  {
-    title: "Homologaciones",
-    slug: { current: "homologaciones" },
-    description:
-      "Homologa títulos y categorías según el trámite que necesites.",
-    icon: "ClipboardCheck",
-    feeRows: [],
-    downloads: [],
-  },
-  {
-    title: "Duplicados",
-    slug: { current: "duplicados" },
-    description: "Solicita duplicados de documentos o carnets.",
-    icon: "Copy",
-    feeRows: [],
-    downloads: [],
-  },
-  {
-    title: "Formatos",
-    slug: { current: "formatos" },
-    description:
-      "Descarga formatos de afiliación, salud y otros formularios.",
-    icon: "FolderOpen",
-    feeRows: [],
-    downloads: [],
-  },
-];
-
 export const servicesPage = defineType({
   name: "servicesPage",
-  title: "Página Servicios",
+  title: "Servicios",
   type: "document",
-  description: `${PUBLISH_HINT} Trámites y registros en /services: secciones, tarifas socio/público y PDFs.`,
+  description: `${PUBLISH_HINT} Trámites en /services: crea secciones con ícono, título, descripción, tarifas y PDFs. El orden del listado es el del filtro y la página.`,
   groups: [
     { name: "hero", title: "Encabezado", default: true },
     { name: "sections", title: "Trámites" },
-    { name: "help", title: "Ayuda" },
     { name: "seo", title: "Google / buscadores" },
   ],
   fields: [
@@ -78,12 +31,6 @@ export const servicesPage = defineType({
               "Consulta tarifas y descarga los formularios que necesitas para registros y trámites.",
           },
         }),
-        defineField({
-          name: "image",
-          title: "Imagen de fondo (opcional)",
-          type: "imageWithAlt",
-          description: "Si no subes imagen, el hero usa el color institucional.",
-        }),
       ],
     }),
     defineField({
@@ -92,37 +39,9 @@ export const servicesPage = defineType({
       type: "array",
       group: "sections",
       description:
-        "Cada bloque: título, tarifas (socio / público) y botones PDF. Reordena arrastrando.",
+        "Añade solo los trámites que quieras mostrar. Reordena arrastrando: ese orden es el del filtro y la página.",
       of: [defineArrayMember({ type: "serviceSection" })],
-      initialValue: sectionShells,
-    }),
-    defineField({
-      name: "help",
-      title: "Bloque de ayuda",
-      type: "object",
-      group: "help",
-      fields: [
-        defineField({
-          name: "title",
-          title: "Título",
-          type: "string",
-          initialValue: "¿Necesitas ayuda con un trámite?",
-        }),
-        defineField({
-          name: "body",
-          title: "Texto",
-          type: "text",
-          rows: 3,
-          initialValue:
-            "Escríbenos por WhatsApp. Te orientamos sobre registros, traspasos y formularios.",
-        }),
-        defineField({
-          name: "ctaLabel",
-          title: "Texto del botón WhatsApp",
-          type: "string",
-          initialValue: "Consultar por WhatsApp",
-        }),
-      ],
+      initialValue: [],
     }),
     defineField({
       name: "seo",
@@ -138,7 +57,7 @@ export const servicesPage = defineType({
   ],
   preview: {
     prepare() {
-      return { title: "Página Servicios" };
+      return { title: "Servicios" };
     },
   },
 });

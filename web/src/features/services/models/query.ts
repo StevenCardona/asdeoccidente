@@ -1,18 +1,12 @@
-import type { SanityImageSource } from "@sanity/image-url";
-
 type IntroDoc = {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
 };
 
-type ImageDoc = SanityImageSource & { alt?: string };
-
 export type ServicesPageDoc = {
   hero?: {
     intro?: IntroDoc | null;
-    image?: ImageDoc | null;
-    imageAlt?: string;
   } | null;
   sections?: Array<{
     title?: string;
@@ -29,11 +23,6 @@ export type ServicesPageDoc = {
       fileUrl?: string | null;
     }> | null;
   }> | null;
-  help?: {
-    title?: string;
-    body?: string;
-    ctaLabel?: string;
-  } | null;
   seo?: {
     title?: string;
     description?: string;
@@ -42,9 +31,7 @@ export type ServicesPageDoc = {
 
 export const servicesPageQuery = `*[_type == "servicesPage" && _id == "servicesPage"][0]{
   hero{
-    intro{ eyebrow, title, subtitle },
-    image,
-    "imageAlt": image.alt
+    intro{ eyebrow, title, subtitle }
   },
   sections[]{
     title,
@@ -57,6 +44,5 @@ export const servicesPageQuery = `*[_type == "servicesPage" && _id == "servicesP
       "fileUrl": file.asset->url
     }
   },
-  help{ title, body, ctaLabel },
   seo{ title, description }
 }`;

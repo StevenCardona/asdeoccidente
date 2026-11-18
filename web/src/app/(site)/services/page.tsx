@@ -18,8 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: content.seo.title,
     description: content.seo.description,
     siteName: settings.name,
-    image: content.hero.image,
-    imageAlt: content.hero.imageAlt || content.hero.title,
   });
 }
 

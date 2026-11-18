@@ -17,14 +17,14 @@ export const feeRow = defineType({
       title: "Precio para socios",
       type: "number",
       description:
-        "Pesos SIN puntos ni comas (ej. 80000). Déjalo vacío si aún no está confirmado.",
+        "Pesos SIN puntos ni comas (ej. 80000). Vacío → se muestra — en la web.",
     }),
     defineField({
       name: "priceNoSocio",
       title: "Precio para público general",
       type: "number",
       description:
-        "Pesos SIN puntos ni comas. Déjalo vacío si aún no está confirmado.",
+        "Pesos SIN puntos ni comas. Vacío → se muestra — en la web.",
     }),
   ],
   preview: {
@@ -36,7 +36,7 @@ export const feeRow = defineType({
       ].filter(Boolean);
       return {
         title: title || "Concepto",
-        subtitle: parts.length > 0 ? parts.join(" · ") : "Sin precios aún",
+        subtitle: parts.length > 0 ? parts.join(" · ") : "Sin precios (—)",
       };
     },
   },

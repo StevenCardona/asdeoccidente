@@ -1,5 +1,3 @@
-import type { SanityImageSource } from "@sanity/image-url";
-import { resolveSanityImage } from "@/shared/lib/resolve-image";
 import { defaultServicesContent } from "./defaults";
 import type { ServicesPageDoc } from "./query";
 import type {
@@ -95,11 +93,11 @@ function cloneDefaults(): ServicesContent {
       feeRows: section.feeRows.map((row) => ({ ...row })),
       downloads: section.downloads.map((file) => ({ ...file })),
     })),
-    help: { ...defaultServicesContent.help },
     seo: { ...defaultServicesContent.seo },
   };
 }
 
+/** Prefer code seed until Studio publishes at least one titled section. */
 export function mergeServices(doc: ServicesPageDoc | null): ServicesContent {
   if (!doc) return cloneDefaults();
 
@@ -107,29 +105,14 @@ export function mergeServices(doc: ServicesPageDoc | null): ServicesContent {
   if (sections.length === 0) return cloneDefaults();
 
   const intro = doc.hero?.intro;
-  const resolvedImage = resolveSanityImage(
-    doc.hero?.image as SanityImageSource | null | undefined,
-    doc.hero?.imageAlt,
-    undefined,
-    intro?.title,
-  );
-
-  const help = doc.help;
 
   return {
     hero: {
       eyebrow: intro?.eyebrow?.trim() || defaultServicesContent.hero.eyebrow,
       title: intro?.title?.trim() || defaultServicesContent.hero.title,
       subtitle: intro?.subtitle?.trim() || defaultServicesContent.hero.subtitle,
-      image: resolvedImage.src,
-      imageAlt: resolvedImage.alt || defaultServicesContent.hero.imageAlt,
     },
     sections,
-    help: {
-      title: help?.title?.trim() || defaultServicesContent.help.title,
-      body: help?.body?.trim() || defaultServicesContent.help.body,
-      ctaLabel: help?.ctaLabel?.trim() || defaultServicesContent.help.ctaLabel,
-    },
     seo: {
       title: doc.seo?.title?.trim() || defaultServicesContent.seo.title,
       description:

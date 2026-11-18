@@ -39,28 +39,37 @@ export default defineConfig({
                 S.document().schemaType("school").documentId("school"),
               ),
             S.listItem()
-              .title("Página Eventos")
-              .id("eventsPage")
-              .child(
-                S.document()
-                  .schemaType("eventsPage")
-                  .documentId("eventsPage"),
-              ),
-            S.listItem()
               .title("Eventos")
               .id("events")
               .child(
-                S.documentTypeList("event")
+                S.list()
                   .title("Eventos")
-                  .defaultOrdering([
-                    { field: "startDate", direction: "desc" },
-                  ])
-                  .initialValueTemplates([
-                    S.initialValueTemplateItem("event-new"),
+                  .items([
+                    S.listItem()
+                      .title("Página")
+                      .id("eventsPage")
+                      .child(
+                        S.document()
+                          .schemaType("eventsPage")
+                          .documentId("eventsPage"),
+                      ),
+                    S.listItem()
+                      .title("Calendario")
+                      .id("eventsCalendar")
+                      .child(
+                        S.documentTypeList("event")
+                          .title("Calendario")
+                          .defaultOrdering([
+                            { field: "startDate", direction: "desc" },
+                          ])
+                          .initialValueTemplates([
+                            S.initialValueTemplateItem("event-new"),
+                          ]),
+                      ),
                   ]),
               ),
             S.listItem()
-              .title("Página Servicios")
+              .title("Servicios")
               .id("servicesPage")
               .child(
                 S.document()

@@ -1,6 +1,6 @@
 # Spec: Services — registros y trámites (phase 1)
 
-> Status: **in progress** — compact layout + Occidente branding; static seed; Sanity fill later  
+> Status: **in progress** — compact layout; Sanity dinámico para secciones; seed de código como fallback  
 > Path: `/services`  
 > Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md) § Registros
 
@@ -15,7 +15,7 @@
 
 ## Goal
 
-Show trámites in a compact Occidente-branded layout: section title, short text, socio / no socio fees, download buttons. PDF opens in a **new tab** when a file exists.
+Show trámites in a compact Occidente-branded layout: section title, short text, socio / no socio fees, download buttons. PDF opens in a **new tab** when a file exists. Editors create/reorder/remove sections in Sanity.
 
 ## Layout (order)
 
@@ -33,11 +33,17 @@ Show trámites in a compact Occidente-branded layout: section title, short text,
 - Icon + title same row; icon compact/rounded-full mobile, rounded-2xl desktop
 - Titles/body use secondary navy + muted text
 
-## Content source (now)
+## Content source
 
-- Code defaults from previous Asdeoccidente site
+- **Sanity** singleton `servicesPage` (Studio sidebar: **Servicios**): hero intro + dynamic `sections[]` (icon, title, description, slug, feeRows, PDF downloads). Empty array = start from scratch; published sections replace the site list wholesale.
+- **Code defaults** only when there is no doc or no titled sections (fallback so the public page is not blank).
 - Empty price cells → **—** only (no “por confirmar” / “Consultar”)
-- Sanity later overrides when published with sections
+
+## Studio hierarchy (site-wide)
+
+Short page names. Nest only when a module has sub-docs:
+
+- Configuración general · Inicio · Escuela · **Eventos** (Página + Calendario) · **Servicios**
 
 ## PDF buttons
 
@@ -47,9 +53,11 @@ Show trámites in a compact Occidente-branded layout: section title, short text,
 
 ## Acceptance
 
-- [x] Compact intro; icon stacked above content
+- [x] Compact intro; icon + title same row
 - [x] Filter bar with scroll affordance (web + mobile)
-- [x] Primary on filter/buttons; navy table headers; price separators
-- [x] No help WhatsApp section
+- [x] Primary on filter/buttons; light table headers; price separators
+- [x] No help WhatsApp section / Studio help noise
+- [x] Studio: empty sections by default; create trámites dynamically; icon dropdown
+- [x] Studio sidebar: short names; Eventos nested
 - [ ] Association uploads PDFs in Studio
 - [ ] Mobile review

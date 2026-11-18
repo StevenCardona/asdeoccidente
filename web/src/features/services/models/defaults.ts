@@ -6,8 +6,6 @@ export const defaultServicesContent: ServicesContent = {
     title: "Servicios y trámites",
     subtitle:
       "Tarifas y formularios para registros, traspasos, homologaciones y más.",
-    image: null,
-    imageAlt: "",
   },
   sections: [
     {
@@ -156,17 +154,9 @@ export const defaultServicesContent: ServicesContent = {
       ],
     },
   ],
-  help: {
-    title: "¿Necesitas ayuda con un trámite?",
-    body: "Escríbenos por WhatsApp. Te orientamos sobre registros, traspasos y formularios.",
-    ctaLabel: "Escribir por WhatsApp",
-  },
   seo: {
     title: "Servicios y trámites",
     description:
       "Registros, traspasos, homologaciones y formularios. Tarifas y descargas de PDFs.",
   },
 };
-
-export const REGISTROS_WHATSAPP_TEXT =
-  "Hola, tengo una consulta sobre registros y trámites de ejemplares.";

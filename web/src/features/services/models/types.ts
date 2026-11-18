@@ -12,7 +12,7 @@ export type ServicesFeeRow = {
 
 export type ServicesDownload = {
   label: string;
-  /** Empty until a PDF is uploaded (Sanity later). */
+  /** Empty until a PDF is uploaded in Sanity. */
   fileUrl: string;
 };
 
@@ -25,19 +25,9 @@ export type ServicesSection = {
   downloads: ServicesDownload[];
 };
 
-export type ServicesHelp = {
-  title: string;
-  body: string;
-  ctaLabel: string;
-};
-
 export type ServicesContent = {
-  hero: ServicesSectionIntro & {
-    image: string | null;
-    imageAlt: string;
-  };
+  hero: ServicesSectionIntro;
   sections: ServicesSection[];
-  help: ServicesHelp;
   seo: {
     title: string;
     description: string;
