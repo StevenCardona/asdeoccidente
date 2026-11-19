@@ -26,7 +26,36 @@ export const siteSettingsQuery = `*[_type == "siteSettings" && _id == "siteSetti
   whatsappMessageVenue,
   whatsappMessageMembership,
   whatsappMessageEquinotherapy,
-  whatsappMessageGeneral
+  whatsappMessageGeneral,
+  ui{
+    navItems[]{ href, label, icon },
+    contactEyebrow,
+    contactTitle,
+    contactSubtitle,
+    contactFormTitle,
+    contactFormSubtitle,
+    contactNameLabel,
+    contactNamePlaceholder,
+    contactPhoneLabel,
+    contactPhonePlaceholder,
+    contactTopicLabel,
+    contactMessageLabel,
+    contactMessagePlaceholder,
+    contactSubmitLabel,
+    topicLabelSchool,
+    topicLabelFairs,
+    topicLabelVenue,
+    topicLabelMembership,
+    topicLabelEquinotherapy,
+    topicLabelGeneral,
+    footerNavHeading,
+    footerContactHeading,
+    copyrightSuffix,
+    directionsVideoLabel,
+    heroAddressPrefix,
+    "fedequinasImageUrl": fedequinasImage.asset->url,
+    "ogImageUrl": ogImage.asset->url
+  }
 }`;
 
 export type SiteSettingsDoc = {
@@ -56,4 +85,33 @@ export type SiteSettingsDoc = {
   whatsappMessageMembership?: string;
   whatsappMessageEquinotherapy?: string;
   whatsappMessageGeneral?: string;
+  ui?: {
+    navItems?: Array<{ href?: string; label?: string; icon?: string }> | null;
+    contactEyebrow?: string;
+    contactTitle?: string;
+    contactSubtitle?: string;
+    contactFormTitle?: string;
+    contactFormSubtitle?: string;
+    contactNameLabel?: string;
+    contactNamePlaceholder?: string;
+    contactPhoneLabel?: string;
+    contactPhonePlaceholder?: string;
+    contactTopicLabel?: string;
+    contactMessageLabel?: string;
+    contactMessagePlaceholder?: string;
+    contactSubmitLabel?: string;
+    topicLabelSchool?: string;
+    topicLabelFairs?: string;
+    topicLabelVenue?: string;
+    topicLabelMembership?: string;
+    topicLabelEquinotherapy?: string;
+    topicLabelGeneral?: string;
+    footerNavHeading?: string;
+    footerContactHeading?: string;
+    copyrightSuffix?: string;
+    directionsVideoLabel?: string;
+    heroAddressPrefix?: string;
+    fedequinasImageUrl?: string | null;
+    ogImageUrl?: string | null;
+  } | null;
 };

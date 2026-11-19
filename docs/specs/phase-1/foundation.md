@@ -20,8 +20,8 @@ Next.js app shell: packages, config, feature folders, design tokens, shared layo
 - `web/` starts locally (`npm run dev`)
 - TypeScript strict; Tailwind + shadcn + Lucide wired
 - React Query + nuqs providers in root layout
-- `(site)` layout via `SiteShell`: Header · outlet · ContactLocation · Footer · mobile bottom nav
-- Routes: `/` (Home feature), `/school`, `/fairs`, `/fairs/[slug]` (School/Fairs placeholder bodies)
+- `(site)` layout via `SiteShell`: Header (desktop nav + mobile hamburger drawer) · outlet · ContactLocation · Footer
+- Routes: `/`, `/school`, `/events`, `/events/[slug]`, `/services`, `/venue`, `/membership`, `/equinotherapy`, `/directory`
 - `/about` deferred (file `page.tsx.deferred`; nav entry commented)
 - `/studio` embedded — Sanity login; project `h9imk562` / dataset `production`
 - CSS variables / tokens from design system
@@ -55,7 +55,8 @@ See [`../../context/phase-1/architecture.md`](../../context/phase-1/architecture
 
 ## Layout & navigation
 
-**Header (desktop):** BrandLockup · Inicio `/` · Escuela `/school` · Ferias `/fairs` · WhatsApp CTA.  
+**Header (desktop):** BrandLockup · links from `navItems` · WhatsApp CTA.  
+**Header (mobile):** BrandLockup · hamburguesa → drawer lateral con `navItems` + WhatsApp (sin barra inferior).  
 `{/* Nosotros /about — deferred */}`
 
 **Mobile bottom nav:** Inicio · Escuela · Ferias (Lucide). Nosotros commented.
@@ -99,7 +100,7 @@ Same shell; mobile gets bottom nav and tighter gutters. Desktop max width ~`1280
 
 - [x] `npm run dev` serves the shell
 - [x] Unauthenticated users cannot edit Studio content (Sanity login)
-- [x] Nav reaches `/`, `/school`, `/fairs` without About visible
+- [x] Nav reaches `/`, `/school`, `/events` (and other published offer routes) without About visible
 - [x] ContactLocation shows map + video slot (placeholder when URL empty) + mailto form
 - [x] Shared Button / Skeleton / Dialog exist and are used by the shell
 - [x] Brand logos + favicon in `public/brand/`

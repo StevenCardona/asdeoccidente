@@ -1,6 +1,8 @@
-import { Suspense } from "react";
+/**
+ * Shared site chrome: Header → main → ContactLocation → Footer.
+ * `settings` come from RSC `getSiteSettings()` (Sanity published).
+ */
 import { ContactLocation } from "@/features/layout/components/contact-location";
-import { MobileNav } from "@/features/layout/components/mobile-nav";
 import { SiteFooter } from "@/features/layout/components/site-footer";
 import { SiteHeader } from "@/features/layout/components/site-header";
 import type { SiteSettings } from "@/features/site/models";
@@ -16,12 +18,7 @@ export function SiteShell({ children, settings }: SiteShellProps) {
       <SiteHeader settings={settings} />
       <main className="flex-1">{children}</main>
       <ContactLocation settings={settings} />
-      <div className="pb-14 md:pb-0">
-        <SiteFooter settings={settings} />
-      </div>
-      <Suspense fallback={null}>
-        <MobileNav />
-      </Suspense>
+      <SiteFooter settings={settings} />
     </div>
   );
 }

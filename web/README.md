@@ -1,52 +1,54 @@
 # Asdeoccidente web
 
-Phase-1 Next.js app. See root [`AGENTS.md`](../AGENTS.md), [`docs/specs/phase-1/foundation.md`](../docs/specs/phase-1/foundation.md), and [`docs/specs/phase-1/home.md`](../docs/specs/phase-1/home.md).
+Phase-1 Next.js app. See root [`AGENTS.md`](../AGENTS.md) and [`docs/specs/phase-1/site-pages.md`](../docs/specs/phase-1/site-pages.md).
 
 ## Setup
 
 ```bash
 cd web
-cp .env.example .env   # if needed
+cp .env.example .env   # infra only — same vars as root .env.example
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). Studio: [/studio](http://localhost:3000/studio).
 
-Brand assets: `public/brand/` (`logo.jpg` header, `logo-white.png` footer, `favicon.ico` tab icon, `fedeequinas.png` hero).
+Brand marks in `public/brand/` (logo header/footer, favicon). Fedequinas / OG images are uploaded in Sanity (`siteSettings` → Textos de interfaz).
 
-Contact, socials, map, and page copy come from Sanity (`siteSettings` / page documents). Env holds **infra only**.
+Contact, socials, map, nav, page copy, and CTAs come from Sanity. Env is **infra only**.
 
-## Environment (local + Vercel)
+## Environment
 
-| Variable | Local | Vercel Production / Preview |
+| Variable | Local | Production |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | `https://asdeoccidente.vercel.app` |
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | `h9imk562` | same |
+| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | production URL |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | project id | same |
 | `NEXT_PUBLIC_SANITY_DATASET` | `production` | same |
 
-The public site reads **published** content only via the Sanity CDN. No API token is required for page reads. After changing Vercel env vars, **Redeploy**.
+Published CDN reads only — no token required for the public site. Do not commit `.env`.
 
-Do not commit `.env` / `web/.env`.
+## Routes
 
-## What’s in the app
-
-| Path | Status |
+| Path | Content |
 | --- | --- |
-| `/` | Home — full sections from Sanity |
-| `/school` | Escuela — from Sanity |
-| `/fairs`, `/fairs/[slug]` | Placeholder (noindex until content ships) |
-| `/about` | Deferred |
+| `/` | Home |
+| `/school` | Escuela de chalanería |
+| `/events` | Eventos list (page banner or featured event hero) |
+| `/events/[slug]` | Event detail |
+| `/services` | Trámites |
+| `/venue` | Alquiler de sede |
+| `/membership` | Socios |
+| `/equinotherapy` | Equinoterapia |
+| `/directory` | Directorio (Excel por tipo) |
+| `/about` | Deferred (not in nav) |
 | `/studio` | Sanity Studio (noindex) |
 
-Shared chrome: Header · page body · Contact (mailto form + map + directions video) · Footer · mobile nav.
+Shared chrome: Header → page → Contact & location → Footer. Mobile uses a hamburger drawer (no bottom nav). **No route redirects** in `next.config` — use English paths (`/school`, `/events`, …).
 
-## Sanity Studio (embedded)
+## Publishing
 
-Studio lives **inside this app** at [http://localhost:3000/studio](http://localhost:3000/studio) — same path in production (`https://asdeoccidente.vercel.app/studio`).
+1. Open `/studio` and sign in.
+2. Edit singletons (Configuración general, Inicio, Escuela, Eventos → Página, …) or documents (Eventos → Calendario, Directorio → Tipos).
+3. Click **Publicar**. Wait ~1 minute or hard-refresh.
 
-1. Open `/studio` and sign in with your Sanity account.
-2. Edit **Configuración general**, **Inicio**, **Escuela**. After edits, click **Publicar** (Save alone does not update the public site).
-3. CORS: `http://localhost:3000` and managed origin for `https://asdeoccidente.vercel.app`.
-
-Production: [https://asdeoccidente.vercel.app](https://asdeoccidente.vercel.app).
+Home secondary CTA must be **Ver el próximo evento** with href **`/events`** (never `/fairs`).

@@ -60,7 +60,7 @@ function InfoSection({
   section: EventDetailInfoSection;
   settings: SiteSettings;
 }) {
-  const infoTitle = section.title?.trim() || "Información del evento";
+  const infoTitle = section.title?.trim() || "";
   const eyebrow = section.eyebrow?.trim() || "";
   const imageOnLeft = section.imagePosition === "left";
   const paragraphs = splitBody(section.body);

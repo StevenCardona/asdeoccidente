@@ -1,10 +1,11 @@
-import { Check } from "lucide-react";
 import type { EquinotherapyStory } from "@/features/equinotherapy/models";
 import { SafeImage } from "@/shared/components/safe-image";
+import { sectionPadX, sectionPadY } from "@/shared/lib/section";
 import { cn } from "@/shared/lib/utils";
 
 type EquinotherapyStoryProps = {
   content: EquinotherapyStory;
+  /** When true, section uses muted/gray background (benefits with cards). */
   muted?: boolean;
 };
 
@@ -21,21 +22,25 @@ export function EquinotherapyStorySection({
   if (!hasText && !content.image) return null;
 
   const imageOnLeft = content.imagePosition === "left";
+  const hasBenefitCards = content.benefits.length > 0;
 
   return (
     <section
       className={cn(
-        "px-5 py-10 md:px-12 md:py-14",
-        muted ? "bg-muted/35" : "bg-background",
+        sectionPadX,
+        sectionPadY,
+        muted || hasBenefitCards ? "bg-muted/40" : "bg-background",
       )}
     >
       <div className="mx-auto max-w-7xl">
         <div
           className={cn(
-            "grid gap-8 lg:items-center lg:gap-12",
-            imageOnLeft
-              ? "lg:grid-cols-[0.9fr_1.1fr] lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1"
-              : "lg:grid-cols-[1.1fr_0.9fr]",
+            "grid gap-8 lg:items-start lg:gap-12",
+            content.image
+              ? imageOnLeft
+                ? "lg:grid-cols-[0.9fr_1.1fr] lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1"
+                : "lg:grid-cols-[1.1fr_0.9fr]"
+              : undefined,
           )}
         >
           <div>
@@ -56,18 +61,19 @@ export function EquinotherapyStorySection({
                 ))}
               </div>
             ) : null}
-            {content.benefits.length > 0 ? (
-              <ul className="mt-6 space-y-3">
-                {content.benefits.map((benefit) => (
+            {hasBenefitCards ? (
+              <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                {content.benefits.map((benefit, index) => (
                   <li
                     key={benefit.slice(0, 48)}
-                    className="flex items-start gap-2 text-sm text-secondary md:text-base"
+                    className="border border-border bg-background p-4"
                   >
-                    <Check
-                      className="mt-0.5 h-4 w-4 shrink-0 text-primary"
-                      aria-hidden
-                    />
-                    <span>{benefit}</span>
+                    <p className="text-xs font-bold tabular-nums tracking-[0.08em] text-primary">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-secondary md:text-base">
+                      {benefit}
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -85,15 +91,7 @@ export function EquinotherapyStorySection({
                 imageOnLeft ? "lg:mr-auto" : "lg:ml-auto",
               )}
             />
-          ) : (
-            <div
-              className={cn(
-                "aspect-[4/3] w-full max-w-lg rounded-xl bg-muted",
-                imageOnLeft ? "lg:mr-auto" : "lg:ml-auto",
-              )}
-              aria-hidden
-            />
-          )}
+          ) : null}
         </div>
       </div>
     </section>

@@ -1,3 +1,7 @@
+/**
+ * Events list + detail. Loads `eventsPage` chrome and `event` documents.
+ * List page uses featured event hero when available; otherwise `eventsPage.hero`.
+ */
 import { cache } from "react";
 import { getSanityDataClient } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -35,6 +39,7 @@ export type {
   EventStatus,
   EventsContent,
   EventsListContent,
+  EventsPageHero,
 } from "./types";
 
 export {
@@ -49,7 +54,6 @@ export {
 } from "./format";
 
 export {
-  DEFAULT_EVENT_TICKET_NOTES,
   eventHasTicketPrices,
   normalizeEvent,
   resolveDetailSections,

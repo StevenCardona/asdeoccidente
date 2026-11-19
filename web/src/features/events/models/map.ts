@@ -180,24 +180,23 @@ function mergeIntro(
 
 export function emptyEventsListContent(): EventsListContent {
   return {
-    calendarIntro: {
-      eyebrow: "Calendario",
-      title: "Próximos eventos",
+    hero: {
+      badge: "",
+      title: "",
       subtitle: "",
+      image: "",
+      imageAlt: "",
+      primaryCtaLabel: "",
     },
+    calendarIntro: { eyebrow: "", title: "", subtitle: "" },
     reviewsIntro: { eyebrow: "", title: "", subtitle: "" },
     reviews: [],
     galleryIntro: { eyebrow: "", title: "", subtitle: "" },
     gallery: [],
     faqIntro: { eyebrow: "", title: "", subtitle: "" },
     faq: [],
-    emptyCalendarMessage:
-      "Estamos armando el calendario. Escríbenos por WhatsApp si quieres cupos o fechas.",
-    seo: {
-      title: "Eventos y ferias",
-      description:
-        "Ferias, exposiciones y eventos del caballo criollo colombiano con Asdeoccidente.",
-    },
+    emptyCalendarMessage: "",
+    seo: { title: "", description: "" },
   };
 }
 
@@ -230,7 +229,17 @@ export function mapEventsPage(
     }))
     .filter((item) => item.question && item.answer);
 
+  const heroImage = mapImage(doc.hero?.image);
+
   return {
+    hero: {
+      badge: doc.hero?.badge?.trim() || "",
+      title: doc.hero?.title?.trim() || "",
+      subtitle: doc.hero?.subtitle?.trim() || "",
+      image: heroImage?.src || "",
+      imageAlt: heroImage?.alt || "",
+      primaryCtaLabel: doc.hero?.primaryCtaLabel?.trim() || "",
+    },
     calendarIntro: mergeIntro(doc.calendarIntro, empty.calendarIntro),
     reviewsIntro: mergeIntro(doc.reviewsIntro, empty.reviewsIntro),
     reviews,

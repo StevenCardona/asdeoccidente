@@ -6,14 +6,6 @@ import type {
   EventInput,
 } from "./types";
 
-export const DEFAULT_EVENT_TICKET_NOTES =
-  "Entrada general, palcos e inscripción de ejemplares por WhatsApp.";
-
-const DEFAULT_BANNER: EventImage = {
-  src: "/imgs/banner3.webp",
-  alt: "Ambiente de evento equino en Asdeoccidente",
-};
-
 function teaserFromSummary(summary: string, max = 90): string {
   const clean = summary.trim().replace(/\s+/g, " ");
   if (!clean) return "";
@@ -23,32 +15,19 @@ function teaserFromSummary(summary: string, max = 90): string {
   return `${(cut > 40 ? slice.slice(0, cut) : slice).trim()}…`;
 }
 
-function defaultSeo(
-  title: string,
-  startDate: string,
-  endDate?: string,
-): Event["seo"] {
-  const range = formatEventDateRange(startDate, endDate);
-  return {
-    title,
-    description: `${title}. ${range}.`,
-  };
-}
-
 export function normalizeEvent(input: EventInput): Event {
   const summary = input.summary?.trim() ?? "";
   const teaser =
     input.teaser?.trim() || teaserFromSummary(summary) || input.title;
   const seoTitle = input.seo?.title?.trim() || input.title;
-  const seoDescription =
-    input.seo?.description?.trim() ||
-    defaultSeo(input.title, input.startDate, input.endDate).description;
+  const seoDescription = input.seo?.description?.trim() || "";
+  const range = formatEventDateRange(input.startDate, input.endDate);
 
   return {
     title: input.title.trim(),
     slug: input.slug.trim(),
     featured: input.featured ?? false,
-    banner: input.banner ?? DEFAULT_BANNER,
+    banner: input.banner ?? null,
     highlightImage: input.highlightImage,
     teaser,
     startDate: input.startDate,
@@ -63,7 +42,9 @@ export function normalizeEvent(input: EventInput): Event {
     status: input.status,
     seo: {
       title: seoTitle,
-      description: seoDescription,
+      description:
+        seoDescription ||
+        (range ? `${input.title.trim()}. ${range}.` : input.title.trim()),
     },
   };
 }
@@ -79,7 +60,7 @@ export function resolveDetailSections(event: Event): EventDetailSection[] {
   return [
     {
       type: "info",
-      title: "Información del evento",
+      title: "",
       body,
       imagePosition: "right",
     },

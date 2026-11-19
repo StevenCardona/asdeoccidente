@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Shared contact band: eyebrow/title from `settings.ui`, mailto form, map iframe,
+ * optional directions video dialog. Labels and copy come from Sanity siteSettings.
+ */
 import { useState } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
@@ -23,6 +27,8 @@ export function ContactLocation({ settings }: ContactLocationProps) {
   const hasVideo = Boolean(videoSrc);
   const posterSrc = video.posterSrc?.trim() || "";
   const [videoOpen, setVideoOpen] = useState(false);
+  const videoLabel =
+    settings.ui.directionsVideoLabel.trim() || settings.ui.contactTitle.trim();
 
   return (
     <section
@@ -34,30 +40,42 @@ export function ContactLocation({ settings }: ContactLocationProps) {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
           <div className="flex min-h-0 flex-col gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-tertiary">
-                Contacto y ubicación
-              </p>
-              <h2
-                id="contact-location-heading"
-                className="mt-2 font-display text-2xl font-bold text-secondary md:text-3xl"
-              >
-                Escríbenos y ubica la sede
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
-                Déjanos tus datos y te respondemos por correo.
-              </p>
+              {settings.ui.contactEyebrow.trim() ? (
+                <p className="text-xs font-bold uppercase tracking-wider text-tertiary">
+                  {settings.ui.contactEyebrow}
+                </p>
+              ) : null}
+              {settings.ui.contactTitle.trim() ? (
+                <h2
+                  id="contact-location-heading"
+                  className="mt-2 font-display text-2xl font-bold text-secondary md:text-3xl"
+                >
+                  {settings.ui.contactTitle}
+                </h2>
+              ) : (
+                <h2 id="contact-location-heading" className="sr-only">
+                  Contacto
+                </h2>
+              )}
+              {settings.ui.contactSubtitle.trim() ? (
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {settings.ui.contactSubtitle}
+                </p>
+              ) : null}
             </div>
 
-            <div className="h-64 min-h-[16rem] flex-1 overflow-hidden rounded-lg border border-border bg-surface md:h-72">
-              <iframe
-                title="Mapa de la sede Asdeoccidente"
-                src={mapSrc}
-                className="h-full w-full border-0"
-                loading="lazy"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
+            {mapSrc.trim() ? (
+              <div className="h-64 min-h-[16rem] flex-1 overflow-hidden rounded-lg border border-border bg-surface md:h-72">
+                <iframe
+                  title={settings.ui.contactTitle.trim() || "Mapa"}
+                  src={mapSrc}
+                  className="h-full w-full border-0"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            ) : null}
 
             {hasVideo ? (
               <>
@@ -65,7 +83,7 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                   type="button"
                   onClick={() => setVideoOpen(true)}
                   className="group relative h-28 w-full cursor-pointer overflow-hidden rounded-lg border border-border bg-secondary text-left md:h-32"
-                  aria-label="Ver video cómo llegar a la sede"
+                  aria-label={videoLabel}
                 >
                   {posterSrc ? (
                     <Image
@@ -81,9 +99,9 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                     <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform group-hover:scale-105">
                       <Play className="h-6 w-6 fill-current" aria-hidden />
                     </span>
-                    <span className="text-sm font-semibold">
-                      Cómo llegar a la sede
-                    </span>
+                    {videoLabel ? (
+                      <span className="text-sm font-semibold">{videoLabel}</span>
+                    ) : null}
                   </span>
                 </button>
 
@@ -97,7 +115,7 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                     )}
                   >
                     <DialogTitle className="sr-only">
-                      Cómo llegar a la sede
+                      {videoLabel || "Video"}
                     </DialogTitle>
                     <div
                       className={cn(
@@ -118,7 +136,7 @@ export function ContactLocation({ settings }: ContactLocationProps) {
                           />
                         ) : (
                           <iframe
-                            title="Cómo llegar a la sede"
+                            title={videoLabel || "Video"}
                             src={videoSrc}
                             className="h-full w-full border-0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

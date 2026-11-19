@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 const DEFAULT_ADDRESS =
   "Transversal 5 # 1 - 60, Recta Cali-Palmira, Corregimiento La Dolores, Palmira – Valle del Cauca";
@@ -21,6 +21,7 @@ export const siteSettings = defineType({
     { name: "location", title: "Ubicación" },
     { name: "google", title: "Google" },
     { name: "whatsapp", title: "WhatsApp" },
+    { name: "ui", title: "Textos de interfaz" },
   ],
   fields: [
     defineField({
@@ -270,6 +271,235 @@ export const siteSettings = defineType({
       group: "whatsapp",
       description: "Ej. Hola, quiero hacer una consulta.",
       initialValue: "Hola, quiero hacer una consulta.",
+    }),
+    defineField({
+      name: "ui",
+      title: "Textos de interfaz",
+      type: "object",
+      group: "ui",
+      description:
+        "Menú, bloque de contacto y formulario. Solo lo publicado aquí se muestra en el sitio (sin textos quemados en código).",
+      fields: [
+        defineField({
+          name: "navItems",
+          title: "Menú (header y footer)",
+          type: "array",
+          of: [
+            defineArrayMember({
+              type: "object",
+              fields: [
+                defineField({
+                  name: "href",
+                  title: "Ruta",
+                  type: "string",
+                  description: "Ej. /, /school, /events",
+                  validation: (rule) => rule.required(),
+                }),
+                defineField({
+                  name: "label",
+                  title: "Etiqueta",
+                  type: "string",
+                  validation: (rule) => rule.required(),
+                }),
+                defineField({
+                  name: "icon",
+                  title: "Icono (Lucide)",
+                  type: "string",
+                  options: {
+                    list: [
+                      "Home",
+                      "GraduationCap",
+                      "CalendarDays",
+                      "LayoutGrid",
+                      "Building2",
+                      "Handshake",
+                      "HeartPulse",
+                      "BookUser",
+                      "Users",
+                    ],
+                  },
+                  initialValue: "Home",
+                }),
+              ],
+              preview: {
+                select: { title: "label", subtitle: "href" },
+              },
+            }),
+          ],
+          initialValue: [
+            { href: "/", label: "Inicio", icon: "Home" },
+            { href: "/school", label: "Escuela", icon: "GraduationCap" },
+            { href: "/events", label: "Eventos", icon: "CalendarDays" },
+            { href: "/services", label: "Servicios", icon: "LayoutGrid" },
+            { href: "/venue", label: "Alquiler", icon: "Building2" },
+            { href: "/membership", label: "Socios", icon: "Handshake" },
+            {
+              href: "/equinotherapy",
+              label: "Equinoterapia",
+              icon: "HeartPulse",
+            },
+            { href: "/directory", label: "Directorio", icon: "BookUser" },
+          ],
+        }),
+        defineField({
+          name: "contactEyebrow",
+          title: "Contacto — eyebrow",
+          type: "string",
+          initialValue: "Contacto y ubicación",
+        }),
+        defineField({
+          name: "contactTitle",
+          title: "Contacto — título",
+          type: "string",
+          initialValue: "Escríbenos y ubica la sede",
+        }),
+        defineField({
+          name: "contactSubtitle",
+          title: "Contacto — subtítulo",
+          type: "text",
+          rows: 2,
+          initialValue: "Déjanos tus datos y te respondemos por correo.",
+        }),
+        defineField({
+          name: "contactFormTitle",
+          title: "Formulario — título",
+          type: "string",
+          initialValue: "Cuéntanos qué necesitas",
+        }),
+        defineField({
+          name: "contactFormSubtitle",
+          title: "Formulario — subtítulo",
+          type: "string",
+          initialValue: "Te respondemos por correo.",
+        }),
+        defineField({
+          name: "contactNameLabel",
+          title: "Label nombre",
+          type: "string",
+          initialValue: "¿Cómo te llamas?",
+        }),
+        defineField({
+          name: "contactNamePlaceholder",
+          title: "Placeholder nombre",
+          type: "string",
+          initialValue: "Tu nombre",
+        }),
+        defineField({
+          name: "contactPhoneLabel",
+          title: "Label teléfono",
+          type: "string",
+          initialValue: "Teléfono",
+        }),
+        defineField({
+          name: "contactPhonePlaceholder",
+          title: "Placeholder teléfono",
+          type: "string",
+          initialValue: "Tu celular",
+        }),
+        defineField({
+          name: "contactTopicLabel",
+          title: "Label motivo",
+          type: "string",
+          initialValue: "Motivo",
+        }),
+        defineField({
+          name: "contactMessageLabel",
+          title: "Label mensaje",
+          type: "string",
+          initialValue: "Mensaje",
+        }),
+        defineField({
+          name: "contactMessagePlaceholder",
+          title: "Placeholder mensaje",
+          type: "string",
+          initialValue: "¿En qué te ayudamos?",
+        }),
+        defineField({
+          name: "contactSubmitLabel",
+          title: "Botón enviar",
+          type: "string",
+          initialValue: "Enviar mensaje",
+        }),
+        defineField({
+          name: "topicLabelSchool",
+          title: "Opción motivo — Escuela",
+          type: "string",
+          initialValue: "Escuela / clase gratis",
+        }),
+        defineField({
+          name: "topicLabelFairs",
+          title: "Opción motivo — Eventos",
+          type: "string",
+          initialValue: "Eventos",
+        }),
+        defineField({
+          name: "topicLabelVenue",
+          title: "Opción motivo — Alquiler",
+          type: "string",
+          initialValue: "Alquiler sede",
+        }),
+        defineField({
+          name: "topicLabelMembership",
+          title: "Opción motivo — Socios",
+          type: "string",
+          initialValue: "Socios",
+        }),
+        defineField({
+          name: "topicLabelEquinotherapy",
+          title: "Opción motivo — Equinoterapia",
+          type: "string",
+          initialValue: "Equinoterapia",
+        }),
+        defineField({
+          name: "topicLabelGeneral",
+          title: "Opción motivo — General",
+          type: "string",
+          initialValue: "Consulta general",
+        }),
+        defineField({
+          name: "footerNavHeading",
+          title: "Footer — título navegación",
+          type: "string",
+          initialValue: "Navegación",
+        }),
+        defineField({
+          name: "footerContactHeading",
+          title: "Footer — título contacto",
+          type: "string",
+          initialValue: "Sede y contacto",
+        }),
+        defineField({
+          name: "copyrightSuffix",
+          title: "Footer — texto copyright",
+          type: "string",
+          initialValue: "Todos los derechos reservados.",
+        }),
+        defineField({
+          name: "directionsVideoLabel",
+          title: "Label video cómo llegar",
+          type: "string",
+          initialValue: "Cómo llegar",
+        }),
+        defineField({
+          name: "heroAddressPrefix",
+          title: "Prefijo dirección en hero Home",
+          type: "string",
+          description: 'Ej. "Nuestra sede está en " (se concatena con la dirección).',
+          initialValue: "Nuestra sede está en ",
+        }),
+        defineField({
+          name: "fedequinasImage",
+          title: "Logo Fedequinas (hero)",
+          type: "image",
+          description: "Si está vacío, no se muestra el logo Fedequinas.",
+        }),
+        defineField({
+          name: "ogImage",
+          title: "Imagen por defecto SEO / Open Graph",
+          type: "image",
+          description: "Usada en JSON-LD y metadatos cuando la página no trae imagen propia.",
+        }),
+      ],
     }),
   ],
   preview: {

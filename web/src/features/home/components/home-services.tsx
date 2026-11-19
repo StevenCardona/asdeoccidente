@@ -2,6 +2,7 @@ import type { HomeSectionIntro, HomeServiceItem } from "@/features/home/models";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SafeImage } from "@/shared/components/safe-image";
+import { sectionPadX, sectionPadY } from "@/shared/lib/section";
 
 type HomeServicesProps = {
   intro: HomeSectionIntro;
@@ -41,7 +42,7 @@ export function HomeServices({ intro, items }: HomeServicesProps) {
   if (!hasIntro && items.length === 0) return null;
 
   return (
-    <section className="bg-background px-5 py-16 md:px-12 md:py-20">
+    <section className={`bg-background ${sectionPadX} ${sectionPadY}`}>
       <div className="mx-auto max-w-7xl">
         {intro.eyebrow.trim() ? (
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
@@ -60,25 +61,25 @@ export function HomeServices({ intro, items }: HomeServicesProps) {
         ) : null}
 
         {items.length > 0 ? (
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((service) => (
               <li
-                key={service.title}
+                key={`${service.href ?? ""}-${service.title}`}
                 className="overflow-hidden border border-border bg-background"
               >
                 <SafeImage
                   src={service.image}
                   alt={service.imageAlt}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                  wrapperClassName="aspect-[16/10]"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  wrapperClassName="aspect-[16/10] bg-muted"
                 />
-                <div className="p-5 md:p-6">
+                <div className="flex flex-col p-5 md:p-6">
                   <h3 className="font-display text-lg font-semibold text-secondary">
                     {service.title}
                   </h3>
                   {service.description.trim() ? (
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {service.description}
                     </p>
                   ) : null}

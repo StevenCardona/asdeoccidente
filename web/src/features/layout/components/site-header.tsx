@@ -1,12 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
 import { BrandLockup } from "@/features/layout/components/brand-lockup";
 import type { SiteSettings } from "@/features/site/models";
 import { WhatsAppIcon } from "@/shared/components/brand-icons";
 import { Button } from "@/shared/components/ui/button";
-import { buildWhatsAppUrl, navItems } from "@/shared/config/site";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/shared/components/ui/sheet";
+import { buildWhatsAppUrl, resolveNavItems } from "@/shared/config/site";
 import { cn } from "@/shared/lib/utils";
 
 type SiteHeaderProps = {
@@ -16,6 +25,8 @@ type SiteHeaderProps = {
 export function SiteHeader({ settings }: SiteHeaderProps) {
   const pathname = usePathname();
   const whatsappHref = buildWhatsAppUrl(settings, "general");
+  const [open, setOpen] = useState(false);
+  const items = resolveNavItems(settings);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
@@ -29,7 +40,7 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
           className="hidden max-w-[min(100%,36rem)] flex-wrap items-center justify-end gap-0.5 md:flex lg:max-w-[42rem] xl:max-w-none"
           aria-label="Principal"
         >
-          {navItems.map((item) => {
+          {items.map((item) => {
             const active =
               item.href === "/"
                 ? pathname === "/"
@@ -49,35 +60,77 @@ export function SiteHeader({ settings }: SiteHeaderProps) {
               </Link>
             );
           })}
-          {/* Nosotros /about — deferred */}
         </nav>
 
-        <Button
-          asChild
-          variant="whatsapp"
-          size="icon"
-          className="shrink-0 md:hidden"
-        >
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-          >
-            <WhatsAppIcon className="h-5 w-5" />
-          </a>
-        </Button>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button asChild variant="whatsapp" size="sm" className="hidden md:inline-flex">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp
+            </a>
+          </Button>
 
-        <Button asChild variant="whatsapp" size="sm" className="hidden md:inline-flex">
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            WhatsApp
-          </a>
-        </Button>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="md:hidden"
+                aria-label="Abrir menú"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="md:hidden">
+              <SheetHeader>
+                <SheetTitle>Menú</SheetTitle>
+              </SheetHeader>
+              <nav
+                className="flex flex-1 flex-col gap-1 overflow-y-auto p-3"
+                aria-label="Menú móvil"
+              >
+                {items.map((item) => {
+                  const active =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "rounded-md px-3 py-3 text-sm font-semibold transition-colors",
+                        active
+                          ? "bg-primary text-primary-foreground"
+                          : "text-secondary hover:bg-muted",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+              <div className="border-t border-border p-3">
+                <Button asChild variant="whatsapp" className="w-full">
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                  >
+                    <WhatsAppIcon className="h-4 w-4" />
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

@@ -42,18 +42,9 @@ export const homeQuery = `*[_type == "home" && _id == "home"][0]{
       "alt": alt
     }
   },
-  gaits{
+  reviews{
     intro{ eyebrow, title, subtitle },
-    items[]{
-      id,
-      tab,
-      tag,
-      sound,
-      title,
-      text,
-      image,
-      "imageAlt": image.alt
-    }
+    items[]{ name, place, rating, text }
   },
   videos{
     intro{ eyebrow, title, subtitle },
@@ -115,17 +106,13 @@ export type HomeDoc = {
     intro?: IntroDoc | null;
     photos?: Array<ImageDoc | null> | null;
   } | null;
-  gaits?: {
+  reviews?: {
     intro?: IntroDoc | null;
     items?: Array<{
-      id?: string;
-      tab?: string;
-      tag?: string;
-      sound?: string;
-      title?: string;
+      name?: string;
+      place?: string;
+      rating?: number;
       text?: string;
-      image?: ImageDoc | null;
-      imageAlt?: string;
     }> | null;
   } | null;
   videos?: {

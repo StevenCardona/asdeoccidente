@@ -1,69 +1,106 @@
 import { resolveSanityImageUrl } from "@/shared/lib/resolve-image";
 import { toEmbeddableVideoUrl } from "@/shared/lib/video-src";
-import {
-  defaultSiteSettings,
-  mapEmbedFromAddress,
-} from "./defaults";
+import { emptySiteSettings, mapEmbedFromAddress } from "./defaults";
 import type { SiteSettingsDoc } from "./query";
-import type { SiteSettings } from "./types";
+import type { SiteNavItem, SiteSettings, SiteUiChrome } from "./types";
 
-function pick(
-  value: string | undefined,
-  fallback: string,
-): string {
-  const trimmed = value?.trim();
-  return trimmed || fallback;
+function text(value: string | undefined | null): string {
+  return value?.trim() || "";
+}
+
+function mapNavItems(
+  items:
+    | Array<{ href?: string; label?: string; icon?: string }>
+    | null
+    | undefined,
+): SiteNavItem[] {
+  const result: SiteNavItem[] = [];
+  for (const item of items ?? []) {
+    const href = item?.href?.trim();
+    const label = item?.label?.trim();
+    if (!href || !label) continue;
+    result.push({
+      href,
+      label,
+      icon: item?.icon?.trim() || "Home",
+    });
+  }
+  return result;
+}
+
+function mapUi(ui: SiteSettingsDoc["ui"]): SiteUiChrome {
+  return {
+    navItems: mapNavItems(ui?.navItems),
+    contactEyebrow: text(ui?.contactEyebrow),
+    contactTitle: text(ui?.contactTitle),
+    contactSubtitle: text(ui?.contactSubtitle),
+    contactFormTitle: text(ui?.contactFormTitle),
+    contactFormSubtitle: text(ui?.contactFormSubtitle),
+    contactNameLabel: text(ui?.contactNameLabel),
+    contactNamePlaceholder: text(ui?.contactNamePlaceholder),
+    contactPhoneLabel: text(ui?.contactPhoneLabel),
+    contactPhonePlaceholder: text(ui?.contactPhonePlaceholder),
+    contactTopicLabel: text(ui?.contactTopicLabel),
+    contactMessageLabel: text(ui?.contactMessageLabel),
+    contactMessagePlaceholder: text(ui?.contactMessagePlaceholder),
+    contactSubmitLabel: text(ui?.contactSubmitLabel),
+    contactTopicLabels: {
+      school: text(ui?.topicLabelSchool),
+      fairs: text(ui?.topicLabelFairs),
+      venue: text(ui?.topicLabelVenue),
+      membership: text(ui?.topicLabelMembership),
+      equinotherapy: text(ui?.topicLabelEquinotherapy),
+      general: text(ui?.topicLabelGeneral),
+    },
+    footerNavHeading: text(ui?.footerNavHeading),
+    footerContactHeading: text(ui?.footerContactHeading),
+    copyrightSuffix: text(ui?.copyrightSuffix),
+    directionsVideoLabel: text(ui?.directionsVideoLabel),
+    heroAddressPrefix: text(ui?.heroAddressPrefix),
+    fedequinasImageUrl: text(ui?.fedequinasImageUrl),
+    ogImageUrl: text(ui?.ogImageUrl),
+  };
 }
 
 export function mergeSiteSettings(doc: SiteSettingsDoc | null): SiteSettings {
-  if (!doc) return defaultSiteSettings;
+  if (!doc) return emptySiteSettings;
 
-  const address = pick(doc.address, defaultSiteSettings.address);
-  const mapFromDoc = doc.mapEmbedUrl?.trim() ?? "";
-  // Prefer CMS value unless it's an empty/broken legacy embed?pb= that Google rejects with 400.
+  const address = text(doc.address);
+  const mapFromDoc = text(doc.mapEmbedUrl);
   const mapLooksBroken =
     mapFromDoc.includes("/maps/embed?pb=") &&
     mapFromDoc.includes("4v1794807182929");
   const mapEmbedUrl =
     mapFromDoc && !mapLooksBroken
       ? mapFromDoc
-      : defaultSiteSettings.mapEmbedUrl || mapEmbedFromAddress(address);
+      : mapEmbedFromAddress(address);
 
   return {
-    name: pick(doc.name, defaultSiteSettings.name),
-    legalName: pick(doc.legalName, defaultSiteSettings.legalName),
-    footerBlurb: pick(doc.footerBlurb, defaultSiteSettings.footerBlurb),
+    name: text(doc.name),
+    legalName: text(doc.legalName),
+    footerBlurb: text(doc.footerBlurb),
     address,
-    phonePbx: pick(doc.phonePbx, defaultSiteSettings.phonePbx),
-    phoneMobile: pick(doc.phoneMobile, defaultSiteSettings.phoneMobile),
-    phoneMobileAlt: pick(
-      doc.phoneMobileAlt,
-      defaultSiteSettings.phoneMobileAlt,
-    ),
-    whatsappNumber: pick(
-      doc.whatsappNumber,
-      defaultSiteSettings.whatsappNumber,
-    ),
-    email: pick(doc.email, defaultSiteSettings.email),
+    phonePbx: text(doc.phonePbx),
+    phoneMobile: text(doc.phoneMobile),
+    phoneMobileAlt: text(doc.phoneMobileAlt),
+    whatsappNumber: text(doc.whatsappNumber),
+    email: text(doc.email),
     social: {
-      instagram: pick(
-        doc.instagramUrl,
-        defaultSiteSettings.social.instagram,
-      ),
-      youtube: pick(doc.youtubeUrl, defaultSiteSettings.social.youtube),
-      tiktok: pick(doc.tiktokUrl, defaultSiteSettings.social.tiktok),
+      instagram: text(doc.instagramUrl),
+      youtube: text(doc.youtubeUrl),
+      tiktok: text(doc.tiktokUrl),
     },
     mapEmbedUrl,
     directionsVideo: (() => {
       const posterSrc =
         resolveSanityImageUrl(doc.directionsVideoPoster ?? null, 1200) ??
         undefined;
-      const fileUrl = doc.directionsVideoFileUrl?.trim() || "";
-      const source = doc.directionsVideoSource?.trim();
+      const fileUrl = text(doc.directionsVideoFileUrl);
+      const source = text(doc.directionsVideoSource);
       if (source === "file" || (!source && fileUrl)) {
         return { kind: "file" as const, src: fileUrl, posterSrc };
       }
-      const rawUrl = doc.directionsVideoUrl?.trim() || "";
+      const rawUrl = text(doc.directionsVideoUrl);
       return {
         kind: "url" as const,
         src: rawUrl ? toEmbeddableVideoUrl(rawUrl) : "",
@@ -71,40 +108,18 @@ export function mergeSiteSettings(doc: SiteSettingsDoc | null): SiteSettings {
       };
     })(),
     google: {
-      rating: pick(doc.googleRating, defaultSiteSettings.google.rating),
-      reviewCount: pick(
-        doc.googleReviewCount,
-        defaultSiteSettings.google.reviewCount,
-      ),
-      reviewsUrl:
-        doc.googleReviewsUrl?.trim() ??
-        defaultSiteSettings.google.reviewsUrl,
+      rating: text(doc.googleRating),
+      reviewCount: text(doc.googleReviewCount),
+      reviewsUrl: text(doc.googleReviewsUrl),
     },
     whatsappMessages: {
-      school: pick(
-        doc.whatsappMessageSchool,
-        defaultSiteSettings.whatsappMessages.school,
-      ),
-      fairs: pick(
-        doc.whatsappMessageFairs,
-        defaultSiteSettings.whatsappMessages.fairs,
-      ),
-      venue: pick(
-        doc.whatsappMessageVenue,
-        defaultSiteSettings.whatsappMessages.venue,
-      ),
-      membership: pick(
-        doc.whatsappMessageMembership,
-        defaultSiteSettings.whatsappMessages.membership,
-      ),
-      equinotherapy: pick(
-        doc.whatsappMessageEquinotherapy,
-        defaultSiteSettings.whatsappMessages.equinotherapy,
-      ),
-      general: pick(
-        doc.whatsappMessageGeneral,
-        defaultSiteSettings.whatsappMessages.general,
-      ),
+      school: text(doc.whatsappMessageSchool),
+      fairs: text(doc.whatsappMessageFairs),
+      venue: text(doc.whatsappMessageVenue),
+      membership: text(doc.whatsappMessageMembership),
+      equinotherapy: text(doc.whatsappMessageEquinotherapy),
+      general: text(doc.whatsappMessageGeneral),
     },
+    ui: mapUi(doc.ui),
   };
 }

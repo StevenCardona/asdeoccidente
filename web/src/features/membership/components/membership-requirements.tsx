@@ -1,6 +1,7 @@
 import { FileDown } from "lucide-react";
 import type { MembershipContent } from "@/features/membership/models";
 import { Button } from "@/shared/components/ui/button";
+import { sectionPadX, sectionPadY } from "@/shared/lib/section";
 
 type MembershipRequirementsProps = {
   content: MembershipContent["requirements"];
@@ -15,7 +16,7 @@ export function MembershipRequirements({
   const hasFile = Boolean(formatFileUrl.trim());
 
   return (
-    <section className="border-y border-border bg-surface px-4 py-12 md:px-8 md:py-16">
+    <section className={`bg-background ${sectionPadX} ${sectionPadY}`}>
       <div className="mx-auto max-w-7xl">
         <div className="max-w-2xl">
           {intro.eyebrow.trim() ? (
@@ -36,13 +37,18 @@ export function MembershipRequirements({
         </div>
 
         {items.length > 0 ? (
-          <ul className="mt-8 max-w-3xl space-y-3">
-            {items.map((item) => (
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+            {items.map((item, index) => (
               <li
                 key={item}
-                className="border-l-2 border-primary/80 pl-4 text-base leading-relaxed text-secondary"
+                className="border border-border bg-background p-4 md:p-5"
               >
-                {item}
+                <p className="text-xs font-bold tabular-nums tracking-[0.08em] text-primary">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-2 text-base leading-relaxed text-secondary">
+                  {item}
+                </p>
               </li>
             ))}
           </ul>

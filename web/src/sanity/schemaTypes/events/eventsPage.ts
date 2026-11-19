@@ -7,15 +7,59 @@ export const eventsPage = defineType({
   name: "eventsPage",
   title: "Eventos · Página",
   type: "document",
-  description: `${PUBLISH_HINT} Configura el listado /events: intros, reseñas, galería y FAQ. Los eventos del calendario se crean en Eventos → Calendario.`,
+  description: `${PUBLISH_HINT} Configura el listado /events: banner (si no hay evento destacado), intros, reseñas, galería y FAQ. Los eventos del calendario se crean en Eventos → Calendario.`,
   groups: [
-    { name: "calendar", title: "Calendario", default: true },
+    { name: "hero", title: "Banner", default: true },
+    { name: "calendar", title: "Calendario" },
     { name: "reviews", title: "Reseñas" },
     { name: "gallery", title: "Galería" },
     { name: "faq", title: "Preguntas" },
     { name: "seo", title: "Google / buscadores" },
   ],
   fields: [
+    defineField({
+      name: "hero",
+      title: "Banner de la página",
+      type: "object",
+      group: "hero",
+      description:
+        "Se muestra en /events cuando aún no hay un evento con foto para el hero destacado. Si hay evento destacado, ese hero lo reemplaza.",
+      fields: [
+        defineField({
+          name: "badge",
+          title: "Etiqueta",
+          type: "string",
+          initialValue: "Eventos",
+        }),
+        defineField({
+          name: "title",
+          title: "Título (h1)",
+          type: "string",
+          initialValue: "Próximos eventos",
+        }),
+        defineField({
+          name: "subtitle",
+          title: "Subtítulo",
+          type: "text",
+          rows: 3,
+          initialValue:
+            "Ferias, exposiciones y citas del caballo criollo colombiano con Asdeoccidente.",
+        }),
+        defineField({
+          name: "image",
+          title: "Imagen de fondo",
+          type: "imageWithAlt",
+          description: "Solo lo publicado se ve. Sin imagen, el banner usa fondo sólido.",
+        }),
+        defineField({
+          name: "primaryCtaLabel",
+          title: "Texto del botón WhatsApp",
+          type: "string",
+          initialValue: "Consultar por WhatsApp",
+          description: "Usa el mensaje WhatsApp — Eventos de Configuración general.",
+        }),
+      ],
+    }),
     defineField({
       name: "calendarIntro",
       title: "Títulos del calendario",

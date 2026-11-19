@@ -9,15 +9,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/escuela-de-chalaneria",
-        destination: "/school",
-        permanent: true,
-      },
-    ];
-  },
   turbopack: {
     rules: {
       "*.css": {

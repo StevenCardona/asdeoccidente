@@ -1,6 +1,8 @@
 # Asdeoccidente — Domain knowledge
 
-Fuente única de producto: qué es, qué hacen, quiénes, datos, textos y cómo presentamos la escuela. Camino principal de contacto: WhatsApp. Fecha de referencia: 14 de noviembre de 2026.
+Fuente única de producto: qué es, qué hacen, quiénes, datos, textos y cómo presentamos la escuela. Camino principal de contacto: WhatsApp. Fecha de referencia: 18 de noviembre de 2026.
+
+**CMS (obligatorio):** todo texto, imagen, PDF, tarifa y menú editable vive en Sanity. El código no rellena seeds: sin documento publicado la sección/página queda vacía. PDFs en Studio; Directorio = un Excel por tipo → «Procesar Excel» → Publicar. Contacto/nav/formulario en `siteSettings` → grupo «Textos de interfaz».
 
 Visual: [`docs/design/DESIGN.md`](../../design/DESIGN.md). Specs y build: `docs/specs/` y `docs/context/phase-*`.
 
@@ -183,20 +185,21 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | --- | --- |
 | **Título** | Aprende, compite y celebra con el caballo criollo colombiano. |
 | **Subtítulo** | Clases de chalanería personalizadas para niños y adultos, y ferias en el Valle del Cauca. Te acompañamos desde el primer paso. |
-| **Botones** | Quiero mi clase gratis (WhatsApp escuela) · Ver la próxima feria (`/fairs`) |
+| **Botones** | Quiero mi clase gratis (WhatsApp escuela) · Ver el próximo evento (`/events`) — ambos en Sanity `home.hero` |
 
 **Bloques de la página (orden):**
 
 1. Hero — banner, Google opiniones + Fedequinas, título, subtítulo, CTAs  
 2. Esencia — cuatro beats + mosaico fotográfico  
 3. Cifras — 1975 · +200 alumnos · opiniones Google · +180 socios  
-4. Servicios — trámites, escuela, equinoterapia, alquiler (CTAs informativos)  
+4. Servicios — tarjetas CMS (escuela, trámites, equinoterapia, alquiler, socios, directorio)  
 5. Galería — carrusel de fotos  
-6. Cuatro andares — pestañas (Paso Fino, Trocha, Trocha y Galope, Trote y Galope)  
-7. Videos — cuatro reels (marco 9:16)  
+6. Reseñas — testimonios CMS  
+7. Videos — hasta cuatro reels (marco 9:16)  
 8. Contacto y ubicación (layout) — mapa + video cómo llegar + mini formulario correo  
 9. Pie — dirección, teléfonos, WhatsApp, redes  
 
+**Histórico:** la sección “Cuatro andares” ya no va en Home.  
 **No va aquí:** tarifas completas, junta, “¿Qué quieres hacer?”, detalle de instalaciones.
 
 ### Nosotros `/about` (diferido)
@@ -207,14 +210,14 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | **Subtítulo** | Desde 1975 cuidamos y promovemos el caballo criollo colombiano en el Valle del Cauca. `[por confirmar año de fundación]` |
 | **Regla** | La junta completa solo vive aquí. Voz propia. Ruta y nav comentadas hasta que exista el spec. |
 
-### Ferias `/fairs` (+ `/fairs/[slug]`)
+### Eventos `/events` (+ `/events/[slug]`)
 
 | | |
 | --- | --- |
 | **Título (ejemplo de evento)** | XXXIV Copa América Equina · 29 de octubre al 1 de noviembre. `[ajustar fechas]` |
 | **Subtítulo** | Cuatro días de competencia y ambiente de feria. Entradas desde $10.000. `[por confirmar]` |
 | **Botones** | Ver entradas · Inscribir mi ejemplar |
-| **Regla** | Producto de eventos: listado con destacada + cards, detalle por slug. Entrada general primero, luego palcos. Nombre oficial completo. Mostrar “Última actualización”. |
+| **Regla** | Listado con hero de evento destacado **o** banner de `eventsPage` si no hay calendario. Detalle por slug. Sin ruta `/fairs`. |
 
 ### Ofertas (fase 1 specs / stubs; hechos cortos)
 
@@ -224,7 +227,7 @@ Misma URL en celular y escritorio; celular con menos secciones.
 | Equinoterapia | `/equinotherapy` | Sin promesas de cura; lenguaje médico validado por terapeutas. |
 | Socios | `/membership` | Quiénes somos, misión/visión, ser socio, ser afiliado, costos, requisitos + formato. CTA “Quiero ser socio”. |
 | Alquiler sede | `/venue` | Cotización por WhatsApp (mensaje sede). Espacios y medidas abajo. |
-| Directorio equino | `/directory` | Catálogo buscable (tipos dinámicos en Sanity); UI de búsqueda más adelante. Spec only. |
+| Directorio equino | `/directory` | Un Excel por tipo en Sanity → tabla con columnas del archivo; filtro, búsqueda, orden y descarga. |
 
 #### Socios / afiliación (`/membership`)
 

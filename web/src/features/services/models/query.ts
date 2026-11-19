@@ -1,12 +1,18 @@
-type IntroDoc = {
-  eyebrow?: string;
-  title?: string;
-  subtitle?: string;
-};
+import type { SanityImageSource } from "@sanity/image-url";
 
 export type ServicesPageDoc = {
   hero?: {
-    intro?: IntroDoc | null;
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    image?: SanityImageSource | null;
+    imageAlt?: string;
+    /** Legacy compact intro — used as fallback if title is empty. */
+    intro?: {
+      eyebrow?: string;
+      title?: string;
+      subtitle?: string;
+    } | null;
   } | null;
   sections?: Array<{
     title?: string;
@@ -31,6 +37,11 @@ export type ServicesPageDoc = {
 
 export const servicesPageQuery = `*[_type == "servicesPage" && _id == "servicesPage"][0]{
   hero{
+    badge,
+    title,
+    subtitle,
+    image,
+    "imageAlt": image.alt,
     intro{ eyebrow, title, subtitle }
   },
   sections[]{

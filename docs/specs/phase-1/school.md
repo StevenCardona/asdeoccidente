@@ -1,6 +1,6 @@
 # Spec: School (phase 1)
 
-> Status: **in progress** — `/school` body implemented with static content; Sanity CMS deferred  
+> Status: **in progress** — Sanity `school` + page; acceptance pending  
 > Path: `/school`  
 > Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md) § Escuela
 
@@ -15,57 +15,31 @@
 
 ## Goal
 
-Convert interest into a free first class via WhatsApp. Explain personalized teaching and what the school provides — with institutional clarity.
-
-## Expected result
-
-- Page `/school` with sections below
-- Primary CTA: Quiero mi clase gratis → WhatsApp school template
-- Fee cards personalizadas (1/2/3/4) with Socio / No socio / Hijo montador
-- Carousels with arrows + dots (Home pattern) for method axes, horses, staff
-- Shared UI; layout ContactLocation/Footer unchanged
-- SEO for `/school`
-- Content in `features/school/models/school.ts` (static). **Sanity deferred.**
-
-## Scope / out of scope
-
-**In:** method, horses (dark band), gallery, staff, fees, FAQ (6 clave).
-
-**Out:** About, map duplicate, sticky CTA, “Antes de venir”, grupales tabs, Sanity school doc (later).
+Convert interest into a free first class via WhatsApp. Explain personalized teaching — institutional clarity, congruent banner copy.
 
 ## Sections (order)
 
-1. **Hero** — badge “Clase de cortesía” · `h1` · subtitle · CTAs; **below CTAs:** smaller `GoogleReviewsBadge` (`tone="dark"`, link) + compact stats **+200 alumnos** · **Desde 1975** (KB; no inventar otras cifras)
-2. **Cómo es la clase** — steps + axes carousel (icon beside text; flechas/puntos)
-3. **Caballos** — fondo `bg-secondary`; same cards as staff; carousel controls
-4. **Galería** — bento + degradado oscuro tipo banner
-5. **Profesores** — carousel controls
-6. **Tarifas** — personalizadas only; notas matrícula
-7. **FAQ** — 6 preguntas (gratis+agenda, equipo, matrícula+eventos, qué llevar, socio, sede)
+1. **Hero** (`PageHero`) — title + subtitle (no repeated badge text) · CTAs · below CTAs: `GoogleReviewsBadge` + **cifra de alumnos** from Sanity `hero.badge` (default `+200 alumnos`). **No** «Desde 1975» in the hero meta line.
+2. **Cómo es la clase** — steps + axes
+3. **Caballos** — `bg-secondary`
+4. **Galería**
+5. **Profesores**
+6. **Tarifas** — personalizadas; notas matrícula
+7. **FAQ**
 
-## Matrícula (bajo tarifas)
+## Banner copy rules
 
-1. Matrícula $190.000: incluye póliza, gorra y buzo de la escuela.
-2. Con ella tienes beneficios en eventos: entrada gratuita o descuentos.
+- `hero.badge` = student count label (shown in meta, not as a crimson chip)
+- Title / subtitle / CTA must not repeat each other
+- Defaults live in `features/school/models/defaults.ts` and Studio field descriptions
 
-## Fees
+## CMS
 
-No-socio: 1→$90.000 · 2→$180.000 · 3→$280.000 · 4→$370.000 (socio/hijo promediados en model).
+Sanity singleton `school` — hero, method, horses, gallery, staff, fees, FAQ, SEO.
 
-## Data source
+## Acceptance
 
-| Field | Notes |
-| --- | --- |
-| All page copy | `web/src/features/school/models/school.ts` |
-| CMS | Deferred |
-
-## Acceptance criteria
-
-- [x] WhatsApp clase gratis
-- [x] Caballos antes de galería, fondo oscuro
-- [x] Carousels con flechas y puntos
-- [x] FAQ reducido a dudas no obvias; sin sección “Antes de venir”
-- [x] Google reviews bajo CTAs (compacto) + cifras +200 / 1975
-- [x] ContactLocation no duplicado
-- [ ] Acceptance mobile + fee sign-off 2026
-- [ ] Sanity polish as needed
+- [x] Hero without «Desde 1975»; alumnos from CMS badge field
+- [x] Sanity school document
+- [ ] Fee sign-off 2026
+- [ ] Mobile review

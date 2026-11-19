@@ -7,17 +7,18 @@ export const schoolHero = defineType({
   fields: [
     defineField({
       name: "badge",
-      title: "Etiqueta roja",
+      title: "Cifra de alumnos (bajo el banner)",
       type: "string",
-      description: "Ej. Clase de cortesía",
-      initialValue: "Clase de cortesía",
+      description:
+        "Se muestra junto a las reseñas Google, no como etiqueta. Ej. +200 alumnos. No repitas este texto en el título.",
+      initialValue: "+200 alumnos",
     }),
     defineField({
       name: "title",
       title: "Título grande",
       type: "string",
-      description: "Ej. Aprende a montar con un maestro solo para ti.",
-      initialValue: "Aprende a montar con un maestro solo para ti.",
+      description: "Ej. Escuela de chalanería personalizada",
+      initialValue: "Escuela de chalanería personalizada",
     }),
     defineField({
       name: "subtitle",
@@ -25,9 +26,9 @@ export const schoolHero = defineType({
       type: "text",
       rows: 3,
       description:
-        "Ej. Clases totalmente personalizadas. Un instructor a tu lado. Tu primera clase es gratis.",
+        "Distinto del título y de la cifra. Ej. Un instructor a tu lado… primera clase gratis.",
       initialValue:
-        "Clases totalmente personalizadas. Un instructor a tu lado. Tu primera clase es gratis.",
+        "Un instructor a tu lado en cada sesión. Caballo y equipo los pone la escuela; tu primera clase es gratis.",
     }),
     defineField({
       name: "primaryCtaLabel",

@@ -12,15 +12,14 @@ export async function generateMetadata(): Promise<Metadata> {
     fetchEventsContent(),
     getSiteSettings(),
   ]);
+  const image = content.list.gallery[0]?.src ?? null;
   return buildPageMetadata({
     path: "/events",
-    title: content.list.seo.title || "Eventos y ferias",
-    description:
-      content.list.seo.description ||
-      "Ferias, exposiciones y eventos del caballo criollo colombiano con Asdeoccidente.",
+    title: content.list.seo.title || content.list.calendarIntro.title,
+    description: content.list.seo.description,
     siteName: settings.name,
-    image: "/imgs/banner3.webp",
-    imageAlt: "Ambiente de evento equino en Asdeoccidente",
+    image,
+    imageAlt: content.list.gallery[0]?.alt,
   });
 }
 
@@ -34,11 +33,11 @@ export default async function Page() {
     <>
       <PageJsonLd
         path="/events"
-        title={initialContent.list.seo.title || "Eventos y ferias"}
-        description={
-          initialContent.list.seo.description ||
-          "Ferias, exposiciones y eventos del caballo criollo colombiano con Asdeoccidente."
+        title={
+          initialContent.list.seo.title ||
+          initialContent.list.calendarIntro.title
         }
+        description={initialContent.list.seo.description}
         siteName={settings.name}
       />
       <EventsListPage initialContent={initialContent} settings={settings} />

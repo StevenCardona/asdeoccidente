@@ -44,11 +44,11 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | Alquiler | `/venue` | In progress — Sanity `venuePage` |
 | Socios | `/membership` | In progress — Sanity `membershipPage` |
 | Equinoterapia | `/equinotherapy` | In progress — Sanity `equinotherapyPage` |
-| Directorio | `/directory` | Spec / stub (search UI later) |
+| Directorio | `/directory` | Implemented — Excel por tipo + tabla |
 | Nosotros | `/about` | **Commented / deferred** (`page.tsx.deferred`) |
 | Studio | `/studio` | Active + **authenticated** (Sanity login) |
 
-Old Spanish WordPress paths get 301 redirects at launch (document at cutover).
+Public routes use English paths only (`/school`, `/events`, …). **No Next.js redirects** — do not add `/fairs` or Spanish path aliases.
 
 ---
 
@@ -72,7 +72,7 @@ web/
       home/
         app/                     # HomePage (smart)
         hooks/                   # useHomeContent, useCountUp
-        components/              # hero, essence, stats, services, gallery, gaits, videos, …
+        components/              # hero, essence, stats, services, gallery, reviews, videos, …
         models/                  # types, defaults, query, map, fetchHomeContent
         utils/                   # cta, icons
       school/
@@ -109,7 +109,7 @@ web/
 
 ## Design system & anti–“AI page” rules
 
-Source: [`DESIGN.md`](../../design/DESIGN.md) + [`design-system.png`](../../design/design-system.png).
+Source: [`DESIGN.md`](../../design/DESIGN.md) and mockups under `docs/design/`.
 
 - Tokens: primary crimson, secondary navy/slate, tertiary amber (sparingly), neutrals, Plus Jakarta Sans (display) + Inter (body)
 - Same Button / Dialog / Skeleton everywhere — no per-page restyling
@@ -125,13 +125,24 @@ Mockups under `docs/design/mobile|web/` are atmosphere references, not pixel man
 
 Every public page (`SiteShell`):
 
-1. **Header** — BrandLockup, nav (Inicio · Escuela · Ferias), WhatsApp CTA. Nosotros commented.
+1. **Header** — BrandLockup; desktop `navItems`; mobile **hamburguesa + drawer** (sin bottom bar); WhatsApp CTA
 2. **Body** — feature content only
 3. **Contact & location** — mini form (`mailto`) + Maps iframe + optional directions video dialog
 4. **Footer** — address, phones, WhatsApp, email, socials from `getSiteSettings()`
-5. **Mobile bottom nav** — Inicio · Escuela · Ferias; Nosotros commented
 
-Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`).
+### Shared UI patterns
+
+- **`PageHero`** — full-bleed LCP banner (`next/image` priority); sizes `home` | `standard` | `compact`
+- **`ReviewsSection`** — shared testimonials (`tone`: white | muted)
+- **Section padding** — `shared/lib/section.ts` (`sectionPadX` / `sectionPadY`)
+- **Images** — heroes via `PageHero`; below-fold via `SafeImage` — **no `/imgs` runtime fallbacks**
+- Skeletons: Home dedicated; others use `PageHeroSkeleton` / feature skeletons as needed
+
+### Content policy (Sanity-only)
+
+- Runtime **empty shells** when CMS missing — never invent copy, fees, reviews, or images in code
+- `siteSettings.ui` owns nav labels, contact block, form labels, Fedequinas/OG images
+- Studio `initialValue` helps editors fill new docs; production site shows **only published** fields
 
 ---
 
@@ -150,22 +161,23 @@ Skeletons mirror section structure while data loads (Home has `HomePageSkeleton`
 - **Access:** Sanity login / project members only
 - CORS: allow `http://localhost:3000` and `https://asdeoccidente.vercel.app`
 - Schemas (folder per page under `schemaTypes/`):
-  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages (school / fairs / venue / membership / general)
-  - **Inicio** (`home` singleton) — hero, essence, stats, services, gallery, gaits, videos, SEO
-  - **Escuela** (`school` singleton) — hero, method, horses, gallery, staff, fees, FAQ, SEO
-  - **Servicios** (`servicesPage`) — trámites sections + PDFs
-  - **Alquiler** (`venuePage`) — hero (incl. contactLine), intro, spaces, gallery, reviews, SEO
-  - **Socios** (`membershipPage`) — hero, about, mission/vision, benefits, costs, requirements + PDF, SEO
-  - **Eventos** (`eventsPage` + `event`) — list page + calendar documents
+  - **Configuración general** (`siteSettings`) — identity, contact, socials, map, Google, WhatsApp messages
+  - **Inicio** (`home`) — hero, essence, stats, services, gallery, **reviews**, videos, SEO (Andares removed)
+  - **Escuela** (`school`) — hero (badge = cifra alumnos), method, horses, gallery, staff, fees, FAQ, SEO
+  - **Servicios** (`servicesPage`) — PageHero + trámites + **PDF** downloads
+  - **Alquiler** (`venuePage`) — hero without address line; intro, spaces, gallery, reviews, SEO
+  - **Socios** (`membershipPage`) — hero, benefits, costs, requirements (+ PDF), reviews, SEO
+  - **Equinoterapia** (`equinotherapyPage`) — hero without address; story, gallery, reviews, FAQ, SEO
+  - **Eventos** (`eventsPage` + `event`)
+  - **Directorio** (`directoryPage` + `directoryDataset`) — un Excel por tipo → headers/rows; Studio «Procesar Excel»
 
 ---
 
 ## SEO
 
-- `metadataBase`, per-route metadata (`generateMetadata` on Home), single `h1`
-- `sitemap.ts`, `robots.ts`
-- Hero image prioritized for LCP on mobile
-- Spanish content; English URLs with ES titles/descriptions
+- `metadataBase`, per-route `generateMetadata` via `buildPageMetadata`, single `h1`
+- `PageJsonLd` on pages; `sitemap.ts`, `robots.ts`
+- SEO title/description distinct from badge; Spanish content; English URLs
 
 ---
 

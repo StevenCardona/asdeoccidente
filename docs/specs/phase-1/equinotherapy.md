@@ -27,12 +27,12 @@ Present equinotherapy carefully for families seeking therapeutic support with th
 
 ## Sections (build order)
 
-1. **Hero** — positioning + WhatsApp enquire CTA
-2. **Story intro** — first two paragraphs + image (right)
+1. **Hero** — PageHero; badge/title/subtitle congruentes (**sin dirección**); WhatsApp CTA
+2. **Story intro** — párrafos + imagen; fondo blanco
 3. **Gallery** — photo carousel
-4. **Story benefits** — remaining copy + benefits list + image (left)
-5. **Reviews** — curated quote cards (editable; replace with approved testimonies)
-6. **FAQ** — accordion (editable; practical, non-clinical)
+4. **Story benefits** — copy + **beneficios en cards** sobre sección **gris**
+5. **Reviews** — ReviewsSection; **fondo blanco**
+6. **FAQ** — accordion
 
 ## Default copy (KB + draft sources)
 

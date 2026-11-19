@@ -4,13 +4,13 @@ import { useState, type FormEvent } from "react";
 import type { SiteSettings, WhatsappTopic } from "@/features/site/models";
 import { Button } from "@/shared/components/ui/button";
 
-const topics: Array<{ value: WhatsappTopic; label: string }> = [
-  { value: "school", label: "Escuela / clase gratis" },
-  { value: "fairs", label: "Eventos" },
-  { value: "venue", label: "Alquiler sede" },
-  { value: "membership", label: "Socios" },
-  { value: "equinotherapy", label: "Equinoterapia" },
-  { value: "general", label: "Consulta general" },
+const TOPIC_KEYS: WhatsappTopic[] = [
+  "school",
+  "fairs",
+  "venue",
+  "membership",
+  "equinotherapy",
+  "general",
 ];
 
 type ContactMiniFormProps = {
@@ -18,9 +18,17 @@ type ContactMiniFormProps = {
 };
 
 export function ContactMiniForm({ settings }: ContactMiniFormProps) {
+  const ui = settings.ui;
+  const topics = TOPIC_KEYS.map((value) => ({
+    value,
+    label: ui.contactTopicLabels[value],
+  })).filter((item) => item.label.trim());
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [topic, setTopic] = useState<WhatsappTopic>("school");
+  const [topic, setTopic] = useState<WhatsappTopic>(
+    topics[0]?.value ?? "general",
+  );
   const [message, setMessage] = useState("");
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -31,19 +39,27 @@ export function ContactMiniForm({ settings }: ContactMiniFormProps) {
     const topicLabel =
       topics.find((item) => item.value === topic)?.label ?? topic;
     const subject = encodeURIComponent(
-      `Consulta Asdeoccidente — ${topicLabel}`,
+      `${settings.name.trim() || "Consulta"} — ${topicLabel}`,
     );
     const bodyLines = [
       settings.whatsappMessages[topic],
       "",
-      name.trim() ? `Nombre: ${name.trim()}` : null,
-      phone.trim() ? `Teléfono: ${phone.trim()}` : null,
-      `Motivo: ${topicLabel}`,
-      message.trim() ? `Mensaje: ${message.trim()}` : null,
+      name.trim() ? `${ui.contactNameLabel || "Nombre"}: ${name.trim()}` : null,
+      phone.trim()
+        ? `${ui.contactPhoneLabel || "Teléfono"}: ${phone.trim()}`
+        : null,
+      `${ui.contactTopicLabel || "Motivo"}: ${topicLabel}`,
+      message.trim()
+        ? `${ui.contactMessageLabel || "Mensaje"}: ${message.trim()}`
+        : null,
     ].filter(Boolean);
     const body = encodeURIComponent(bodyLines.join("\n"));
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
+
+  if (!settings.email.trim() && !ui.contactFormTitle.trim()) {
+    return null;
+  }
 
   return (
     <form
@@ -52,80 +68,96 @@ export function ContactMiniForm({ settings }: ContactMiniFormProps) {
     >
       <div className="space-y-4">
         <div>
-          <h3 className="font-display text-xl font-bold tracking-tight text-secondary md:text-2xl">
-            Cuéntanos qué necesitas
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Te respondemos por correo.
-          </p>
+          {ui.contactFormTitle.trim() ? (
+            <h3 className="font-display text-xl font-bold tracking-tight text-secondary md:text-2xl">
+              {ui.contactFormTitle}
+            </h3>
+          ) : null}
+          {ui.contactFormSubtitle.trim() ? (
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {ui.contactFormSubtitle}
+            </p>
+          ) : null}
         </div>
 
         <div>
-          <label
-            htmlFor="contact-name"
-            className="text-xs font-semibold uppercase tracking-wide text-secondary"
-          >
-            ¿Cómo te llamas?
-          </label>
+          {ui.contactNameLabel.trim() ? (
+            <label
+              htmlFor="contact-name"
+              className="text-xs font-semibold uppercase tracking-wide text-secondary"
+            >
+              {ui.contactNameLabel}
+            </label>
+          ) : null}
           <input
             id="contact-name"
             name="name"
             value={name}
             onChange={(event) => setName(event.target.value)}
             className="mt-1.5 h-11 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            placeholder="Tu nombre"
+            placeholder={ui.contactNamePlaceholder}
             autoComplete="name"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="contact-phone"
-            className="text-xs font-semibold uppercase tracking-wide text-secondary"
-          >
-            ¿A qué número te escribimos?
-          </label>
+          {ui.contactPhoneLabel.trim() ? (
+            <label
+              htmlFor="contact-phone"
+              className="text-xs font-semibold uppercase tracking-wide text-secondary"
+            >
+              {ui.contactPhoneLabel}
+            </label>
+          ) : null}
           <input
             id="contact-phone"
             name="phone"
             value={phone}
             onChange={(event) => setPhone(event.target.value)}
             className="mt-1.5 h-11 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            placeholder="Celular o teléfono"
+            placeholder={ui.contactPhonePlaceholder}
             autoComplete="tel"
             inputMode="tel"
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="contact-topic"
-            className="text-xs font-semibold uppercase tracking-wide text-secondary"
-          >
-            Motivo
-          </label>
-          <select
-            id="contact-topic"
-            name="topic"
-            value={topic}
-            onChange={(event) => setTopic(event.target.value as WhatsappTopic)}
-            className="mt-1.5 h-11 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            {topics.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        {topics.length > 0 ? (
+          <div>
+            {ui.contactTopicLabel.trim() ? (
+              <label
+                htmlFor="contact-topic"
+                className="text-xs font-semibold uppercase tracking-wide text-secondary"
+              >
+                {ui.contactTopicLabel}
+              </label>
+            ) : null}
+            <select
+              id="contact-topic"
+              name="topic"
+              value={topic}
+              onChange={(event) =>
+                setTopic(event.target.value as WhatsappTopic)
+              }
+              className="mt-1.5 h-11 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              {topics.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
 
         <div>
-          <label
-            htmlFor="contact-message"
-            className="text-xs font-semibold uppercase tracking-wide text-secondary"
-          >
-            Mensaje (opcional)
-          </label>
+          {ui.contactMessageLabel.trim() ? (
+            <label
+              htmlFor="contact-message"
+              className="text-xs font-semibold uppercase tracking-wide text-secondary"
+            >
+              {ui.contactMessageLabel}
+            </label>
+          ) : null}
           <textarea
             id="contact-message"
             name="message"
@@ -133,25 +165,17 @@ export function ContactMiniForm({ settings }: ContactMiniFormProps) {
             onChange={(event) => setMessage(event.target.value)}
             rows={3}
             className="mt-1.5 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            placeholder="Cuéntanos en pocas líneas"
+            placeholder={ui.contactMessagePlaceholder}
           />
         </div>
       </div>
 
       <div className="space-y-4 pt-2">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-secondary">
-            Después de enviar
-          </p>
-          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
-            <li>Leemos cada mensaje y te contactamos pronto.</li>
-            <li>Tu consulta es importante para nosotros.</li>
-          </ul>
-        </div>
-
-        <Button type="submit" variant="primary" size="lg" className="w-full">
-          Enviar mensaje
-        </Button>
+        {ui.contactSubmitLabel.trim() ? (
+          <Button type="submit" variant="primary" size="lg" className="w-full">
+            {ui.contactSubmitLabel}
+          </Button>
+        ) : null}
       </div>
     </form>
   );

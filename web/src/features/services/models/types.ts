@@ -1,7 +1,9 @@
-export type ServicesSectionIntro = {
-  eyebrow: string;
+export type ServicesHero = {
+  badge: string;
   title: string;
   subtitle: string;
+  image: string;
+  imageAlt: string;
 };
 
 export type ServicesFeeRow = {
@@ -26,7 +28,7 @@ export type ServicesSection = {
 };
 
 export type ServicesContent = {
-  hero: ServicesSectionIntro;
+  hero: ServicesHero;
   sections: ServicesSection[];
   seo: {
     title: string;

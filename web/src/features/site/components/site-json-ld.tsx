@@ -47,17 +47,17 @@ export function SiteJsonLd({ settings }: SiteJsonLdProps) {
         "@type": ["LocalBusiness", "SportsActivityLocation"],
         "@id": localBusinessId,
         name: settings.name,
-        image: `${siteConfig.siteUrl}/imgs/banner3.webp`,
+        image: settings.ui.ogImageUrl || undefined,
         url: siteConfig.siteUrl,
         email: settings.email || undefined,
         telephone,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: settings.address,
-          addressLocality: "Palmira",
-          addressRegion: "Valle del Cauca",
-          addressCountry: "CO",
-        },
+        address: settings.address
+          ? {
+              "@type": "PostalAddress",
+              streetAddress: settings.address,
+              addressCountry: "CO",
+            }
+          : undefined,
         parentOrganization: {
           "@id": organizationId,
         },

@@ -44,6 +44,13 @@ export type EventDoc = {
 };
 
 export type EventsPageDoc = {
+  hero?: {
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    image?: EventImageDoc | null;
+    primaryCtaLabel?: string;
+  } | null;
   calendarIntro?: {
     eyebrow?: string;
     title?: string;
@@ -120,6 +127,14 @@ export const eventBySlugQuery = `*[_type == "event" && slug.current == $slug][0]
 export const eventSlugsQuery = `*[_type == "event" && defined(slug.current)].slug.current`;
 
 export const eventsPageQuery = `*[_type == "eventsPage" && _id == "eventsPage"][0]{
+  hero{
+    badge,
+    title,
+    subtitle,
+    image,
+    "imageAlt": image.alt,
+    primaryCtaLabel
+  },
   calendarIntro{ eyebrow, title, subtitle },
   emptyCalendarMessage,
   reviewsIntro{ eyebrow, title, subtitle },

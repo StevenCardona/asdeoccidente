@@ -5,8 +5,9 @@ import { EventsEmptyState } from "@/features/events/components/events-empty-stat
 import { EventsFaq } from "@/features/events/components/events-faq";
 import { EventsFeaturedHero } from "@/features/events/components/events-featured-hero";
 import { EventsGallery } from "@/features/events/components/events-gallery";
+import { EventsPageHero } from "@/features/events/components/events-page-hero";
 import { EventsPageSkeleton } from "@/features/events/components/events-page-skeleton";
-import { EventsReviews } from "@/features/events/components/events-reviews";
+import { ReviewsSection } from "@/shared/components/reviews-section";
 import { useEventsContent } from "@/features/events/hooks/use-events";
 import {
   getFeaturedEvent,
@@ -37,7 +38,11 @@ export function EventsListPage({
 
   return (
     <div>
-      {featured ? <EventsFeaturedHero event={featured} /> : null}
+      {featured ? (
+        <EventsFeaturedHero event={featured} />
+      ) : (
+        <EventsPageHero hero={content.list.hero} settings={settings} />
+      )}
       {noEvents ? (
         <EventsEmptyState
           settings={settings}
@@ -52,7 +57,7 @@ export function EventsListPage({
           emptyMessage={content.list.emptyCalendarMessage}
         />
       )}
-      <EventsReviews
+      <ReviewsSection
         intro={content.list.reviewsIntro}
         reviews={content.list.reviews}
       />

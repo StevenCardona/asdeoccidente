@@ -18,7 +18,7 @@ export const serviceDownload = defineType({
       type: "file",
       options: { accept: "application/pdf" },
       description:
-        "Opcional por ahora. Cuando lo subas, el botón abre el PDF en una pestaña nueva.",
+        "Sube el PDF en Sanity. Con archivo: el botón abre en pestaña nueva. Sin archivo: botón deshabilitado en el sitio.",
     }),
   ],
   preview: {

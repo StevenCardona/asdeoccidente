@@ -24,7 +24,7 @@ export const emptyHomeContent: HomeContent = {
     intro: { eyebrow: "", title: "", subtitle: "" },
     photos: [],
   },
-  gaits: {
+  reviews: {
     intro: { eyebrow: "", title: "", subtitle: "" },
     items: [],
   },
@@ -35,4 +35,3 @@ export const emptyHomeContent: HomeContent = {
 };
 
 /** @deprecated Use emptyHomeContent — kept as alias for existing imports. */
-export const defaultHomeContent = emptyHomeContent;

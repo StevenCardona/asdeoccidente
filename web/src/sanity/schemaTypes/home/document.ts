@@ -14,7 +14,7 @@ export const home = defineType({
     { name: "stats", title: "Cifras" },
     { name: "services", title: "Servicios" },
     { name: "gallery", title: "Galería" },
-    { name: "gaits", title: "Andares" },
+    { name: "reviews", title: "Reseñas" },
     { name: "videos", title: "Videos" },
     { name: "seo", title: "Google / buscadores" },
   ],
@@ -48,7 +48,7 @@ export const home = defineType({
       type: "homeServices",
       group: "services",
       description:
-        "Tarjetas de servicios (trámites, escuela, equinoterapia, alquiler).",
+        "Tarjetas de servicios (trámites, escuela, equinoterapia, alquiler). Cada tarjeta debe tener su propia imagen.",
     }),
     defineField({
       name: "gallery",
@@ -58,12 +58,12 @@ export const home = defineType({
       description: "Carrusel de fotos de la sede, escuela y ferias.",
     }),
     defineField({
-      name: "gaits",
-      title: "Andares",
-      type: "homeGaits",
-      group: "gaits",
+      name: "reviews",
+      title: "Reseñas",
+      type: "homeReviews",
+      group: "reviews",
       description:
-        "Sección de los cuatro andares oficiales (Paso Fino, Trocha, etc.).",
+        "Sección de testimonios en Inicio (reemplaza Andares). Sube solo reseñas reales.",
     }),
     defineField({
       name: "videos",
@@ -79,11 +79,11 @@ export const home = defineType({
       type: "seo",
       group: "seo",
       description:
-        "Título y texto corto que aparecen en Google al buscar la página. No se ven dentro del sitio.",
+        "Título y texto corto que aparecen en Google al buscar la página. No se ven dentro del sitio. Deben ser distintos del h1 del banner y no repetir el badge.",
       initialValue: {
-        title: "Aprende, compite y celebra con el caballo criollo colombiano.",
+        title: "Asociación equina del Occidente · Escuela y ferias",
         description:
-          "Escuela de chalanería y ferias del caballo criollo colombiano en el Valle del Cauca. Primera clase gratis.",
+          "Escuela de chalanería, ferias, registros y sede en el Valle del Cauca. Primera clase gratis.",
       },
     }),
   ],

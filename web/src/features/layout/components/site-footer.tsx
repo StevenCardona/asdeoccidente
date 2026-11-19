@@ -8,13 +8,14 @@ import {
   WhatsAppIcon,
   YoutubeIcon,
 } from "@/shared/components/brand-icons";
-import { buildWhatsAppUrl, navItems } from "@/shared/config/site";
+import { buildWhatsAppUrl, resolveNavItems } from "@/shared/config/site";
 
 type SiteFooterProps = {
   settings: SiteSettings;
 };
 
 export function SiteFooter({ settings }: SiteFooterProps) {
+  const items = resolveNavItems(settings);
   const socialLinks = [
     {
       href: settings.social.instagram,
@@ -33,33 +34,41 @@ export function SiteFooter({ settings }: SiteFooterProps) {
     },
   ].filter((item) => Boolean(item.href));
 
-  const phones = [
-    settings.phoneMobile,
-    settings.phoneMobileAlt,
-  ].filter(Boolean);
+  const phones = [settings.phoneMobile, settings.phoneMobileAlt].filter(
+    Boolean,
+  );
 
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-3 md:px-12 md:py-14">
         <div>
           <BrandLockup name={settings.name} variant="dark" />
-          <p className="mt-4 text-sm leading-relaxed text-white/70">
-            {settings.legalName}. {settings.footerBlurb}
-          </p>
+          {(settings.legalName || settings.footerBlurb) && (
+            <p className="mt-4 text-sm leading-relaxed text-white/70">
+              {[settings.legalName, settings.footerBlurb]
+                .filter(Boolean)
+                .join(". ")}
+            </p>
+          )}
         </div>
 
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-white/50">
-            Navegación
-          </p>
+          {settings.ui.footerNavHeading.trim() ? (
+            <p className="text-xs font-bold uppercase tracking-wider text-white/50">
+              {settings.ui.footerNavHeading}
+            </p>
+          ) : null}
           <ul className="mt-3 space-y-2 text-sm">
-            {navItems.map((item) => (
+            {items.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   className="inline-flex items-center gap-1.5 text-white/80 hover:text-white"
                 >
-                  <ChevronRight className="h-3.5 w-3.5 text-white/40" aria-hidden />
+                  <ChevronRight
+                    className="h-3.5 w-3.5 text-white/40"
+                    aria-hidden
+                  />
                   {item.label}
                 </Link>
               </li>
@@ -68,23 +77,36 @@ export function SiteFooter({ settings }: SiteFooterProps) {
         </div>
 
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-white/50">
-            Sede y contacto
-          </p>
+          {settings.ui.footerContactHeading.trim() ? (
+            <p className="text-xs font-bold uppercase tracking-wider text-white/50">
+              {settings.ui.footerContactHeading}
+            </p>
+          ) : null}
           <ul className="mt-3 space-y-3 text-sm text-white/80">
-            <li className="flex gap-2.5">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
-              <span>{settings.address}</span>
-            </li>
+            {settings.address.trim() ? (
+              <li className="flex gap-2.5">
+                <MapPin
+                  className="mt-0.5 h-4 w-4 shrink-0 text-white"
+                  aria-hidden
+                />
+                <span>{settings.address}</span>
+              </li>
+            ) : null}
             {settings.phonePbx ? (
               <li className="flex gap-2.5">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
+                <Phone
+                  className="mt-0.5 h-4 w-4 shrink-0 text-white"
+                  aria-hidden
+                />
                 <span>PBX {settings.phonePbx}</span>
               </li>
             ) : null}
             {phones.length > 0 ? (
               <li className="flex gap-2.5">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
+                <Phone
+                  className="mt-0.5 h-4 w-4 shrink-0 text-white"
+                  aria-hidden
+                />
                 <span>{phones.join(" · ")}</span>
               </li>
             ) : null}
@@ -103,7 +125,10 @@ export function SiteFooter({ settings }: SiteFooterProps) {
             ) : null}
             {settings.email ? (
               <li className="flex gap-2.5">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden />
+                <Mail
+                  className="mt-0.5 h-4 w-4 shrink-0 text-white"
+                  aria-hidden
+                />
                 <a
                   href={`mailto:${settings.email}`}
                   className="text-white/70 hover:text-white"
@@ -134,8 +159,11 @@ export function SiteFooter({ settings }: SiteFooterProps) {
       </div>
 
       <div className="border-t border-white/10 px-5 py-4 text-center text-xs text-white/50 md:px-12">
-        © {new Date().getFullYear()} {settings.name}. Todos los derechos
-        reservados.
+        © {new Date().getFullYear()}
+        {settings.name.trim() ? ` ${settings.name}.` : ""}
+        {settings.ui.copyrightSuffix.trim()
+          ? ` ${settings.ui.copyrightSuffix}`
+          : ""}
       </div>
     </footer>
   );

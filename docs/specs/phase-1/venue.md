@@ -27,13 +27,13 @@ Let organizers explore sede spaces and request a quote via WhatsApp — clear CT
 
 ## Scope / out of scope
 
-**In:** hero full-bleed (WhatsApp CTA + address + commercial contact line Steet Achury), intro copy, alternating space blocks (title, description, highlights, image, left/right), mid-page gallery, reviews.
+**In:** PageHero (WhatsApp CTA + commercial contact line; **no address in banner** — address lives in Footer/ContactLocation), intro, spaces, gallery, reviews.
 
 **Out:** price list, availability calendar, catering packages, FAQ without confirmed answers.
 
 ## Layout (order)
 
-1. **Hero** — compact full-bleed (más aire en desktop), title, subtitle, WhatsApp “Quiero cotizar”, address + línea comercial Steet Achury
+1. **Hero** — PageHero compact; badge/title/subtitle congruentes; WhatsApp “Quiero cotizar”; línea comercial opcional (sin dirección)
 2. **Intro** — eyebrow + title + body paragraphs (ancho completo `max-w-7xl`)
 3. **Galería** — carousel (home pattern); hidden if no photos
 4. **Espacios (primeros 2)** — `spaces.slice(0, 2)` with `imagePosition` left|right

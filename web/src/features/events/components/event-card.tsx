@@ -24,13 +24,17 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background shadow-sm transition-shadow hover:shadow-md">
       <div className="relative">
-        <SafeImage
-          src={event.banner.src}
-          alt={event.banner.alt}
-          fill
-          sizes="(max-width: 768px) 100vw, 25vw"
-          wrapperClassName="aspect-[16/11]"
-        />
+        {event.banner ? (
+          <SafeImage
+            src={event.banner.src}
+            alt={event.banner.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 25vw"
+            wrapperClassName="aspect-[16/11]"
+          />
+        ) : (
+          <div className="aspect-[16/11] bg-muted" aria-hidden />
+        )}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           {event.kind ? <EventKindBadge kind={event.kind} /> : null}
           <EventStatusBadge status={status} />

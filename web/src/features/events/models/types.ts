@@ -69,7 +69,7 @@ export type Event = {
   title: string;
   slug: string;
   featured: boolean;
-  banner: EventImage;
+  banner: EventImage | null;
   highlightImage?: EventImage;
   teaser: string;
   startDate: string;
@@ -123,7 +123,17 @@ export type EventReview = {
   text: string;
 };
 
+export type EventsPageHero = {
+  badge: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  imageAlt: string;
+  primaryCtaLabel: string;
+};
+
 export type EventsListContent = {
+  hero: EventsPageHero;
   calendarIntro: {
     eyebrow: string;
     title: string;

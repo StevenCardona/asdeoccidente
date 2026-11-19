@@ -22,18 +22,17 @@ Prestigious, human Home: horse, method, culture. CTAs to free class (WhatsApp) a
 
 Rendered by `HomePage` after shared Header; ContactLocation + Footer come from the site shell.
 
-1. **Hero** — full-bleed banner (`/imgs/banner.png` or CMS `heroImage`); Google reviews badge + Fedequinas logo; `h1` + subtitle; primary CTA WhatsApp (clase gratis) · secondary CTA `/events`; **sede address** under CTAs (small, muted white, ≈ CTA row width; no separate tall band below the banner)
-2. **Esencia** — four beats (title, text, Lucide icon) + 2×2 photo mosaic (`/imgs/escuela*.jpg`)
-3. **Cifras** — navy slab, count-up with icons: **1975** · **+200** alumnos · Google opiniones · **+180** socios
-4. **Servicios** — photo cards in **`md:grid-cols-3`** (offers + escuela); CTAs link to stub/live routes when `href` is set
-5. **Galería** — horizontal carousel (`SafeImage`, 2-up mobile / 4-up desktop)
-6. **Cuatro andares** — tabs (Paso Fino, Trocha, Trocha y Galope, Trote y Galope) on crimson section
-7. **Videos** — four fixed slots, **all 9:16**; desktop one row; mobile 1-up carousel; Instagram/TikTok embeds (URLs from CMS or `NEXT_PUBLIC_HOME_VIDEO_URL_*`)
+1. **Hero** — shared `PageHero` (full-bleed); Google reviews badge + Fedequinas; `h1` + subtitle; CTAs; sede address under CTAs
+2. **Esencia** — four beats + photo mosaic
+3. **Cifras** — navy slab: **1975** · **+200** alumnos · Google opiniones · **+180** socios
+4. **Servicios** — photo cards (`lg:grid-cols-3`); **only CMS items** (no code seed cards)
+5. **Galería** — horizontal carousel (`SafeImage`)
+6. **Reseñas** — shared `ReviewsSection` (replaces Andares / «Patrimonio vivo»)
+7. **Videos** — four 9:16 slots
 
-Shared after the feature body (not inside `HomePage`):
+Shared after the feature body:
 
-8. **ContactLocation** — map + optional “Cómo llegar” video (dialog) · mini form → `mailto:` site email  
-9. **Footer** — full address, phones, WhatsApp, socials from env
+8. **ContactLocation** · **Footer** — contactos desde `siteSettings`
 
 Not rendered on the page: “¿Qué quieres hacer?” entry cards (field may exist in Sanity/model for later; UI does not mount it).
 
@@ -70,7 +69,9 @@ Editable in Studio and merged with `defaultHomeContent`:
 | `showStats`, `stats[]` | Yes |
 | `socialVideos[]` (max 4) | Yes |
 | `seoTitle`, `seoDescription` | Yes (`generateMetadata`) |
+| `reviews` (intro + items) | Yes — testimonios en Inicio |
 | `culturalLabel`, `entryCards[]` | In schema/model; **not rendered** |
+| `gaits` / Andares | **Removed** — replaced by reviews |
 
 ## Loading & media
 

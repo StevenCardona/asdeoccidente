@@ -1,7 +1,7 @@
 import { VenueGallery } from "@/features/venue/components/venue-gallery";
 import { VenueHero } from "@/features/venue/components/venue-hero";
 import { VenueIntro } from "@/features/venue/components/venue-intro";
-import { VenueReviews } from "@/features/venue/components/venue-reviews";
+import { ReviewsSection } from "@/shared/components/reviews-section";
 import { VenueSpaces } from "@/features/venue/components/venue-spaces";
 import type { VenueContent } from "@/features/venue/models";
 import type { SiteSettings } from "@/features/site/models";
@@ -22,7 +22,11 @@ export function VenuePage({ content, settings }: VenuePageProps) {
       <VenueGallery content={content.gallery} />
       <VenueSpaces spaces={featuredSpaces} />
       <VenueSpaces spaces={remainingSpaces} />
-      <VenueReviews intro={content.reviewsIntro} reviews={content.reviews} />
+      <ReviewsSection
+        intro={content.reviewsIntro}
+        reviews={content.reviews}
+        tone="muted"
+      />
     </div>
   );
 }

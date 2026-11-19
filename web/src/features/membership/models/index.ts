@@ -1,7 +1,8 @@
 import { cache } from "react";
 import { getSanityDataClient } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { mergeMembership } from "./map";
+import { emptyMembershipContent } from "./defaults";
+import { isMembershipContentEmpty, mergeMembership } from "./map";
 import { membershipPageQuery, type MembershipPageDoc } from "./query";
 import type { MembershipContent } from "./types";
 
@@ -19,12 +20,13 @@ export type {
   MembershipReview,
   MembershipSectionIntro,
 } from "./types";
-export { defaultMembershipContent } from "./defaults";
+export { emptyMembershipContent, defaultMembershipContent } from "./defaults";
+export { isMembershipContentEmpty } from "./map";
 
 export const fetchMembershipContent = cache(
   async (): Promise<MembershipContent> => {
     const client = getSanityDataClient();
-    if (!client) return mergeMembership(null);
+    if (!client) return emptyMembershipContent;
     try {
       const doc = await sanityFetch<MembershipPageDoc | null>(
         client,
@@ -33,7 +35,7 @@ export const fetchMembershipContent = cache(
       return mergeMembership(doc);
     } catch (error) {
       console.error("[sanity] fetchMembershipContent failed", error);
-      return mergeMembership(null);
+      return emptyMembershipContent;
     }
   },
 );

@@ -35,14 +35,14 @@ Invite creators and exhibitors to join as socios or afiliados with a clear “Qu
 
 ## Layout (order)
 
-1. **Hero** — full-bleed; logo Fedequinas; título; subtítulo; WhatsApp “Quiero ser socio”
-2. **Quiénes somos** — essence-like: eyebrow + título + cuerpo + columna de fotos
-3. **Misión y Visión** — solo pilares (imagen + título + texto); sin intro de sección; imágenes compactas en desktop; mobile carousel
-4. **Ser socio** — intro + cards compactas (número junto al título) + galería snap
-5. **Ser afiliado** — intro + cards compactas
-6. **Costos** — tabla (Tipo · Cuota de sostenimiento · Valor); mobile cards apiladas
-7. **Requisitos** — lista + botón Descargar formato (PDF Sanity; disabled si vacío)
-8. **Reseñas** — intro + cards (patrón venue)
+1. **Hero** — PageHero; Fedequinas; título ≠ CTA; subtítulo claro; WhatsApp “Quiero ser socio”
+2. **Quiénes somos**
+3. **Misión y Visión**
+4. **Ser socio** — cards + galería
+5. **Ser afiliado** — cards; **fondo blanco**
+6. **Costos** — tabla / mobile cards
+7. **Requisitos / Cómo unirme** — **cards** + PDF Sanity; **fondo blanco**
+8. **Reseñas** — shared ReviewsSection; **fondo blanco**
 9. Shared ContactLocation / Footer
 
 ## Default copy (KB-aligned)

@@ -17,19 +17,19 @@ Progress: [`../../context/phase-1/progress.md`](../../context/phase-1/progress.m
 | 6 | Venue | `/venue` | [`venue.md`](venue.md) | In progress |
 | 7 | Membership | `/membership` | [`membership.md`](membership.md) | In progress |
 | 8 | Equinotherapy | `/equinotherapy` | [`equinotherapy.md`](equinotherapy.md) | In progress |
-| 9 | Directory | `/directory` | [`directory.md`](directory.md) | Spec / stub (search UI later) |
+| 9 | Directory | `/directory` | [`directory.md`](directory.md) | Implemented (Excel por tipo) |
 
 ## Deferred
 
 | Item | Notes |
 | --- | --- |
 | About | Path `/about` and nav item **commented** until a future spec |
-| Directory search UI + Sanity schemas | Specced in [`directory.md`](directory.md); implement later |
+| Directory Excel seed data | Association uploads Excels in Studio |
 | Phase 2 | Chatbot |
 | Phase 3 | Contact page, refinements, full builds of stub offers |
 
 ## Shared chrome (all active pages)
 
-Header · **page body** · Contact & location (mailto form + Maps + directions video dialog) · Footer · mobile bottom nav  
+Header (desktop nav · mobile hamburger drawer) · **page body** · Contact & location · Footer  
 
-Labels in Spanish; routes in English. Contact details (address, phones, WhatsApp, socials) from Sanity `siteSettings` in the Footer.
+Labels in Spanish; routes in English. Contact details from Sanity `siteSettings`. Shared `PageHero` + section padding across pages.

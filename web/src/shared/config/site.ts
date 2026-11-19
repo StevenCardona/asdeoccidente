@@ -1,33 +1,55 @@
 /**
- * Infra + navigation helpers.
- * Editable identity/contact lives in Sanity (`getSiteSettings`).
+ * Infra helpers. Editable identity/contact/nav lives in Sanity (`getSiteSettings`).
  */
 
 import type {
+  SiteNavItem,
   SiteSettings,
   WhatsappTopic,
 } from "@/features/site/models";
 
-export type { WhatsappTopic };
+export type { WhatsappTopic, SiteNavItem };
 
 export const siteConfig = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 };
 
-export const navItems = [
-  { href: "/", label: "Inicio", icon: "Home" as const },
-  { href: "/school", label: "Escuela", icon: "GraduationCap" as const },
-  { href: "/events", label: "Eventos", icon: "CalendarDays" as const },
-  { href: "/services", label: "Servicios", icon: "LayoutGrid" as const },
-  { href: "/venue", label: "Alquiler", icon: "Building2" as const },
-  { href: "/membership", label: "Socios", icon: "Handshake" as const },
-  { href: "/equinotherapy", label: "Equinoterapia", icon: "HeartPulse" as const },
-  { href: "/directory", label: "Directorio", icon: "BookUser" as const },
-  // { href: "/about", label: "Nosotros", icon: "Users" as const }, // deferred
-] as const;
+export type NavIconName =
+  | "Home"
+  | "GraduationCap"
+  | "CalendarDays"
+  | "LayoutGrid"
+  | "Building2"
+  | "Handshake"
+  | "HeartPulse"
+  | "BookUser"
+  | "Users";
 
-export type NavItem = (typeof navItems)[number];
-export type NavIconName = NavItem["icon"];
+const ALLOWED_ICONS = new Set<string>([
+  "Home",
+  "GraduationCap",
+  "CalendarDays",
+  "LayoutGrid",
+  "Building2",
+  "Handshake",
+  "HeartPulse",
+  "BookUser",
+  "Users",
+]);
+
+export function resolveNavItems(settings: SiteSettings): Array<{
+  href: string;
+  label: string;
+  icon: NavIconName;
+}> {
+  return settings.ui.navItems.map((item) => ({
+    href: item.href,
+    label: item.label,
+    icon: (ALLOWED_ICONS.has(item.icon)
+      ? item.icon
+      : "Home") as NavIconName,
+  }));
+}
 
 export function buildWhatsAppUrl(
   settings: Pick<SiteSettings, "whatsappNumber" | "whatsappMessages">,
@@ -37,7 +59,7 @@ export function buildWhatsAppUrl(
   const number = settings.whatsappNumber?.trim();
   if (!number) return "#";
   const text = encodeURIComponent(
-    customText ?? settings.whatsappMessages[topic],
+    customText ?? settings.whatsappMessages[topic] ?? "",
   );
   return `https://wa.me/${number}?text=${text}`;
 }

@@ -51,14 +51,11 @@ export type HomeGalleryPhoto = {
   alt: string;
 };
 
-export type HomeGait = {
-  id: string;
-  tab: string;
-  tag: string;
-  sound: string;
-  title: string;
+export type HomeReview = {
+  name: string;
+  place: string;
+  rating: number;
   text: string;
-  image: string;
 };
 
 export type HomeSectionIntro = {
@@ -90,9 +87,9 @@ export type HomeContent = {
     intro: HomeSectionIntro;
     photos: HomeGalleryPhoto[];
   };
-  gaits: {
+  reviews: {
     intro: HomeSectionIntro;
-    items: HomeGait[];
+    items: HomeReview[];
   };
   videosIntro: HomeSectionIntro;
   socialVideos: HomeSocialVideo[];

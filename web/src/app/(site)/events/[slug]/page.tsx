@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: event.seo.title,
     description: event.seo.description,
     siteName: settings.name,
-    image: event.banner.src,
-    imageAlt: event.banner.alt,
+    image: event.banner?.src,
+    imageAlt: event.banner?.alt,
   });
 }
 

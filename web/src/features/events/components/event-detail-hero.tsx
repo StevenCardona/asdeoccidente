@@ -162,18 +162,25 @@ export function EventDetailHero({ event, settings }: EventDetailHeroProps) {
             </div>
           </div>
 
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-border bg-muted shadow-sm">
-            <Image
-              src={media.src}
-              alt={media.alt}
-              fill
-              priority
-              fetchPriority="high"
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              quality={75}
+          {media ? (
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-border bg-muted shadow-sm">
+              <Image
+                src={media.src}
+                alt={media.alt}
+                fill
+                priority
+                fetchPriority="high"
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={75}
+              />
+            </div>
+          ) : (
+            <div
+              className="aspect-[4/3] w-full rounded-lg border border-border bg-muted"
+              aria-hidden
             />
-          </div>
+          )}
         </div>
       </div>
     </section>

@@ -1,4 +1,6 @@
-import { defaultServicesContent } from "./defaults";
+import type { SanityImageSource } from "@sanity/image-url";
+import { resolveSanityImage } from "@/shared/lib/resolve-image";
+import { emptyServicesContent } from "./defaults";
 import type { ServicesPageDoc } from "./query";
 import type {
   ServicesContent,
@@ -84,39 +86,36 @@ function mapSections(
   return result;
 }
 
-function cloneDefaults(): ServicesContent {
-  return {
-    ...defaultServicesContent,
-    hero: { ...defaultServicesContent.hero },
-    sections: defaultServicesContent.sections.map((section) => ({
-      ...section,
-      feeRows: section.feeRows.map((row) => ({ ...row })),
-      downloads: section.downloads.map((file) => ({ ...file })),
-    })),
-    seo: { ...defaultServicesContent.seo },
-  };
-}
-
-/** Prefer code seed until Studio publishes at least one titled section. */
 export function mergeServices(doc: ServicesPageDoc | null): ServicesContent {
-  if (!doc) return cloneDefaults();
+  if (!doc) return { ...emptyServicesContent, sections: [] };
 
-  const sections = mapSections(doc.sections);
-  if (sections.length === 0) return cloneDefaults();
-
-  const intro = doc.hero?.intro;
+  const hero = doc.hero;
+  const legacy = hero?.intro;
+  const resolved = resolveSanityImage(
+    hero?.image as SanityImageSource | null | undefined,
+    hero?.imageAlt,
+  );
 
   return {
     hero: {
-      eyebrow: intro?.eyebrow?.trim() || defaultServicesContent.hero.eyebrow,
-      title: intro?.title?.trim() || defaultServicesContent.hero.title,
-      subtitle: intro?.subtitle?.trim() || defaultServicesContent.hero.subtitle,
+      badge: hero?.badge?.trim() || legacy?.eyebrow?.trim() || "",
+      title: hero?.title?.trim() || legacy?.title?.trim() || "",
+      subtitle: hero?.subtitle?.trim() || legacy?.subtitle?.trim() || "",
+      image: resolved.src || "",
+      imageAlt: resolved.alt,
     },
-    sections,
+    sections: mapSections(doc.sections),
     seo: {
-      title: doc.seo?.title?.trim() || defaultServicesContent.seo.title,
-      description:
-        doc.seo?.description?.trim() || defaultServicesContent.seo.description,
+      title: doc.seo?.title?.trim() || "",
+      description: doc.seo?.description?.trim() || "",
     },
   };
+}
+
+export function isServicesContentEmpty(content: ServicesContent): boolean {
+  return (
+    !content.hero.title.trim() &&
+    !content.hero.image &&
+    content.sections.length === 0
+  );
 }

@@ -3,17 +3,12 @@ import {
   resolveSanityImage,
   resolveSanityImageUrl,
 } from "@/shared/lib/resolve-image";
-import {
-  defaultHomeServiceItems,
-  isPlaceholderCta,
-  matchDefaultService,
-} from "./default-services";
 import { emptyHomeContent } from "./defaults";
 import type { HomeDoc } from "./query";
 import type {
   HomeContent,
-  HomeGait,
   HomeGalleryPhoto,
+  HomeReview,
   HomeSectionIntro,
   HomeServiceItem,
   HomeSocialVideo,
@@ -88,51 +83,25 @@ function mergeHomeServices(
   for (const item of items ?? []) {
     if (!item?.title?.trim()) continue;
     const title = item.title.trim();
-    const fallback = matchDefaultService(title, item.href);
     const resolved = resolveSanityImage(
       item.image as SanityImageSource | null | undefined,
       item.imageAlt,
       undefined,
       title,
     );
-    const image = resolved.src || fallback?.image || "";
-    if (!image) continue;
-
-    const href =
-      item.href?.trim() || fallback?.href || matchDefaultService(title)?.href;
-    const rawCta = item.cta?.trim() || "";
-    const cta =
-      !rawCta || isPlaceholderCta(rawCta)
-        ? fallback?.cta || rawCta
-        : rawCta;
+    if (!resolved.src) continue;
 
     fromCms.push({
-      title: fallback?.title || title,
-      description: item.description?.trim() || fallback?.description || "",
-      cta,
-      href,
-      image,
-      imageAlt: resolved.alt || fallback?.imageAlt || title,
+      title,
+      description: item.description?.trim() || "",
+      cta: item.cta?.trim() || "",
+      href: item.href?.trim() || undefined,
+      image: resolved.src,
+      imageAlt: resolved.alt || title,
     });
   }
 
-  return defaultHomeServiceItems.map((fallback) => {
-    const match = fromCms.find(
-      (item) =>
-        item.href === fallback.href ||
-        matchDefaultService(item.title, item.href)?.href === fallback.href,
-    );
-    if (!match) return fallback;
-    return {
-      title: match.title || fallback.title,
-      description: match.description || fallback.description,
-      cta:
-        !match.cta || isPlaceholderCta(match.cta) ? fallback.cta : match.cta,
-      href: match.href || fallback.href,
-      image: match.image || fallback.image,
-      imageAlt: match.imageAlt || fallback.imageAlt,
-    };
-  });
+  return fromCms;
 }
 
 function hasHeroAsset(image: SanityImageSource | null | undefined): boolean {
@@ -182,24 +151,15 @@ export function mergeHome(
     });
   }
 
-  const gaitItems: HomeGait[] = [];
-  for (const item of doc.gaits?.items ?? []) {
-    if (!item?.id?.trim() || !item.title?.trim()) continue;
-    const resolved = resolveSanityImage(
-      item.image as SanityImageSource | null | undefined,
-      item.imageAlt,
-      undefined,
-      item.title,
-    );
-    if (!resolved.src) continue;
-    gaitItems.push({
-      id: item.id.trim(),
-      tab: item.tab?.trim() || item.title.trim(),
-      tag: item.tag?.trim() || "",
-      sound: item.sound?.trim() || "",
-      title: item.title.trim(),
-      text: item.text?.trim() || "",
-      image: resolved.src,
+  const reviewItems: HomeReview[] = [];
+  for (const item of doc.reviews?.items ?? []) {
+    if (!item?.name?.trim() || !item.text?.trim()) continue;
+    const rating = Number(item.rating);
+    reviewItems.push({
+      name: item.name.trim(),
+      place: item.place?.trim() || "",
+      rating: Number.isFinite(rating) ? rating : 5,
+      text: item.text.trim(),
     });
   }
 
@@ -276,9 +236,9 @@ export function mergeHome(
       intro: mergeIntro(doc.gallery?.intro),
       photos: galleryPhotos,
     },
-    gaits: {
-      intro: mergeIntro(doc.gaits?.intro),
-      items: gaitItems,
+    reviews: {
+      intro: mergeIntro(doc.reviews?.intro),
+      items: reviewItems,
     },
     videosIntro: mergeIntro(doc.videos?.intro),
     socialVideos: fromCmsVideos,
@@ -321,7 +281,7 @@ export function isHomeContentEmpty(home: HomeContent): boolean {
     home.stats.length === 0 &&
     home.services.items.length === 0 &&
     home.gallery.photos.length === 0 &&
-    home.gaits.items.length === 0 &&
+    home.reviews.items.length === 0 &&
     home.socialVideos.length === 0
   );
 }

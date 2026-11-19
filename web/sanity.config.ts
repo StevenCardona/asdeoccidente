@@ -100,6 +100,33 @@ export default defineConfig({
                   .schemaType("equinotherapyPage")
                   .documentId("equinotherapyPage"),
               ),
+            S.listItem()
+              .title("Directorio")
+              .id("directory")
+              .child(
+                S.list()
+                  .title("Directorio")
+                  .items([
+                    S.listItem()
+                      .title("Página")
+                      .id("directoryPage")
+                      .child(
+                        S.document()
+                          .schemaType("directoryPage")
+                          .documentId("directoryPage"),
+                      ),
+                    S.listItem()
+                      .title("Tipos (Excel)")
+                      .id("directoryDatasets")
+                      .child(
+                        S.documentTypeList("directoryDataset")
+                          .title("Tipos (Excel)")
+                          .defaultOrdering([
+                            { field: "sortOrder", direction: "asc" },
+                          ]),
+                      ),
+                  ]),
+              ),
           ]),
     }),
     visionTool(),

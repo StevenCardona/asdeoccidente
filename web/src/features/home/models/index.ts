@@ -1,3 +1,8 @@
+/**
+ * Home feature data layer.
+ * Fetches published Sanity singleton `home`, merges into UI model.
+ * Missing client / fetch errors → empty shell (no runtime seed copy).
+ */
 import { cache } from "react";
 import { getSanityDataClient } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -10,15 +15,15 @@ export type {
   HomeContent,
   HomeCta,
   HomeEssenceItem,
-  HomeGait,
   HomeGalleryPhoto,
   HomeHeroImage,
+  HomeReview,
   HomeSectionIntro,
   HomeServiceItem,
   HomeSocialVideo,
   HomeStat,
 } from "./types";
-export { defaultHomeContent, emptyHomeContent } from "./defaults";
+export { emptyHomeContent } from "./defaults";
 export { homeHeroImageUrl, isHomeContentEmpty } from "./map";
 
 export const fetchHomeContent = cache(async (): Promise<HomeContent> => {

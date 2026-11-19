@@ -25,17 +25,19 @@ export function EventsFeaturedHero({ event }: EventsFeaturedHeroProps) {
 
   return (
     <section className="relative isolate overflow-hidden bg-secondary text-white">
-      <Image
-        src={event.banner.src}
-        alt=""
-        fill
-        priority
-        fetchPriority="high"
-        quality={75}
-        className="object-cover object-center"
-        sizes="100vw"
-        aria-hidden
-      />
+      {event.banner ? (
+        <Image
+          src={event.banner.src}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          quality={75}
+          className="object-cover object-center"
+          sizes="100vw"
+          aria-hidden
+        />
+      ) : null}
       <div
         className="absolute inset-0 bg-gradient-to-r from-secondary/95 via-secondary/85 to-secondary/55"
         aria-hidden
@@ -91,16 +93,18 @@ export function EventsFeaturedHero({ event }: EventsFeaturedHeroProps) {
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden border border-white/20 shadow-lg md:mx-0 md:max-w-none">
-          <Image
-            src={media.src}
-            alt={media.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 90vw, 40vw"
-            quality={75}
-          />
-        </div>
+        {media ? (
+          <div className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden border border-white/20 shadow-lg md:mx-0 md:max-w-none">
+            <Image
+              src={media.src}
+              alt={media.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 90vw, 40vw"
+              quality={75}
+            />
+          </div>
+        ) : null}
       </div>
     </section>
   );

@@ -1,7 +1,8 @@
 import { cache } from "react";
 import { getSanityDataClient } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { mergeEquinotherapy } from "./map";
+import { emptyEquinotherapyContent } from "./defaults";
+import { isEquinotherapyContentEmpty, mergeEquinotherapy } from "./map";
 import {
   equinotherapyPageQuery,
   type EquinotherapyPageDoc,
@@ -18,12 +19,16 @@ export type {
   EquinotherapySectionIntro,
   EquinotherapyStory,
 } from "./types";
-export { defaultEquinotherapyContent } from "./defaults";
+export {
+  emptyEquinotherapyContent,
+  defaultEquinotherapyContent,
+} from "./defaults";
+export { isEquinotherapyContentEmpty } from "./map";
 
 export const fetchEquinotherapyContent = cache(
   async (): Promise<EquinotherapyContent> => {
     const client = getSanityDataClient();
-    if (!client) return mergeEquinotherapy(null);
+    if (!client) return emptyEquinotherapyContent;
     try {
       const doc = await sanityFetch<EquinotherapyPageDoc | null>(
         client,
@@ -32,7 +37,7 @@ export const fetchEquinotherapyContent = cache(
       return mergeEquinotherapy(doc);
     } catch (error) {
       console.error("[sanity] fetchEquinotherapyContent failed", error);
-      return mergeEquinotherapy(null);
+      return emptyEquinotherapyContent;
     }
   },
 );

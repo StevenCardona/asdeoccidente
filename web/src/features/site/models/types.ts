@@ -8,6 +8,38 @@ export type WhatsappTopic =
 
 export type WhatsappMessages = Record<WhatsappTopic, string>;
 
+export type SiteNavItem = {
+  href: string;
+  label: string;
+  icon: string;
+};
+
+export type SiteUiChrome = {
+  navItems: SiteNavItem[];
+  contactEyebrow: string;
+  contactTitle: string;
+  contactSubtitle: string;
+  contactFormTitle: string;
+  contactFormSubtitle: string;
+  contactNameLabel: string;
+  contactNamePlaceholder: string;
+  contactPhoneLabel: string;
+  contactPhonePlaceholder: string;
+  contactTopicLabel: string;
+  contactMessageLabel: string;
+  contactMessagePlaceholder: string;
+  contactSubmitLabel: string;
+  contactTopicLabels: Record<WhatsappTopic, string>;
+  footerNavHeading: string;
+  footerContactHeading: string;
+  copyrightSuffix: string;
+  directionsVideoLabel: string;
+  /** Prefix before address in home hero, e.g. "Nuestra sede está en ". */
+  heroAddressPrefix: string;
+  fedequinasImageUrl: string;
+  ogImageUrl: string;
+};
+
 export type SiteSettings = {
   name: string;
   legalName: string;
@@ -24,11 +56,9 @@ export type SiteSettings = {
     tiktok: string;
   };
   mapEmbedUrl: string;
-  /** Directions video for Contact & location; empty src means none. */
   directionsVideo: {
     kind: "url" | "file";
     src: string;
-    /** Optional cover shown on the trigger and as HTML video poster. */
     posterSrc?: string;
   };
   google: {
@@ -37,4 +67,5 @@ export type SiteSettings = {
     reviewsUrl: string;
   };
   whatsappMessages: WhatsappMessages;
+  ui: SiteUiChrome;
 };

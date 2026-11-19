@@ -1,7 +1,6 @@
 "use client";
 
 import { HomeEssence } from "@/features/home/components/home-essence";
-import { HomeGaits } from "@/features/home/components/home-gaits";
 import { HomeHero } from "@/features/home/components/home-hero";
 import { HomePageSkeleton } from "@/features/home/components/home-page-skeleton";
 import { HomePhotoGallery } from "@/features/home/components/home-photo-gallery";
@@ -15,6 +14,7 @@ import {
   type HomeContent,
 } from "@/features/home/models";
 import type { SiteSettings } from "@/features/site/models";
+import { ReviewsSection } from "@/shared/components/reviews-section";
 
 type HomePageProps = {
   initialHome?: HomeContent;
@@ -60,7 +60,11 @@ export function HomePage({ initialHome, settings }: HomePageProps) {
         intro={home.gallery.intro}
         photos={home.gallery.photos}
       />
-      <HomeGaits intro={home.gaits.intro} items={home.gaits.items} />
+      <ReviewsSection
+        intro={home.reviews.intro}
+        reviews={home.reviews.items}
+        tone="muted"
+      />
       <HomeSocialVideos intro={home.videosIntro} videos={home.socialVideos} />
     </div>
   );

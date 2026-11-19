@@ -1,6 +1,10 @@
 import type { SanityImageSource } from "@sanity/image-url";
 import { resolveSanityImage } from "@/shared/lib/resolve-image";
-import { defaultMembershipContent } from "./defaults";
+import {
+  mapReviewItems,
+  mapSectionIntro,
+} from "@/shared/sanity/map-content";
+import { emptyMembershipContent } from "./defaults";
 import type { MembershipPageDoc } from "./query";
 import type {
   MembershipBenefit,
@@ -8,8 +12,6 @@ import type {
   MembershipCostRow,
   MembershipImage,
   MembershipPillar,
-  MembershipReview,
-  MembershipSectionIntro,
 } from "./types";
 
 type ImageDoc = SanityImageSource & { alt?: string };
@@ -17,27 +19,15 @@ type ImageDoc = SanityImageSource & { alt?: string };
 function mapImage(
   image: ImageDoc | null | undefined,
   altFallback: string,
-  fallbackSrc?: string,
 ): MembershipImage | null {
   const resolved = resolveSanityImage(
     image ?? null,
     image?.alt,
-    fallbackSrc,
+    undefined,
     altFallback,
   );
   if (!resolved.src) return null;
   return { src: resolved.src, alt: resolved.alt || altFallback };
-}
-
-function mapIntro(
-  intro: { eyebrow?: string; title?: string; subtitle?: string } | null | undefined,
-  fallback: MembershipSectionIntro,
-): MembershipSectionIntro {
-  return {
-    eyebrow: intro?.eyebrow?.trim() || fallback.eyebrow,
-    title: intro?.title?.trim() || fallback.title,
-    subtitle: intro?.subtitle?.trim() || fallback.subtitle,
-  };
 }
 
 function mapPhotos(
@@ -59,10 +49,7 @@ function mapBenefits(
   for (const item of items ?? []) {
     const title = item?.title?.trim();
     if (!title) continue;
-    result.push({
-      title,
-      text: item?.text?.trim() || "",
-    });
+    result.push({ title, text: item?.text?.trim() || "" });
   }
   return result;
 }
@@ -92,193 +79,82 @@ function mapCostRows(
     if (!label) continue;
     result.push({
       label,
-      cuotaDisplay: row?.cuotaDisplay?.trim() || "—",
-      valorDisplay: row?.valorDisplay?.trim() || "—",
+      cuotaDisplay: row?.cuotaDisplay?.trim() || "",
+      valorDisplay: row?.valorDisplay?.trim() || "",
     });
   }
   return result;
 }
 
-function mapReviews(
-  reviews: MembershipPageDoc["reviews"],
-): MembershipReview[] {
-  const result: MembershipReview[] = [];
-  for (const review of reviews ?? []) {
-    const name = review?.name?.trim();
-    const text = review?.text?.trim();
-    if (!name || !text) continue;
-    const rating =
-      typeof review?.rating === "number" && Number.isFinite(review.rating)
-        ? Math.min(5, Math.max(1, Math.round(review.rating)))
-        : 5;
-    result.push({
-      name,
-      place: review?.place?.trim() || "",
-      rating,
-      text,
-    });
-  }
-  return result;
-}
+export function mergeMembership(
+  doc: MembershipPageDoc | null,
+): MembershipContent {
+  if (!doc) return emptyMembershipContent;
 
-function cloneDefaults(): MembershipContent {
-  const d = defaultMembershipContent;
-  return {
-    ...d,
-    hero: { ...d.hero },
-    about: {
-      ...d.about,
-      paragraphs: [...d.about.paragraphs],
-      photos: d.about.photos.map((photo) => ({ ...photo })),
-    },
-    missionVision: {
-      pillars: d.missionVision.pillars.map((pillar) => ({
-        ...pillar,
-        image: pillar.image ? { ...pillar.image } : null,
-      })),
-    },
-    memberBenefits: {
-      intro: { ...d.memberBenefits.intro },
-      items: d.memberBenefits.items.map((item) => ({ ...item })),
-      gallery: {
-        intro: { ...d.memberBenefits.gallery.intro },
-        photos: d.memberBenefits.gallery.photos.map((photo) => ({ ...photo })),
-      },
-    },
-    affiliateBenefits: {
-      intro: { ...d.affiliateBenefits.intro },
-      items: d.affiliateBenefits.items.map((item) => ({ ...item })),
-    },
-    costs: {
-      intro: { ...d.costs.intro },
-      rows: d.costs.rows.map((row) => ({ ...row })),
-    },
-    requirements: {
-      ...d.requirements,
-      intro: { ...d.requirements.intro },
-      items: [...d.requirements.items],
-    },
-    reviewsIntro: { ...d.reviewsIntro },
-    reviews: d.reviews.map((review) => ({ ...review })),
-    seo: { ...d.seo },
-  };
-}
-
-/** Prefer code seed until Studio publishes at least one benefit title. */
-export function mergeMembership(doc: MembershipPageDoc | null): MembershipContent {
-  if (!doc) return cloneDefaults();
-
-  const memberItems = mapBenefits(doc.memberBenefits?.items);
-  if (memberItems.length === 0) return cloneDefaults();
-
-  const defaults = defaultMembershipContent;
   const heroImage = mapImage(
     doc.hero?.image,
-    defaults.hero.imageAlt,
-    defaults.hero.image,
+    (doc.hero?.image as { alt?: string } | null | undefined)?.alt?.trim() || "",
   );
-
   const aboutParagraphs = (doc.about?.paragraphs ?? [])
     .map((paragraph) => paragraph?.trim())
     .filter((paragraph): paragraph is string => Boolean(paragraph));
-
-  const aboutPhotos = mapPhotos(doc.about?.photos, "Foto Asdeoccidente");
-  const pillars = mapPillars(doc.missionVision?.pillars);
-  const affiliateItems = mapBenefits(doc.affiliateBenefits?.items);
-  const costRows = mapCostRows(doc.costs?.rows);
-  const galleryPhotos = mapPhotos(
-    doc.memberBenefits?.gallery?.photos,
-    "Foto de la asociación",
-  );
   const requirementItems = (doc.requirements?.items ?? [])
     .map((item) => item?.trim())
     .filter((item): item is string => Boolean(item));
-  const reviews = mapReviews(doc.reviews);
 
   return {
     hero: {
-      title: doc.hero?.title?.trim() || defaults.hero.title,
-      subtitle: doc.hero?.subtitle?.trim() || defaults.hero.subtitle,
-      primaryCtaLabel:
-        doc.hero?.primaryCtaLabel?.trim() || defaults.hero.primaryCtaLabel,
-      image: heroImage?.src || defaults.hero.image,
-      imageAlt: heroImage?.alt || defaults.hero.imageAlt,
+      title: doc.hero?.title?.trim() || "",
+      subtitle: doc.hero?.subtitle?.trim() || "",
+      primaryCtaLabel: doc.hero?.primaryCtaLabel?.trim() || "",
+      image: heroImage?.src || "",
+      imageAlt: heroImage?.alt || "",
     },
     about: {
-      eyebrow: doc.about?.eyebrow?.trim() || defaults.about.eyebrow,
-      title: doc.about?.title?.trim() || defaults.about.title,
-      paragraphs:
-        aboutParagraphs.length > 0
-          ? aboutParagraphs
-          : [...defaults.about.paragraphs],
-      photos:
-        aboutPhotos.length > 0
-          ? aboutPhotos
-          : defaults.about.photos.map((photo) => ({ ...photo })),
+      eyebrow: doc.about?.eyebrow?.trim() || "",
+      title: doc.about?.title?.trim() || "",
+      paragraphs: aboutParagraphs,
+      photos: mapPhotos(doc.about?.photos, ""),
     },
     missionVision: {
-      pillars:
-        pillars.length > 0
-          ? pillars
-          : defaults.missionVision.pillars.map((pillar) => ({
-              ...pillar,
-              image: pillar.image ? { ...pillar.image } : null,
-            })),
+      pillars: mapPillars(doc.missionVision?.pillars),
     },
     memberBenefits: {
-      intro: mapIntro(doc.memberBenefits?.intro, defaults.memberBenefits.intro),
-      items: memberItems,
+      intro: mapSectionIntro(doc.memberBenefits?.intro),
+      items: mapBenefits(doc.memberBenefits?.items),
       gallery: {
-        intro: mapIntro(
-          doc.memberBenefits?.gallery?.intro,
-          defaults.memberBenefits.gallery.intro,
-        ),
-        photos:
-          galleryPhotos.length > 0
-            ? galleryPhotos
-            : defaults.memberBenefits.gallery.photos.map((photo) => ({
-                ...photo,
-              })),
+        intro: mapSectionIntro(doc.memberBenefits?.gallery?.intro),
+        photos: mapPhotos(doc.memberBenefits?.gallery?.photos, ""),
       },
     },
     affiliateBenefits: {
-      intro: mapIntro(
-        doc.affiliateBenefits?.intro,
-        defaults.affiliateBenefits.intro,
-      ),
-      items:
-        affiliateItems.length > 0
-          ? affiliateItems
-          : defaults.affiliateBenefits.items.map((item) => ({ ...item })),
+      intro: mapSectionIntro(doc.affiliateBenefits?.intro),
+      items: mapBenefits(doc.affiliateBenefits?.items),
     },
     costs: {
-      intro: mapIntro(doc.costs?.intro, defaults.costs.intro),
-      rows:
-        costRows.length > 0
-          ? costRows
-          : defaults.costs.rows.map((row) => ({ ...row })),
+      intro: mapSectionIntro(doc.costs?.intro),
+      rows: mapCostRows(doc.costs?.rows),
     },
     requirements: {
-      intro: mapIntro(doc.requirements?.intro, defaults.requirements.intro),
-      items:
-        requirementItems.length > 0
-          ? requirementItems
-          : [...defaults.requirements.items],
-      formatLabel:
-        doc.requirements?.formatLabel?.trim() ||
-        defaults.requirements.formatLabel,
-      formatFileUrl:
-        doc.requirements?.formatFileUrl?.trim() ||
-        defaults.requirements.formatFileUrl,
+      intro: mapSectionIntro(doc.requirements?.intro),
+      items: requirementItems,
+      formatLabel: doc.requirements?.formatLabel?.trim() || "",
+      formatFileUrl: doc.requirements?.formatFileUrl?.trim() || "",
     },
-    reviewsIntro: mapIntro(doc.reviewsIntro, defaults.reviewsIntro),
-    reviews:
-      reviews.length > 0
-        ? reviews
-        : defaults.reviews.map((review) => ({ ...review })),
+    reviewsIntro: mapSectionIntro(doc.reviewsIntro),
+    reviews: mapReviewItems(doc.reviews),
     seo: {
-      title: doc.seo?.title?.trim() || defaults.seo.title,
-      description: doc.seo?.description?.trim() || defaults.seo.description,
+      title: doc.seo?.title?.trim() || "",
+      description: doc.seo?.description?.trim() || "",
     },
   };
+}
+
+export function isMembershipContentEmpty(content: MembershipContent): boolean {
+  return (
+    !content.hero.title.trim() &&
+    !content.hero.image &&
+    content.memberBenefits.items.length === 0 &&
+    content.about.paragraphs.length === 0
+  );
 }

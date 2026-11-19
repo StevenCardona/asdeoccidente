@@ -1,17 +1,18 @@
 # Spec: Fairs — events (phase 1)
 
-> Status: **in progress** — phase A static layout + detail; Sanity / React Query deferred (phase B)  
-> Paths: `/fairs` (list) · `/fairs/[slug]` (detail)  
-> Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md)
+> Status: **implemented** — Sanity `eventsPage` + `event` documents; routes `/events`  
+> Paths: `/events` (list) · `/events/[slug]` (detail)  
+> Domain: [`../../context/knowledge-base/asdeoccidente.md`](../../context/knowledge-base/asdeoccidente.md)  
+> Note: product id remains `fairs` in older docs; **public URL is always `/events`**. No `/fairs` redirects.
 
 ## Identification
 
 | Field | Value |
 | --- | --- |
-| Id | `fairs` |
+| Id | `fairs` (events product) |
 | Phase | 1 |
 | Depends on | `foundation` |
-| Feature folder | `features/fairs` |
+| Feature folder | `features/events` |
 
 ## Goal
 
