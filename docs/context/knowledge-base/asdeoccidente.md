@@ -6,7 +6,7 @@ Fuente única de producto: qué es, qué hacen, quiénes, datos, textos y cómo 
 
 Visual: [`docs/design/DESIGN.md`](../../design/DESIGN.md). Specs y build: `docs/specs/` y `docs/context/phase-*`.
 
-**Regla de datos:** lo no confirmado se marca `[por confirmar]` o `[ejemplo]`. No inventar precios, horarios ni logros. Si dos fuentes chocan, se muestran ambas hasta que la junta cierre una.
+**Regla de datos:** la KB + la guía de Studio son la **base publicable** (cada campo del CMS lleva un valor listo para pegar). Si un dato cambia después, se corrige en Sanity. Si dos fuentes chocan, se publica una base y la junta ajusta en Studio.
 
 ---
 
@@ -39,18 +39,23 @@ YouTube: [@asdeoccidente.oficial](https://www.youtube.com/@asdeoccidente.oficial
 TikTok: [@asdeoccidente](https://www.tiktok.com/@asdeoccidente?lang=es)  
 WhatsApp principal (sitio): 573186669622  
 
-**Directorio (contacto oficial)**
+**Directorio (contacto oficial)** — sección en `/directory` (fijo en código: `contact-team.ts`)
+
+| | |
+| --- | --- |
+| **Título** | En que te podemos servir? |
+| **Subtítulo** | Recuerda, Asdeoccidente Su Casa !!! |
 
 | Rol | Nombre | Correo | Teléfono |
 | --- | --- | --- | --- |
 | Presidente | Diego Fernando García G. | presidencia@asdeoccidente.org.co | — |
-| Directora ejecutiva | María Luisa Daza Díaz | directorejecutivo@asdeoccidente.org.co | (+57) 318 397 4134 |
-| Director comercial | Steet Achury Mendoza | comercial@asdeoccidente.org.co | (+57) 300 3220606 |
-| Comunicaciones | Sofía Mera E. | comunicaciones@asdeoccidente.org.co | (+57) 317 437 1969 |
-| Registros | Cristian Castro | registros@asdeoccidente.org.co | Cel 318 666 96 22 · Tel 032 666 96 22 Ext.110 |
-| Contadora | Nubia Avendaño | contabilidad@asdeoccidente.org.co | Cel 318 666 96 22 · Tel 032 666 96 22 Ext.107 |
+| Director ejecutivo | María Luisa Daza Díaz | directorejecutivo@asdeoccidente.org.co | (+57) 318 397 4134 |
+| Director comercial | Steet Achury Mendoza | comercial@asdeoccidente.org.co | (+57) 300 3223066 |
+| Comunicaciones | Sofía Mera E. | comunicaciones@asdeoccidente.org.co | (+57) 311 437 7960 |
+| Registros | Cristian Castro | registros@asdeoccidente.org.co | Cel. 318 666 96 22 · Tel. 032 666 96 22 Ext. 110 |
+| Contadora | Nubia Avendaño | contabilidad@asdeoccidente.org.co | Cel. 318 666 93 22 · Tel. 032 666 96 22 Ext. 107 |
 | Analista administrativa | Paola Andrea Martínez R. | asdeoccidente@asdeoccidente.org.co | (+57) 318 666 96 22 |
-| Coordinador chalanería | Diego Fernando Hincapié | escueladechalaneria@asdeoccidente.org.co | (+57) 318 666 96 23 |
+| Coordinador chalanería | Diego Fernando Hincapié | escueladechalaneria@asdeoccidente.org.co | (+57) 318 666 96 22 |
 
 Datos globales de UI viven en Sanity (`siteSettings`). `.env` solo guarda URL del sitio y credenciales de Sanity.
 
@@ -97,7 +102,7 @@ Prioridad del mensaje (orden de verdad): primero el caballo y montar bien; forma
 | Logros / nombres | Campeones y podios regionales/nacionales/internacionales citados en prensa | Agronegocios `[por confirmar]` antes de publicar nombres |
 
 **Contacto escuela**  
-Coordinador: Diego Fernando Hincapié · Cel (+57) 318 666 96 23 · escueladechalaneria@asdeoccidente.org.co
+Coordinador: Diego Fernando Hincapié · Cel (+57) 318 666 96 22 · escueladechalaneria@asdeoccidente.org.co
 
 ### 2.3 Tarifas
 
@@ -223,11 +228,11 @@ Misma URL en celular y escritorio; celular con menos secciones.
 
 | Oferta | Ruta app | Nota |
 | --- | --- | --- |
-| Servicios (registros/trámites) | `/services` | Secciones con tarifas socio/no socio + PDFs; precios `[por confirmar]` hasta tabla oficial |
+| Servicios (registros/trámites) | `/services` | Secciones con tarifas socio/no socio + PDFs (base en guía Studio; editar en Sanity si cambian) |
 | Equinoterapia | `/equinotherapy` | Sin promesas de cura; lenguaje médico validado por terapeutas. |
 | Socios | `/membership` | Quiénes somos, misión/visión, ser socio, ser afiliado, costos, requisitos + formato. CTA “Quiero ser socio”. |
 | Alquiler sede | `/venue` | Cotización por WhatsApp (mensaje sede). Espacios y medidas abajo. |
-| Directorio equino | `/directory` | Un Excel por tipo en Sanity → tabla con columnas del archivo; filtro, búsqueda, orden y descarga. |
+| Directorio equino | `/directory` | Excel por tipo → tabla con scroll; debajo, equipo de contacto (8 cards fijas en `contact-team.ts`). |
 
 #### Socios / afiliación (`/membership`)
 
@@ -294,11 +299,11 @@ Representar a los criadores y promover la cultura y la pasión por el caballo cr
 | Parqueadero | ~800 vehículos |
 | Zonas verdes | ~600 m² aprox. c/u |
 
-**Cotización:** WhatsApp principal del sitio + mensaje sede. Contacto comercial (KB directorio): Steet Achury Mendoza · (+57) 300 322 0606 · comercial@asdeoccidente.org.co.
+**Cotización:** WhatsApp principal del sitio + mensaje sede. Contacto comercial (KB directorio): Steet Achury Mendoza · (+57) 300 3223066 · comercial@asdeoccidente.org.co.
 
-**Copy UI de espacios:** descripciones cortas de producto en Sanity/defaults (no son hechos técnicos adicionales). **Sin lista de precios** hasta que la asociación confirme tarifas.
+**Copy UI de espacios:** descripciones cortas de producto en Sanity (medidas confirmadas arriba). Cotización por WhatsApp (sin lista de precios de alquiler en la web).
 
-**Aún diferido:** contacto dedicado, About, tabla única de tarifas de registros `[por confirmar]`, tarifas de alquiler de sede.
+**Aún diferido:** página About; tarifas de alquiler de sede en el sitio (cotización WhatsApp).
 
 ---
 
@@ -340,35 +345,21 @@ Representar a los criadores y promover la cultura y la pasión por el caballo cr
 
 ---
 
-## 5. Datos que no se inventan
+## 5. Criterios de copy (base CMS)
 
 | Riesgo | Qué hacer |
 | --- | --- |
-| Precios distintos entre sitio, prensa y junta | Una sola tabla oficial; hasta entonces marcar fuente |
+| Precios distintos entre fuentes | Publicar la base de la guía Studio; corregir en Sanity si la junta cambia un monto |
 | Decir “grupales” si el producto es personalizado | Usar “clases totalmente personalizadas” |
 | Matrícula sin decir qué incluye | Siempre: seguro, gorra y buzo |
 | “Trae tu equipo” | No: la escuela pone caballo, montura y equipo |
-| Cuenta regresiva a mano | Calcular desde fecha real del evento |
-| Programación distinta al afiche | Copiar afiche oficial; “Última actualización” |
-| Nombres de alumnos / títulos sin permiso | Confirmar antes de publicar |
-| Año de fundación / “+45 años” | Confirmar; no mezclar cifras |
-| Mapas o videos vacíos | Mapa real o quitar el bloque |
+| Programación de eventos | Pegar la base del calendario en la guía; ajustar fechas en Studio si el afiche cambia |
+| Mapas o videos | Pegar URL/archivo en Configuración general (base en la guía) |
+
+Los ajustes posteriores (horarios finos, fotos nuevas de docentes, montos 2026 actualizados) se hacen **editando y publicando en Studio**, no dejando campos vacíos.
 
 ---
 
-## 6. Qué falta confirmar con la asociación
-
-| A quién | Qué |
-| --- | --- |
-| Dirección escuela / Diego Hincapié | Tabla de precios **2026** (solo personalizadas); vigencia de packs 4/3/2/1; si se elimina la fila “grupales”; valor real de matrícula; renovación |
-| Escuela | Duración de cada clase; horarios semanales; si clase gratis = evaluación previa |
-| Escuela | Fotos reales de docentes; biografías cortas; testimonios aprobados |
-| Junta | Año de fundación; un solo nombre y dirección de sede; correos correctos; WhatsApp por tema; quién aprueba contenido |
-| Eventos | Programación oficial Copa, entradas generales, fechas |
-| Equinoterapia (fase 3) | A quién va, sesión tipo, precio, quién dirige |
-
----
-
-## 7. Redes
+## 6. Redes
 
 Objetivo: pasar seguidores de Instagram al sitio (enlace de la bio). Pilares: educativo, detrás de cámaras, eventos, testimonios, cupos. Medir clics a la bio y visitas desde Instagram.

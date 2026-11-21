@@ -44,7 +44,7 @@ No separate custom backend in phase 1 beyond Next route handlers / Sanity client
 | Alquiler | `/venue` | In progress — Sanity `venuePage` |
 | Socios | `/membership` | In progress — Sanity `membershipPage` |
 | Equinoterapia | `/equinotherapy` | In progress — Sanity `equinotherapyPage` |
-| Directorio | `/directory` | Implemented — Excel por tipo + tabla |
+| Directorio | `/directory` | Implemented — Excel por tipo + tabla con scroll + equipo fijo |
 | Nosotros | `/about` | **Commented / deferred** (`page.tsx.deferred`) |
 | Studio | `/studio` | Active + **authenticated** (Sanity login) |
 
@@ -169,7 +169,7 @@ Every public page (`SiteShell`):
   - **Socios** (`membershipPage`) — hero, benefits, costs, requirements (+ PDF), reviews, SEO
   - **Equinoterapia** (`equinotherapyPage`) — hero without address; story, gallery, reviews, FAQ, SEO
   - **Eventos** (`eventsPage` + `event`)
-  - **Directorio** (`directoryPage` + `directoryDataset`) — un Excel por tipo → headers/rows; Studio «Procesar Excel»
+  - **Directorio** (`directoryPage` + `directoryDataset`) — un Excel por tipo → headers/rows; Studio «Procesar Excel»; equipo de contacto fijo en `contact-team.ts` (sin schema aún)
 
 ---
 

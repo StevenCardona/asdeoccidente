@@ -11,7 +11,7 @@
 | Spec venue | In progress — no address in hero |
 | Spec membership | In progress — requirements cards; white section bgs |
 | Spec equinotherapy | In progress — benefit cards; white reviews |
-| Spec directory | Done (Excel-per-type + table UI) |
+| Spec directory | Done (Excel-per-type + table scroll + fixed contact team) |
 | Spec about | Deferred (route commented) |
 | App `web/` foundation shell | Done |
 | Sanity Studio (embedded `/studio`) | Wired — project `h9imk562` / `production` |
@@ -23,7 +23,7 @@
 | App Venue `/venue` | In progress |
 | App Membership `/membership` | In progress |
 | App Equinotherapy `/equinotherapy` | In progress |
-| App Directory `/directory` | Done (awaiting Excel uploads) |
+| App Directory `/directory` | Done (scroll + contact cards; awaiting Excel uploads) |
 
 ## Sanity-only content
 

@@ -17,7 +17,7 @@ Progress: [`../../context/phase-1/progress.md`](../../context/phase-1/progress.m
 | 6 | Venue | `/venue` | [`venue.md`](venue.md) | In progress |
 | 7 | Membership | `/membership` | [`membership.md`](membership.md) | In progress |
 | 8 | Equinotherapy | `/equinotherapy` | [`equinotherapy.md`](equinotherapy.md) | In progress |
-| 9 | Directory | `/directory` | [`directory.md`](directory.md) | Implemented (Excel por tipo) |
+| 9 | Directory | `/directory` | [`directory.md`](directory.md) | Implemented (Excel + scroll + equipo fijo) |
 
 ## Deferred
 

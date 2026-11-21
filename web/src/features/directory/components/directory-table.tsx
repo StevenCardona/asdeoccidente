@@ -186,9 +186,9 @@ export function DirectoryTable({
           {filteredRows.length === 1 ? "resultado" : "resultados"} · {active.title}
         </p>
 
-        <div className="overflow-x-auto rounded-md border border-border">
+        <div className="max-h-[32rem] overflow-auto rounded-md border border-border">
           <table className="min-w-full border-collapse text-left text-sm">
-            <thead className="bg-muted/50">
+            <thead className="sticky top-0 z-10 bg-muted">
               <tr>
                 {active.headers.map((header, index) => (
                   <th

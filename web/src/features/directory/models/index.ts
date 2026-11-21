@@ -16,6 +16,11 @@ export type {
   DirectoryHero,
   DirectoryPageContent,
 } from "./types";
+export type {
+  DirectoryContactMember,
+  DirectoryContactTeam,
+} from "./contact-team";
+export { directoryContactTeam } from "./contact-team";
 export { emptyDirectoryContent, defaultDirectoryContent } from "./defaults";
 
 export const fetchDirectoryContent = cache(
